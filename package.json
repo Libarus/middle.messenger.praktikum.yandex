@@ -5,12 +5,9 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build2": "tsc && vite build",
-        "build:client": "vite build --outDir ../dist/client",
-        "build:server": "vite build --ssr ../server.js --outDir ../dist/server",
-        "build": "npm run build:client && npm run build:server",
+        "build": "tsc && vite build --emptyOutDir",
         "preview": "vite preview",
-        "serve": "node server.js"
+        "serve": "npm run build && node server.js"
     },
     "devDependencies": {
         "@types/node": "^20.12.7",
