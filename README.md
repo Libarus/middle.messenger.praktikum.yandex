@@ -10,6 +10,10 @@
 
     - Локально: http://localhost:3000/
 
+### Дизайн-макет
+
+https://www.figma.com/file/GypDDFtoxfnhJbDktDa0yN/MegaChat?type=design&node-id=0%3A1&mode=design&t=pl7wtw1sPd45svtB-1
+
 ### Чек-лист
 
 - [+] Проект создан по шаблону https://github.com/yandex-praktikum/middle.messenger.praktikum.yandex

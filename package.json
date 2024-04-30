@@ -1,15 +1,25 @@
 {
-  "name": "aazchat",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --port 3000",
-    "start": "vite --port 3000",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^5.2.0"
-  }
+    "name": "vite-sass",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build2": "tsc && vite build",
+        "build:client": "vite build --outDir ../dist/client",
+        "build:server": "vite build --ssr ../server.js --outDir ../dist/server",
+        "build": "npm run build:client && npm run build:server",
+        "preview": "vite preview",
+        "serve": "node server.js"
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.7",
+        "sass": "^1.75.0",
+        "typescript": "^5.2.2",
+        "vite": "^5.2.0"
+    },
+    "dependencies": {
+        "@types/express": "^4.17.21",
+        "express": "^4.19.2"
+    }
 }
