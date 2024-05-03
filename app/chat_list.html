@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./shared/assets/megachat.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./shared/styles/style.scss">
+    <title>MegaChat</title>
+</head>
+
+<body class="body">
+
+    <main class="main">
+
+        <aside class="aside">
+
+            <div class="search">
+                <div class="search-block">
+                    <input type="text" class="search-block__input" placeholder="Поиск">
+                    <div class="search-block__button">
+                        <img src="/search_btn.svg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="chats">
+                {{> chatitem name="Андрей" datetime="10:49" message="Изображение" unread=2}}
+                {{> chatitem name="Киноклуб" datetime="12:00" self="Вы" message="стикер" unread=0}}
+                {{> chatitem name="Илья" datetime="15:12" message="Друзья, у меня для вас особенный выпуск новостей! Как говориться вот так!" unread=4}}
+                {{> chatitem name="Вадим" datetime="Пт" self="Вы" message="Круто!" unread=0}}
+                {{> chatitem name="тет-а-теты" datetime="Ср" message="И Human Interface Guidelines и Material Design рекомендуют..." unread=0}}
+                {{> chatitem name="1, 2, 3" datetime="Пн" message="Миллионы россиян ежедневно проводят десятки часов свое..." unread=0}}
+                {{> chatitem name="Design Destroyer" datetime="Пн" message="В 2008 году художник Jon Rafman  начал собирать..." unread=0}}
+                {{> chatitem name="Day." datetime="1 Мая 2020" message="Так увлёкся работой по курсу, что совсем забыл его анонсир..." unread=0}}
+                {{> chatitem name="Стас Рогозин" datetime="12 Апр 2020" message="Можно или сегодня или завтра вечером." unread=0}}
+            </div>
+        </aside>
+
+        <section class="section">
+
+            <div class="header">
+                <div class="header-profile">
+                    <img src="./cog.svg" class="header-profile__icon">
+                </div>
+                <div class="header-photo">
+                    <div class="header-photo__avatar">&nbsp;</div>
+                </div>
+                <div class="header__name">Илья</div>
+            </div>
+
+            <div class="content">
+                <div class="content-text">
+                    {{chat_list}}
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+
+</html>

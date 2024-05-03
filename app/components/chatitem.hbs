@@ -1,0 +1,22 @@
+<div class="chats-item">
+    <div class="chats-item-photo">
+        <div class="chats-item-photo__avatar">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="chats-item-block">
+        <div class="chats-item-info">
+            <div class="chats-item-info__name">{{name}}</div>
+            <div class="chats-item-info__datetime">{{datetime}}</div>
+        </div>
+        <div class="chats-item-message">
+            <div class="chats-item-message__text">
+                {{#if self}}<span class="chats-item-message__self">{{self}}:</span>{{/if}}
+                {{message}}
+            </div>
+            <div class="chats-item-message__unread {{#unless unread}}hidden{{/unless}}">{{unread}}</div>
+        </div>
+    </div>
+
+</div>
