@@ -8,7 +8,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "start": "tsc && vite build --emptyOutDir",
+        "start": "vite",
         "build": "tsc && vite build --emptyOutDir",
         "preview": "vite preview",
         "serve": "npm run build && node server.js"
