@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./shared/assets/megachat.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./shared/styles/style.scss">
+    <title>MegaChat - Профиль / изменение данных</title>
+</head>
+
+<body class="body">
+
+    <div class="profile-box">
+
+        <div class="profile-close">
+            <a href="profile-close__button">
+                <img src="/close.svg">
+            </a>
+        </div>
+
+        <div class="profile-photo profile-photo__offset">
+            <img src="/defphoto.svg" class="profile-photo__image">
+        </div>
+
+        <form>
+
+            <div class="profile-items">
+                {{> profileedititem title="Почта" value="pochta@yandex.ru" type="text" name="email" }}
+                {{> profileedititem title="Логин" value="ivanivanov" type="text" name="login" }}
+                {{> profileedititem title="Имя" value="Иван" type="text" name="first_name" }}
+                {{> profileedititem title="Фамилия" value="Иванов" type="text" name="second_name" }}
+                {{> profileedititem title="Имя в чате" value="Иван" type="text" name="name_in_chat" }}
+                {{> profileedititem title="Телефон" value="+7 (909) 967 30 30" type="text" name="phone" }}
+            </div>
+
+            <div class="profile-action profile-action__padding">
+                {{> button class="form-button" label="Сохранить"}}
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

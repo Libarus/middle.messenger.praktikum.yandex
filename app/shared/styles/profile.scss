@@ -1,0 +1,134 @@
+.profile {
+
+    &-box {
+        box-sizing: border-box;
+        width: 510px;
+        margin: 0 auto;
+
+        padding-top: 60px;
+    }
+
+    &-title {
+        font-family: $font-family;
+        text-align: center;
+
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 16px;
+        color: #1E1E1E;
+        margin-bottom: 40px;
+
+        padding-top: 11px;
+    }
+
+    &-close {
+
+        width: 24px;
+        height: 24px;
+        float: right;
+    }
+
+    &-photo {
+        width: 130px;
+        height: 130px;
+        background-color: $bg_input;
+        margin: 0 auto;
+        box-sizing: border-box;
+        padding-top: 48px;
+        border-radius: 50%;
+
+        &__image {
+            width: 32px;
+            height: 32px;
+            display: block;
+            margin: auto auto;
+        }
+
+        &__offset {
+            margin-bottom: 98px;
+        }
+    }
+
+    &-item {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid $silverstroke-color;
+        display: flex;
+        justify-content: space-between;
+        font-family: $font-family;
+
+        &__title {
+
+            font-style: normal;
+            font-weight: 500;
+            font-size: 13px;
+            color: #1E1E1E;
+        }
+
+        &__value {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 13px;
+            text-align: right;
+            color: #999999;
+        }
+
+        &__input {
+            text-align: right;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 13px;
+            text-align: right;
+            color: #999999;
+        }
+
+        &__input:focus {
+            outline: none;
+        }
+
+    }
+
+    &-item:last-child {
+        border: 0;
+    }
+
+    &-action {
+
+        padding-top: 30px;
+
+        &__link {
+            font-family: $font-family;
+            font-size: 13px;
+            display: block;
+            padding: 11px 0;
+            color: #3369F3;
+            text-decoration: none;
+            border-bottom: 1px solid $silverstroke-color;
+        }
+
+        &__exit {
+            font-family: $font-family;
+            font-size: 13px;
+            display: block;
+            padding: 11px 0;
+            color: red;
+            text-decoration: none;
+        }
+
+        &__padding {
+            padding: 59px 115px 0 115px;
+        }
+
+        &-password__padding {
+            padding: 161px 115px 0 115px;
+        }
+
+    }
+
+}
