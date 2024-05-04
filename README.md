@@ -53,16 +53,16 @@ https://www.figma.com/file/GypDDFtoxfnhJbDktDa0yN/MegaChat?type=design&node-id=0
 
 ### Ссылки на страницы
 
-Ссылки даны относительно корня сайта
+Ссылки даны относительно корня сайта. Так же проект развёрнут на https://splendid-torte-395024.netlify.app/
 
-- Основная страница с которой ведут ссылки на все внутренние страницы -- корень сайта
-- Страница авторизации -- /login.html
-- Страница авторизации (с ошибкой) -- /login_error.html
-- Страница регистрации -- /reg.html
-- Страница со списком чатов -- /chat_list.html
-- Страница с чатом -- /chat_chat.html
-- Профиль -- /profile.html
-- Профиль / изменение данных -- /profileedit.html
-- Профиль / изменение пароля -- /profilepassword.html
-- Страница 500 -- /error500.html
-- Страница 404 -- /error404.html
+- Основная страница с которой ведут ссылки на все внутренние страницы -- корень сайта -- https://splendid-torte-395024.netlify.app/
+- Страница авторизации -- /login.html -- https://splendid-torte-395024.netlify.app/login
+- Страница авторизации (с ошибкой) -- /login_error.html -- https://splendid-torte-395024.netlify.app/login_error
+- Страница регистрации -- /reg.html -- https://splendid-torte-395024.netlify.app/reg
+- Страница со списком чатов -- /chat_list.html -- https://splendid-torte-395024.netlify.app/chat_list
+- Страница с чатом -- /chat_chat.html -- https://splendid-torte-395024.netlify.app/chat_chat
+- Профиль -- /profile.html -- https://splendid-torte-395024.netlify.app/profile
+- Профиль / изменение данных -- /profileedit.html -- https://splendid-torte-395024.netlify.app/profileedit
+- Профиль / изменение пароля -- /profilepassword.html -- https://splendid-torte-395024.netlify.app/profilepassword
+- Страница 500 -- /error500.html -- https://splendid-torte-395024.netlify.app/error500
+- Страница 404 -- /error404.html -- https://splendid-torte-395024.netlify.app/error404
