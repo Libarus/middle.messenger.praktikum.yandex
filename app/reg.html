@@ -11,30 +11,34 @@
 
 <body class="body">
 
-    <div class="reg-box">
+    <main>
 
-        <div>
+        <div class="reg-box">
 
-            <div class="reg-title">{{reg_page_title}}</div>
+            <div>
 
-            <form>
-                {{> input label="Почта" name="email" type="email" }}
-                {{> input label="Логин" name="login" type="text" }}
-                {{> input label="Имя" name="first_name" type="text" }}
-                {{> input label="Фамилия" name="second_name" type="text" }}
-                {{> input label="Телефон" name="phone" type="text" }}
-                {{> input label="Пароль" name="password" type="password" }}
-                {{> input label="Пароль (ещё раз)" name="password_again" type="password" }}
-            </form>
+                <div class="reg-title">{{reg_page_title}}</div>
+
+                <form>
+                    {{> input label="Почта" name="email" type="email" }}
+                    {{> input label="Логин" name="login" type="text" }}
+                    {{> input label="Имя" name="first_name" type="text" }}
+                    {{> input label="Фамилия" name="second_name" type="text" }}
+                    {{> input label="Телефон" name="phone" type="text" }}
+                    {{> input label="Пароль" name="password" type="password" }}
+                    {{> input label="Пароль (ещё раз)" name="password_again" type="password" }}
+                </form>
+
+            </div>
+
+            <div>
+                {{> button class="form-button" label="Зарегистрироваться" }}
+                <a href="" class="link text-center mt14">{{reg_login_link}}</a>
+            </div>
 
         </div>
 
-        <div>
-            {{> button class="form-button" label="Зарегистрироваться" }}
-            <a href="" class="link text-center mt14">{{reg_login_link}}</a>
-        </div>
-
-    </div>
+    </main>
 
 </body>
 

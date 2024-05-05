@@ -11,36 +11,41 @@
 
 <body class="body">
 
-    <div class="profile-box">
+    <main>
 
-        <div class="profile-close">
-            <a href="profile-close__button">
-                <img src="/close.svg">
-            </a>
-        </div>
+        <div class="profile-box">
 
-        <div class="profile-photo profile-photo__offset">
-            <img src="/defphoto.svg" class="profile-photo__image">
-        </div>
-
-        <form>
-
-            <div class="profile-items">
-                {{> profileedititem title="Почта" value="pochta@yandex.ru" type="text" name="email" }}
-                {{> profileedititem title="Логин" value="ivanivanov" type="text" name="login" }}
-                {{> profileedititem title="Имя" value="Иван" type="text" name="first_name" }}
-                {{> profileedititem title="Фамилия" value="Иванов" type="text" name="second_name" }}
-                {{> profileedititem title="Имя в чате" value="Иван" type="text" name="name_in_chat" }}
-                {{> profileedititem title="Телефон" value="+7 (909) 967 30 30" type="text" name="phone" }}
+            <div class="profile-close">
+                <a href="profile-close__button">
+                    <img src="/close.svg" alt="Закрыть редактирование данных пользователя">
+                </a>
             </div>
 
-            <div class="profile-action profile-action__padding">
-                {{> button class="form-button" label="Сохранить"}}
-            </div>
+            <div class="profile-photo profile-photo__offset">
+                <img src="/defphoto.svg" class="profile-photo__image" alt="Аватар пользователя">
+                <input type="hidden" name="avatar" value="">
+            </div> 
 
-        </form>
+            <form>
 
-    </div>
+                <div class="profile-items">
+                    {{> profileedititem title="Почта" value="pochta@yandex.ru" type="text" name="email" }}
+                    {{> profileedititem title="Логин" value="ivanivanov" type="text" name="login" }}
+                    {{> profileedititem title="Имя" value="Иван" type="text" name="first_name" }}
+                    {{> profileedititem title="Фамилия" value="Иванов" type="text" name="second_name" }}
+                    {{> profileedititem title="Имя в чате" value="Иван" type="text" name="display_name" }}
+                    {{> profileedititem title="Телефон" value="+7 (909) 967 30 30" type="text" name="phone" }}
+                </div>
+
+                <div class="profile-action profile-action__padding">
+                    {{> button class="form-button" label="Сохранить"}}
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
 
 </body>
 

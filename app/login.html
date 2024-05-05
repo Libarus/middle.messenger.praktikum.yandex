@@ -11,25 +11,29 @@
 
 <body class="body">
 
-    <div class="login-box">
+    <main>
 
-        <div>
+        <div class="login-box">
 
-            <div class="login-title">{{login_page_title}}</div>
+            <div>
 
-            <form>
-                {{> input label="Логин" name="login" type="text" }}
-                {{> input label="Пароль" name="password" type="password" }}
-            </form>
+                <div class="login-title">{{login_page_title}}</div>
+
+                <form>
+                    {{> input label="Логин" name="login" type="text" }}
+                    {{> input label="Пароль" name="password" type="password" }}
+                </form>
+
+            </div>
+
+            <div>
+                {{> button class="form-button" label="Авторизоваться" }}
+                <a href="" class="link text-center mt14">{{login_reg_link}}</a>
+            </div>
 
         </div>
 
-        <div>
-            {{> button class="form-button" label="Авторизоваться" }}
-            <a href="" class="link text-center mt14">{{login_reg_link}}</a>
-        </div>
-
-    </div>
+    </main>
 
 </body>
 

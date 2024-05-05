@@ -11,6 +11,7 @@ $silver_text: #999999;
 $silver_text_bg: #525252;
 $question_bg: #E4FDF1;
 
+@import "./nav.scss";
 @import "./login.scss";
 @import "./reg.scss";
 @import "./header.scss";

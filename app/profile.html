@@ -11,38 +11,42 @@
 
 <body class="body">
 
-    <div class="profile-box">
+    <main>
 
-        <div class="profile-close">
-            <a href="profile-close__button">
-                <img src="/close.svg">
-            </a>
+        <div class="profile-box">
+
+            <div class="profile-close">
+                <a href="profile-close__button">
+                    <img src="/close.svg" alt="Закрыть профиль пользователя">
+                </a>
+            </div>
+
+            <div class="profile-photo">
+                <img src="/defphoto.svg" class="profile-photo__image" alt="Аватар пользователя">
+            </div>
+
+            <div class="profile-title">
+                Иван
+            </div>
+
+            <div class="profile-items">
+                {{> profileitem title="Почта" value="pochta@yandex.ru"}}
+                {{> profileitem title="Логин" value="ivanivanov"}}
+                {{> profileitem title="Имя" value="Иван"}}
+                {{> profileitem title="Фамилия" value="Иванов"}}
+                {{> profileitem title="Имя в чате" value="Иван"}}
+                {{> profileitem title="Телефон" value="+7 (909) 967 30 30"}}
+            </div>
+
+            <div class="profile-action">
+                <a href="" class="profile-action__link">{{edit_data}}</a>
+                <a href="" class="profile-action__link">{{edit_password}}</a>
+                <a href="" class="profile-action__exit">{{exit}}</a>
+            </div>
+
         </div>
 
-        <div class="profile-photo">
-            <img src="/defphoto.svg" class="profile-photo__image">
-        </div>
-
-        <div class="profile-title">
-            Иван
-        </div>
-
-        <div class="profile-items">
-            {{> profileitem title="Почта" value="pochta@yandex.ru"}}
-            {{> profileitem title="Логин" value="ivanivanov"}}
-            {{> profileitem title="Имя" value="Иван"}}
-            {{> profileitem title="Фамилия" value="Иванов"}}
-            {{> profileitem title="Имя в чате" value="Иван"}}
-            {{> profileitem title="Телефон" value="+7 (909) 967 30 30"}}
-        </div>
-
-        <div class="profile-action">
-            <a href="" class="profile-action__link">{{edit_data}}</a>
-            <a href="" class="profile-action__link">{{edit_password}}</a>
-            <a href="" class="profile-action__exit">{{exit}}</a>
-        </div>
-
-    </div>
+    </main>
 
 </body>
 
