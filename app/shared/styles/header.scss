@@ -1,0 +1,121 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.aside {
+    width: calc(100% / 4);
+    background-color: $silverbg-color;
+    height: 100vh;
+}
+
+.section {
+    width: calc(100% / 4 * 3);
+    height: 100vh;
+}
+
+.header {
+    height: 56px;
+    background-color: $silverbg-color;
+    border-bottom: 1px solid $silverstroke-color;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 10px;
+
+    &__name {
+        font-family: $font-family;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 13px;
+        text-align: right;
+        color: #1E1E1E;
+        align-self: center;
+    }
+
+    &-photo {
+        padding: 5px 10px;
+        &__avatar {
+            background-color: $silverstroke-color;
+            width: 47px;
+            height: 47px;
+            border-radius: 50%;
+        }
+    }
+
+    &-profile {
+        align-self: center;
+        &__icon {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+
+
+.search {
+    height: 56px;
+    background-color: $silverbg-color;
+    box-sizing: border-box;
+    padding: 10px;
+
+    &-block {
+        background-color: $silverstroke-color;
+        width: 100%;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+
+        &__input {
+            flex-grow: 1;
+            padding-left: 10px;
+            background: none;
+            border: 0;
+            color: black;
+            font-weight: bold;
+        }
+
+        &__input:focus {
+            outline: none;
+        }
+
+        &__input::-webkit-input-placeholder {
+            color: #999999;
+        }
+
+        &__input:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: #999999;
+            opacity: 1;
+        }
+
+        &__input::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: #999999;
+            opacity: 1;
+        }
+
+        &__input:-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: #999999;
+        }
+
+        &__input::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: #999999;
+        }
+
+        &__input::placeholder {
+            /* Most modern browsers support this now. */
+            color: #999999;
+        }
+
+        &__button {
+            flex: 0 0 20px;
+            padding: 8px 5px;
+        }
+    }
+
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./shared/assets/megachat.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./shared/styles/style.scss">
+    <title>MegaChat - Авторизация</title>
+</head>
+
+<body class="body">
+
+    <main>
+
+        <div class="login-box">
+
+            <div>
+
+                <div class="login-title">{{login_page_title}}</div>
+
+                <form>
+                    {{> input label="Логин" name="login" type="text" value="vasil" error_text="Неверный логин" }}
+                    {{> input label="Пароль" name="password" type="password" }}
+                </form>
+
+            </div>
+
+            <div>
+                {{> button class="form-button" label="Авторизоваться" }}
+                <a href="" class="link text-center mt14">{{login_reg_link}}</a>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
