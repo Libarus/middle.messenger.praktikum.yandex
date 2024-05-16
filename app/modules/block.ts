@@ -51,19 +51,6 @@ class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    componentDidMount(oldProps: any = null) {
-        this._componentDidMount(oldProps);
-    }
-
-    componentDidUpdate(oldProps: any, newProps: any) {
-        this._componentDidUpdate(oldProps, newProps);
-        return true;
-    }
-
-    dispatchComponentDidMount() {
-        this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-    }
-
     setProps = (nextProps: any) => {
         if (!nextProps) {
             return;
@@ -90,6 +77,7 @@ class Block {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+        eventBus.on(Block.EVENTS.FLOW_DCDM, this._dispatchComponentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
@@ -98,15 +86,22 @@ class Block {
         this._element = this._createDocumentElement(tagName);
     }
 
-    _componentDidMount(oldProps: any) {
+    _componentDidMount(oldProps: any): void {
         console.info('componentDidMount >> oldProps', oldProps);
-        //...
+        this.componentDidMount(oldProps);
     }
 
-    _componentDidUpdate(oldProps: any, newProps: any) {
+    _componentDidUpdate(oldProps: any, newProps: any): boolean {
         console.info('componentDidUpdate >> oldProps', oldProps);
         console.info('componentDidUpdate >> newProps', newProps);
+        let result = this.componentDidUpdate(oldProps, newProps);
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+
+        return result;
+    }
+
+    _dispatchComponentDidMount(): void {
+        this.dispatchComponentDidMount();
     }
 
     _render() {
@@ -133,7 +128,7 @@ class Block {
             },
 
             set(target: any, prop: string, value: any) {
-                const oldProps: any = {...target};
+                const oldProps: any = { ...target };
                 target[prop] = value;
                 console.log(`${prop}: ${value}`);
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, props);
@@ -156,10 +151,11 @@ class Block {
 
     /* ABSTRACT */
 
-    // Методы переопределяются
-
-    // Необходимо вернуть разметку
-    render() { }
+    // Методы могут переопределяться
+    componentDidMount(oldProps: any = null): void { }
+    componentDidUpdate(oldProps: any, newProps: any): boolean { return true; }
+    dispatchComponentDidMount(): void { }
+    render() { } // Необходимо вернуть разметку
 }
 
 export default Block;

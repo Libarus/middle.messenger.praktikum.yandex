@@ -1,5 +1,6 @@
-<label class="form__label">
+export default `<label class="form__label">
     {{label}}
     <input type="{{type}}" name="{{name}}" class="form-{{type}}__input {{#if error_text}}form-error__input{{/if}}" value="{{value}}">
     <div class="form-input-error">{{error_text}}</div>
 </label>
+`;

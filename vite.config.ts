@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import sass from 'sass';
 import path from 'path';
-import handlebars from 'vite-plugin-handlebars';
+import handlebars from './vite-plugin-handlebars-precompile';
+// @ts-ignore // плагин установлен, но VS Code его не видит
+import hb from 'vite-plugin-handlebars';
 
 export default defineConfig({
     base: './',
@@ -34,7 +36,7 @@ export default defineConfig({
     server: {
         port: 3000,
     },
-    plugins: [handlebars({
+    plugins: [handlebars(), hb({
         partialDirectory: path.resolve(__dirname, './app/components'),
         context: {
             login_page: 'Страница авторизации',
@@ -46,26 +48,7 @@ export default defineConfig({
             error_404_page: 'Страница 404',
             profile_page: 'Профиль',
             profile_edit_page: 'Профиль / изменение данных',
-            profile_password_page: 'Профиль / изменение пароля',
-
-            login_page_title: 'Вход',
-            login_reg_link: 'Нет аккаунта?',
-
-            reg_page_title: 'Регистрация',
-            reg_login_link: 'Войти',
-
-            chat_list: 'Выберите чат чтобы отправить сообщение',
-
-            error_404_description: 'Не туда попали',
-            error_404_link: 'Назад к чатам',
-
-            error_500_description: 'Мы уже фиксим',
-            error_500_link: 'Назад к чатам',
-
-            edit_data: 'Изменить данные',
-            edit_password: 'Изменить пароль',
-
-            exit: 'Выйти'
-        },
+            profile_password_page: 'Профиль / изменение пароля'
+        }
     })]
 });
