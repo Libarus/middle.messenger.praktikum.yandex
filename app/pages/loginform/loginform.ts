@@ -1,19 +1,61 @@
-import LoginForm from "../../components/loginform";
-import { render } from "../../utils/render-dom";
+import { renderDom } from "../../utils/render-dom";
 
-const form = new LoginForm({
-    login_page_title: 'Вход',
-    login_reg_link: 'Нет аккаунта?'
+import Div from "../../components/div";
+import Ul from "../../components/ul";
+import Li from "../../components/li";
+import Link from "../../components/link";
+import Button from "../../components/button";
+
+const lili = new Li({ children: "555" });
+
+let button = new Button({
+    children: "Click me!!",
+    events: {
+        click: (ev: any) => {
+            console.log("click button", ev);
+        },
+    },
+    settings: { withInternalID: false },
 });
 
-// app — это class дива в корне DOM
-render("#app", form);
+let ul = new Ul({
+    children: [
+        new Li({
+            children: [
+                new Link({
+                    children: "111",
+                    attrib: {
+                        href: "https://ya.ru",
+                        target: "_blank",
+                    },
+                }),
+                button,
+            ],
+        }),
+        new Li({ children: "222" }),
+        new Li({ children: "333" }),
+        new Li({ children: "444" }),
+        lili,
+    ],
+    settings: { withInternalID: true },
+});
 
-/*
+let div = new Div({
+    children: ul,
+    settings: { withInternalID: false },
+    attrib: {
+        class: "class-name-div",
+        otherAttr: "value-attr",
+    },
+});
+
+renderDom("#app", div);
+
 // Через секунду контент изменится сам, достаточно обновить пропсы
 setTimeout(() => {
-    form.setProps({
-        login_page_title: 'Вход',
+    lili.setProps({
+        children: "999000999",
+        aaa: 111,
+        bbb: 222,
     });
-}, 100); 
-*/
+}, 3000);

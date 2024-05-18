@@ -1,3 +1,3 @@
-import CompName from "./compname";
+import CompName from "./div";
 
 export { CompName };

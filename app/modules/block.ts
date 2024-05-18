@@ -1,4 +1,6 @@
 import { EventBus } from "./event-bus";
+import { v4 as makeUUID } from "uuid";
+import Handlebars from "handlebars";
 
 // Нельзя создавать экземпляр данного класса
 class Block {
@@ -6,31 +8,49 @@ class Block {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
         FLOW_CDU: "flow:component-did-update",
-        FLOW_DCDM: "flow:dispatch-component-did-mount",
-        FLOW_RENDER: "flow:render"
+        FLOW_RENDER: "flow:render",
     };
 
     eventBus: any;
-    props: any;
 
-    _element: any = null;
+    _element: HTMLElement = document.createElement("template"); // временная инициализация
     _meta: any = null;
+    _events: any = null;
+
+    _children: any = {};
+    _list: any = {};
+    _props: any = {};
+    _settings: any = {};
+    _attrib: any = {};
+
+    _id: string = "";
+    _setRender: boolean = false;
 
     /** JSDoc
      * @param {string} tagName
-     * @param {Object} props
+     * @param {Object} propsAndChildren
      *
      * @returns {void}
      */
-    constructor(tagName = "div", props = {}) {
+    constructor(tagName: string = "", propsAndChildren: any = {}) {
+        if (tagName == "") {
+            throw new Error("The tag name is not specified");
+        }
+
         const eventBus = new EventBus();
 
         this._meta = {
             tagName,
-            props
+            propsAndChildren,
         };
 
-        this.props = this._makePropsProxy(props);
+        // Генерируем уникальный UUID V4
+        this._id = makeUUID();
+
+        this.setProps(propsAndChildren);
+        this._children = this._makePropsProxy(this._children);
+        this._list = this._makePropsProxy(this._list);
+        this._props = this._makePropsProxy({ ...this._props, __id: this._id });
 
         this.eventBus = () => eventBus;
 
@@ -40,7 +60,7 @@ class Block {
 
     /* GETTER */
 
-    get element() {
+    get element(): HTMLElement {
         return this._element;
     }
 
@@ -56,11 +76,25 @@ class Block {
             return;
         }
 
-        Object.assign(this.props, nextProps);
+        this._setRender = false;
+        const oldProps = { ...this._props };
+
+        const { children, list, props, settings, attrib } = this._getChildren(nextProps);
+
+        if (Object.values(children).length) Object.assign(this._children, children);
+        if (Object.values(list).length) Object.assign(this._list, list);
+        if (Object.values(props).length) Object.assign(this._props, props);
+        if (Object.values(settings).length) Object.assign(this._settings, settings);
+        if (Object.values(attrib).length) Object.assign(this._attrib, attrib);
+
+        if (this._setRender) {
+            this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, this._props);
+            this._setRender = false;
+        }
     };
 
     getContent(): HTMLElement {
-        return this.element;
+        return this._element;
     }
 
     show() {
@@ -71,33 +105,97 @@ class Block {
         this.getContent().style.display = "none";
     }
 
+    compile(template: string, props: any) {
+        const propsAndStubs = { ...props };
+
+        Object.entries(this._children).forEach(([key, child]: [key: string, child: any]) => {
+            propsAndStubs[key] = `<div data-id="${child.Id}"></div>`;
+        });
+
+        Object.entries(this._list).forEach(([key, items]: [key: string, items: any]) => {
+            propsAndStubs[key] = "";
+            Object.entries(items).forEach(([_, child]: [keyChild: string, child: any]) => {
+                propsAndStubs[key] += `<div data-id="__L_${child.Id}"></div>`;
+            });
+        });
+
+        const fragment: any = this._createDocumentElement("template");
+        const stringContent = Handlebars.compile(template)(propsAndStubs);
+        fragment.innerHTML = stringContent;
+
+        Object.values(this._children).forEach((entry: any) => {
+            const stub = fragment.content.querySelector(`[data-id="${entry.Id}"]`);
+            if (stub != null) stub.replaceWith(entry.getContent());
+        });
+
+        Object.entries(this._list).forEach(([_, items]: [key: string, items: any]) => {
+            Object.entries(items).forEach(([_, child]: [keyChild: string, child: any]) => {
+                const stub = fragment.content.querySelector(`[data-id="__L_${child.Id}"]`);
+                if (stub != null) stub.replaceWith(child.getContent());
+            });
+        });
+
+        return fragment.content;
+    }
+
+    get Id(): string {
+        return this._id;
+    }
+
+    get Props(): string {
+        return this._props;
+    }
+
     /* PRIVATE */
 
     _registerEvents(eventBus: any) {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-        eventBus.on(Block.EVENTS.FLOW_DCDM, this._dispatchComponentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
     _createResources() {
         const { tagName } = this._meta;
-        this._element = this._createDocumentElement(tagName);
+        const element: HTMLElement = this._createDocumentElement(tagName);
+        this._element = element;
+    }
+
+    _getChildren(propsAndChildren: any) {
+        const props: any = {};
+        const children: any = {};
+        const list: any = {};
+        let attrib: any = {};
+        let settings: any = {};
+
+        Object.entries(propsAndChildren).forEach(([key, value]) => {
+            if (key.toLowerCase() == "settings") {
+                settings = value;
+            } else if (key.toLowerCase() == "attrib") {
+                attrib = value;
+            } else {
+                if (value instanceof Block) {
+                    children[key] = value;
+                } else if (Array.isArray(value)) {
+                    list[key] = value;
+                } else {
+                    props[key] = value;
+                }
+            }
+        });
+
+        return { children, list, props, settings, attrib };
     }
 
     _componentDidMount(oldProps: any): void {
-        console.info('componentDidMount >> oldProps', oldProps);
         this.componentDidMount(oldProps);
     }
 
-    _componentDidUpdate(oldProps: any, newProps: any): boolean {
-        console.info('componentDidUpdate >> oldProps', oldProps);
-        console.info('componentDidUpdate >> newProps', newProps);
-        let result = this.componentDidUpdate(oldProps, newProps);
-        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-
-        return result;
+    _componentDidUpdate(oldProps: any, newProps: any): void {
+        let isReRender: boolean = this.componentDidUpdate(oldProps, newProps);
+        if (isReRender) {
+            this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        }
     }
 
     _dispatchComponentDidMount(): void {
@@ -105,57 +203,90 @@ class Block {
     }
 
     _render() {
-        const block = this.render();
+        const block: HTMLElement = this.render();
         // Это небезопасный метод для упрощения логики
         // Используйте шаблонизатор из npm или напишите свой безопасный
         // Нужно компилировать не в строку (или делать это правильно),
         // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
-        this._element.innerHTML = block;
+        this._removeEvents();
+        this._element.innerHTML = "";
+        this._element.appendChild(block);
+        this._addEvents();
     }
 
     _makePropsProxy(props: any): any {
-        // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
         const self = this;
 
-        const proxyData = new Proxy(props, {
-
+        return new Proxy(props, {
             get(target: any, prop: string) {
                 if (prop.indexOf("_") === 0) {
-                    throw new Error("Отказано в доступе");
+                    return;
                 }
                 const value = target[prop];
                 return typeof value === "function" ? value.bind(target) : value;
             },
 
             set(target: any, prop: string, value: any) {
-                const oldProps: any = { ...target };
-                target[prop] = value;
-                console.log(`${prop}: ${value}`);
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, props);
+                if (target[prop] !== value) {
+                    target[prop] = value;
+                    self._setRender = true;
+                }
                 return true;
             },
 
             deleteProperty() {
                 throw new Error("Отказано в доступе");
             },
-
         });
-
-        return proxyData;
     }
 
-    _createDocumentElement(tagName: string) {
+    _createDocumentElement(tagName: string): HTMLElement {
         // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-        return document.createElement(tagName);
+        const element: HTMLElement = document.createElement(tagName);
+        if (this._settings?.withInternalID) {
+            element.setAttribute("data-id", this.Id);
+        }
+        this._addAttributes();
+        return element;
+    }
+
+    _addEvents() {
+        const { events = {} } = this._props;
+
+        Object.keys(events).forEach((eventName) => {
+            this._element.addEventListener(eventName, events[eventName]);
+        });
+    }
+
+    _removeEvents() {
+        const { events = {} } = this._props;
+
+        Object.keys(events).forEach((eventName) => {
+            this._element.removeEventListener(eventName, events[eventName]);
+        });
+    }
+
+    _addAttributes() {
+        Object.entries(this._attrib).forEach(([name, value]) => {
+            this._element.setAttribute(name, value as string);
+        });
     }
 
     /* ABSTRACT */
 
     // Методы могут переопределяться
-    componentDidMount(oldProps: any = null): void { }
-    componentDidUpdate(oldProps: any, newProps: any): boolean { return true; }
-    dispatchComponentDidMount(): void { }
-    render() { } // Необходимо вернуть разметку
+    componentDidMount(oldProps: any = null): void {}
+
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+        return true;
+    }
+
+    dispatchComponentDidMount(): void {}
+
+    render(): HTMLElement {
+        console.info(this.Id);
+        return document.createElement("template");
+    } // Необходимо вернуть разметку
 }
 
 export default Block;

@@ -1,4 +1,4 @@
-export function render(selector: string, block: any) {
+export function renderDom(selector: string, block: any) {
     const root = document.querySelector(selector);
     if (root == null) {
         throw new Error(`HTML элемент [селектор: ${selector}] не найден.`);

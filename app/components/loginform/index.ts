@@ -11,8 +11,13 @@ import button from "../button.tmpl.ts";
 Handlebars.registerPartial("input", input);
 Handlebars.registerPartial("button", button);
 
+export type TLoginFormState = {
+    login_page_title: string;
+    login_reg_link: string;
+};
+
 class LoginForm extends Block {
-    constructor(props: any) {
+    constructor(props: TLoginFormState) {
         // Создаём враппер DOM-элемент form
         super("form", props);
     }
