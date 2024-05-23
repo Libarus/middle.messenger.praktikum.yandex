@@ -44,6 +44,10 @@ $question_bg: #E4FDF1;
     margin-top: 14px;
 }
 
+.p20 {
+    padding: 20px;
+}
+
 .hidden {
     display: none;
 }
@@ -64,8 +68,10 @@ $question_bg: #E4FDF1;
     }
 
     &-input-error {
+        font-family: $font-family;
         color: red;
         padding-top: 9px;
+        font-size: 10px;
     }
 
     &-text__input,
@@ -95,6 +101,10 @@ $question_bg: #E4FDF1;
         border-radius: 20px;
         border: 0;
         color: white;
+    }
+
+    &__link {
+        font-size: 11px;
     }
 
 }

@@ -26,6 +26,8 @@ class Block {
     _id: string = "";
     _setRender: boolean = false;
 
+    _plugins: any[] = [];
+
     /** JSDoc
      * @param {string} tagName
      * @param {Object} propsAndChildren
@@ -36,6 +38,8 @@ class Block {
         if (tagName == "") {
             throw new Error("The tag name is not specified");
         }
+
+        tagName = tagName.toLowerCase();
 
         const eventBus = new EventBus();
 
@@ -56,12 +60,6 @@ class Block {
 
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
-    }
-
-    /* GETTER */
-
-    get element(): HTMLElement {
-        return this._element;
     }
 
     /* PUBLIC */
@@ -93,16 +91,12 @@ class Block {
         }
     };
 
-    getContent(): HTMLElement {
-        return this._element;
-    }
-
     show() {
-        this.getContent().style.display = "block";
+        this.getContent.style.display = "block";
     }
 
     hide() {
-        this.getContent().style.display = "none";
+        this.getContent.style.display = "none";
     }
 
     compile(template: string, props: any) {
@@ -115,7 +109,11 @@ class Block {
         Object.entries(this._list).forEach(([key, items]: [key: string, items: any]) => {
             propsAndStubs[key] = "";
             Object.entries(items).forEach(([_, child]: [keyChild: string, child: any]) => {
-                propsAndStubs[key] += `<div data-id="__L_${child.Id}"></div>`;
+                if (child instanceof Block) {
+                    propsAndStubs[key] += `<div data-id="__L_${child.Id}"></div>`;
+                } else {
+                    propsAndStubs[key] += child;
+                }
             });
         });
 
@@ -125,17 +123,27 @@ class Block {
 
         Object.values(this._children).forEach((entry: any) => {
             const stub = fragment.content.querySelector(`[data-id="${entry.Id}"]`);
-            if (stub != null) stub.replaceWith(entry.getContent());
+            if (stub != null) stub.replaceWith(entry.getContent);
         });
 
         Object.entries(this._list).forEach(([_, items]: [key: string, items: any]) => {
             Object.entries(items).forEach(([_, child]: [keyChild: string, child: any]) => {
                 const stub = fragment.content.querySelector(`[data-id="__L_${child.Id}"]`);
-                if (stub != null) stub.replaceWith(child.getContent());
+                if (stub != null) stub.replaceWith(child.getContent);
             });
         });
 
         return fragment.content;
+    }
+
+    addPlugin(plugin: any) {
+        this._plugins.push(plugin);
+    }
+
+    /* GETTER */
+
+    get element(): HTMLElement {
+        return this._element;
     }
 
     get Id(): string {
@@ -144,6 +152,14 @@ class Block {
 
     get Props(): string {
         return this._props;
+    }
+
+    get getContent(): HTMLElement {
+        return this._element;
+    }
+
+    get tagName(): string {
+        return this._meta.tagName;
     }
 
     /* PRIVATE */
@@ -176,7 +192,7 @@ class Block {
             } else {
                 if (value instanceof Block) {
                     children[key] = value;
-                } else if (Array.isArray(value)) {
+                } else if (Array.isArray(value) && key.toLowerCase() != "validate") {
                     list[key] = value;
                 } else {
                     props[key] = value;
@@ -284,7 +300,6 @@ class Block {
     dispatchComponentDidMount(): void {}
 
     render(): HTMLElement {
-        console.info(this.Id);
         return document.createElement("template");
     } // Необходимо вернуть разметку
 }

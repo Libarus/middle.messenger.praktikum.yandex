@@ -1,5 +1,4 @@
-<div>
-
+export const template = `
     <div class="chats-upline"></div>
 
 
@@ -30,5 +29,4 @@
         </div>
 
     </div>
-
-</div>
+`;

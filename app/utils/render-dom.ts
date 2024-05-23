@@ -5,7 +5,7 @@ export function renderDom(selector: string, block: any) {
     }
 
     // Можно завязаться на реализации вашего класса Block
-    root.appendChild(block.getContent());
+    root.replaceWith(block.getContent);
 
     block.dispatchComponentDidMount();
 

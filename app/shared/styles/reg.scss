@@ -2,15 +2,20 @@
 
     &-box {
         width: 340px;
-        height: 655px;
+        min-height: 655px;
 
+        margin: 50px auto;
+        position: relative;
+
+
+        /*
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
-
         margin: auto;
+        */
 
         background: #FFFFFF;
         box-shadow: $shadow;

@@ -1,9 +1,9 @@
 import Block from "../../modules/block";
 import { template } from "./template";
 
-export default class Link extends Block {
-    constructor(props: any) {
-        super("a", props);
+export default class Universal extends Block {
+    constructor(tagName: string, props: any = {}) {
+        super(tagName, props);
     }
 
     render(): HTMLElement {
