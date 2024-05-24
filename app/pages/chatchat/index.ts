@@ -3,18 +3,13 @@ import { renderDom } from "../../utils/render-dom";
 import Universal from "../../components/universal";
 import HTTP from "../../modules/http";
 import ChatItem from "../../components/chat/chatitem";
+import ChatHeader from "../../components/chat/chatheader";
+import Form from "../../components/form";
+import Chat from "../../components/chat/chat";
+import { IChatItem } from "../../shared/interfaces/ichatitem";
+import { IMessages } from "../../shared/interfaces/imessages";
 
-interface IChatItem {
-    id: number;
-    name: string;
-    message: string;
-    self: boolean;
-    datetime: string;
-    unread: number;
-    avatar: string;
-}
-
-export default class ChatListPage {
+export default class ChatChatPage {
     searchBlock = new Universal("div", {
         children: [
             new Universal("input", { attrib: { type: "text", class: "search-block__input", placeholder: "Поиск" } }),
@@ -31,6 +26,58 @@ export default class ChatListPage {
     chats = new Universal("div", {
         children: new Universal("div", { children: "Loading chats ...", attrib: { class: "p20" } }),
         attrib: { class: "chats" },
+    });
+
+    message = new Universal("input", {
+        attrib: {
+            type: "text",
+            name: "message",
+            class: "content-chat-action-message__input",
+            value: "",
+            placeholder: "Сообщение",
+        },
+        validate: ["required"],
+    });
+
+    form = new Form({
+        children: new Universal("div", {
+            children: [
+                new Universal("div", {
+                    children: new Universal("div", {
+                        children: new Universal("img", { attrib: { src: "/skrepka.svg", alt: "Вложить объект" } }),
+                        attrib: { class: "content-chat-action-upload__button" },
+                    }),
+                    attrib: { class: "content-chat-action-upload" },
+                }),
+                new Universal("div", {
+                    children: this.message,
+                    attrib: { class: "content-chat-action-message" },
+                }),
+                new Universal("div", {
+                    children: new Universal("button", {
+                        children: new Universal("img", {
+                            attrib: { src: "/arrow.svg", class: "content-chat-action-send__image", alt: "Отправить сообщение" },
+                        }),
+                        attrib: { type: "submit", class: "content-chat-action-send__button" },
+                    }),
+                    attrib: { class: "content-chat-action-send" },
+                }),
+            ],
+            attrib: { class: "content-chat-action" },
+        }),
+        formElements: [this.message],
+        submit: (ev: any, valid: boolean, data: any = {}) => {
+            console.info(`Form is${valid ? "" : " NOT"} valid. Form data:`, data);
+            ev.preventDefault();
+        },
+        attrib: { id: "message_form_send" },
+    });
+
+    chat = new Chat({ attrib: { class: "content-chat-content" } });
+
+    content = new Universal("div", {
+        children: [new ChatHeader({ name: "Вадим" }), this.chat, this.form],
+        attrib: { class: "content-chat" },
     });
 
     main = new Universal("main", {
@@ -66,7 +113,7 @@ export default class ChatListPage {
                         attrib: { class: "header" },
                     }),
                     new Universal("div", {
-                        children: new Universal("div", { children: "chat list", attrib: { class: "content-text" } }),
+                        children: this.content,
                         attrib: { class: "content" },
                     }),
                 ],
@@ -85,19 +132,31 @@ export default class ChatListPage {
 
         setTimeout(() => {
             this._loadChatsData();
-        }, 3000);
+        }, 300);
     }
 
     _loadChatsData() {
         HTTP.get("/mockdata/chatlistdata.json")
             .then((x: any) => {
                 let data: IChatItem[] = JSON.parse(x.response);
-                this._updateChats(data);
+                data = data.map((item: IChatItem) => {
+                    item.selected = false;
+                    if (item.id == 4) item.selected = true;
+                    return item;
+                });
+                this._updateChatList(data);
+            })
+            .catch((err: any) => console.error(err));
+
+        HTTP.get("/mockdata/messages.json")
+            .then((x: any) => {
+                let data: IMessages[] = JSON.parse(x.response);
+                this._updateChat(data);
             })
             .catch((err: any) => console.error(err));
     }
 
-    _updateChats(items: IChatItem[]) {
+    _updateChatList(items: IChatItem[]) {
         console.info(items);
         const props: any = [];
         items.forEach((item: IChatItem) => {
@@ -106,5 +165,9 @@ export default class ChatListPage {
         });
 
         this.chats.setProps({ children: props });
+    }
+
+    _updateChat(data: IMessages[]) {
+        this.chat.update(data);
     }
 }

@@ -19,7 +19,7 @@ export const template = `
                 </div>
                 <div class="chats-item-block-message">
                     <div class="chats-item-block-message__text">
-                        {{#if self}}<span class="chats-item-block-message__self">{{self}}:</span>{{/if}}
+                        {{#if self}}<span class="chats-item-block-message__self">Вы:</span>{{/if}}
                         {{message}}
                     </div>
                     <div class="chats-item-block-message__unread {{#unless unread}}hidden{{/unless}}">{{unread}}</div>

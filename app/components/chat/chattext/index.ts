@@ -1,7 +1,7 @@
-import Block from "../../modules/block";
+import Block from "../../../modules/block";
 import { template } from "./template";
 
-export default class ChatItem extends Block {
+export default class ChatText extends Block {
     constructor(props: any = {}) {
         super("div", props);
     }

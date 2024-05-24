@@ -5,7 +5,8 @@
 //const moduleName = "password"; // Редактирование пароля
 //const moduleName = "error500"; // Ошибка 500
 //const moduleName = "error404"; // Ошибка 404
-const moduleName = "chatlist"; // Список чатов
+//const moduleName = "chatlist"; // Список чатов
+const moduleName = "chatchat"; // Список чатов + чат
 const moduleLink = `../../pages/${moduleName}`;
 import(moduleLink).then((page: any): void => {
     new page.default("#app");

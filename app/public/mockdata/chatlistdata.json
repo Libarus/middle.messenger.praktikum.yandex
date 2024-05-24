@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "name": "Андрей",
         "message": "Изображение",
         "self": false,
@@ -8,6 +9,7 @@
         "avatar": ""
     },
     {
+        "id": 2,
         "name": "Киноклуб",
         "message": "стикер",
         "self": true,
@@ -16,6 +18,7 @@
         "avatar": ""
     },
     {
+        "id": 3,
         "name": "Илья",
         "message": "Друзья, у меня для вас особенный выпуск новостей! Как говориться вот так!",
         "self": false,
@@ -24,6 +27,7 @@
         "avatar": ""
     },
     {
+        "id": 4,
         "name": "Вадим",
         "message": "Круто!",
         "self": true,
@@ -32,6 +36,7 @@
         "avatar": ""
     },
     {
+        "id": 5,
         "name": "тет-а-теты",
         "message": "И Human Interface Guidelines и Material Design рекомендуют...",
         "self": false,
@@ -40,6 +45,7 @@
         "avatar": ""
     },
     {
+        "id": 6,
         "name": "1, 2, 3",
         "message": "Миллионы россиян ежедневно проводят десятки часов свое...",
         "self": false,
@@ -48,6 +54,7 @@
         "avatar": ""
     },
     {
+        "id": 7,
         "name": "Design Destroyer",
         "message": "В 2008 году художник Jon Rafman  начал собирать...",
         "self": false,
@@ -56,6 +63,7 @@
         "avatar": ""
     },
     {
+        "id": 8,
         "name": "Day.",
         "message": "Так увлёкся работой по курсу, что совсем забыл его анонсир...",
         "self": false,
@@ -64,6 +72,7 @@
         "avatar": ""
     },
     {
+        "id": 9,
         "name": "Стас Рогозин",
         "message": "Можно или сегодня или завтра вечером.",
         "self": false,

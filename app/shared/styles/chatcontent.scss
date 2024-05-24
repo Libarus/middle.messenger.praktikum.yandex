@@ -88,9 +88,9 @@
                 padding: 20px;
             }
 
-            &-answer{
-                
-                &__text {
+            &-answer {
+
+                &-text {
                     width: 50%;
                     box-sizing: border-box;
                     background-color: $silverbg-color;
@@ -105,7 +105,7 @@
                     font-size: 9px;
                     text-align: right;
                 }
-                
+
                 &-image {
 
                     box-sizing: border-box;
@@ -116,7 +116,7 @@
                         max-width: 100%;
                         float: right;
                     }
-                    
+
                     &__time {
                         font-family: $font-family;
                         color: white;
@@ -132,8 +132,13 @@
                         margin-right: 5px;
                     }
 
+
+
                 }
 
+                &__image {
+                    display: none;
+                }
             }
 
             &-question {
@@ -168,7 +173,7 @@
 
         &-content::-webkit-scrollbar {
             width: 0px; // ширина scrollbar'a
-            background: transparent;// опционально
+            background: transparent; // опционально
         }
 
         &-action {
@@ -253,6 +258,8 @@
                     height: 28px;
                     text-align: center;
                     border-radius: 50px;
+                    border: 0;
+                    padding: 0;
                 }
 
                 &__image {
