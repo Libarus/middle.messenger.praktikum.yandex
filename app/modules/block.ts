@@ -291,10 +291,13 @@ class Block {
     /* ABSTRACT */
 
     // Методы могут переопределяться
+    // @ts-ignore
     componentDidMount(oldProps: any = null): void {}
 
+    // @ts-ignore
     componentDidUpdate(oldProps: any, newProps: any): boolean {
-        return true;
+        // TODO: Сделать корректное сравнение объектов
+        return oldProps != newProps;
     }
 
     dispatchComponentDidMount(): void {}

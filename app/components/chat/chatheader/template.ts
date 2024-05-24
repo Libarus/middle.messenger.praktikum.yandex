@@ -5,6 +5,6 @@ export const template = `
     </div>
 
     <div class="content-chat-header-menu">
-        <img src="/dotted.svg" alt="Меню чата">
+        <img src="/images/dotted.svg" alt="Меню чата">
     </div>
 `;

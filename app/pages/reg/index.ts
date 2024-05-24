@@ -120,7 +120,7 @@ export default class RegPage {
     link = new Universal("a", {
         children: "Войти",
         attrib: {
-            href: "/login",
+            href: "/loginform.html",
             class: "form__link link text-center mt14",
         },
     });
@@ -173,6 +173,7 @@ export default class RegPage {
     });
 
     constructor(selector: string) {
+        document.title = "Регистрация";
         renderDom(selector, this.main);
     }
 }

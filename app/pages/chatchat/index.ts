@@ -14,7 +14,7 @@ export default class ChatChatPage {
         children: [
             new Universal("input", { attrib: { type: "text", class: "search-block__input", placeholder: "Поиск" } }),
             new Universal("div", {
-                children: new Universal("img", { attrib: { src: "/search_btn.svg", alt: "Поиск чата" } }),
+                children: new Universal("img", { attrib: { src: "/images/search_btn.svg", alt: "Поиск чата" } }),
                 attrib: { class: "search-block__button" },
             }),
         ],
@@ -24,7 +24,7 @@ export default class ChatChatPage {
     });
 
     chats = new Universal("div", {
-        children: new Universal("div", { children: "Loading chats ...", attrib: { class: "p20" } }),
+        children: new Universal("div", { children: "Loading chat list ...", attrib: { class: "p20" } }),
         attrib: { class: "chats" },
     });
 
@@ -44,7 +44,7 @@ export default class ChatChatPage {
             children: [
                 new Universal("div", {
                     children: new Universal("div", {
-                        children: new Universal("img", { attrib: { src: "/skrepka.svg", alt: "Вложить объект" } }),
+                        children: new Universal("img", { attrib: { src: "/images/skrepka.svg", alt: "Вложить объект" } }),
                         attrib: { class: "content-chat-action-upload__button" },
                     }),
                     attrib: { class: "content-chat-action-upload" },
@@ -56,7 +56,7 @@ export default class ChatChatPage {
                 new Universal("div", {
                     children: new Universal("button", {
                         children: new Universal("img", {
-                            attrib: { src: "/arrow.svg", class: "content-chat-action-send__image", alt: "Отправить сообщение" },
+                            attrib: { src: "/images/arrow.svg", class: "content-chat-action-send__image", alt: "Отправить сообщение" },
                         }),
                         attrib: { type: "submit", class: "content-chat-action-send__button" },
                     }),
@@ -73,7 +73,7 @@ export default class ChatChatPage {
         attrib: { id: "message_form_send" },
     });
 
-    chat = new Chat({ attrib: { class: "content-chat-content" } });
+    chat = new Chat({ children: "Loading messages ...", attrib: { class: "content-chat-content" } });
 
     content = new Universal("div", {
         children: [new ChatHeader({ name: "Вадим" }), this.chat, this.form],
@@ -100,7 +100,7 @@ export default class ChatChatPage {
                         children: [
                             new Universal("div", {
                                 children: new Universal("img", {
-                                    attrib: { src: "/cog.svg", class: "header-profile__icon", alt: "Профиль пользователя" },
+                                    attrib: { src: "/images/cog.svg", class: "header-profile__icon", alt: "Профиль пользователя" },
                                 }),
                                 attrib: { class: "header-profile" },
                             }),
@@ -128,11 +128,12 @@ export default class ChatChatPage {
     });
 
     constructor(selector: string) {
+        document.title = "Чат с пользователем - Вадим";
         renderDom(selector, this.main);
 
         setTimeout(() => {
             this._loadChatsData();
-        }, 300);
+        }, 2000);
     }
 
     _loadChatsData() {

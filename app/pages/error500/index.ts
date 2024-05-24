@@ -8,7 +8,7 @@ export default class Error500Page {
             children: [
                 new Universal("div", { children: "500", attrib: { class: "error-title" } }),
                 new Universal("div", { children: "Мы уже фиксим", attrib: { class: "error-description" } }),
-                new Universal("a", { children: "Назад к чатам", attrib: { class: "error-link", href: "" } }),
+                new Universal("a", { children: "Назад к чатам", attrib: { class: "error-link", href: "/chatchat.html" } }),
             ],
             attrib: {
                 class: "error-box",
@@ -17,6 +17,7 @@ export default class Error500Page {
     });
 
     constructor(selector: string) {
+        document.title = "500 ошибка";
         renderDom(selector, this.main);
     }
 }

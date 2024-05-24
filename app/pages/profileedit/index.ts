@@ -5,6 +5,7 @@ import ProfileItem from "../../components/profileitem";
 import Form from "../../components/form";
 
 export default class ProfileEditPage {
+    divEmail = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputEmail = new Universal("input", {
         attrib: {
             type: "text",
@@ -15,6 +16,7 @@ export default class ProfileEditPage {
         validate: ["required", "email"],
     });
 
+    divLogin = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputLogin = new Universal("input", {
         attrib: {
             type: "text",
@@ -25,6 +27,7 @@ export default class ProfileEditPage {
         validate: ["required"],
     });
 
+    divFirstName = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputFirstName = new Universal("input", {
         attrib: {
             type: "text",
@@ -35,6 +38,7 @@ export default class ProfileEditPage {
         validate: ["required"],
     });
 
+    divSecondName = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputSecondName = new Universal("input", {
         attrib: {
             type: "text",
@@ -45,6 +49,7 @@ export default class ProfileEditPage {
         validate: ["required"],
     });
 
+    divDisplayName = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputDisplayName = new Universal("input", {
         attrib: {
             type: "text",
@@ -55,6 +60,7 @@ export default class ProfileEditPage {
         validate: ["required"],
     });
 
+    divPhone = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputPhone = new Universal("input", {
         attrib: {
             type: "text",
@@ -66,21 +72,21 @@ export default class ProfileEditPage {
     });
 
     profileItems = [
-        new ProfileItem({ title: "Почта", children: this.inputEmail }),
-        new ProfileItem({ title: "Логин", children: this.inputLogin }),
-        new ProfileItem({ title: "Имя", children: this.inputFirstName }),
-        new ProfileItem({ title: "Фамилия", children: this.inputSecondName }),
-        new ProfileItem({ title: "Имя в чате", children: this.inputDisplayName }),
-        new ProfileItem({ title: "Телефон", children: this.inputPhone }),
+        new ProfileItem({ title: "Почта", children: [this.inputEmail, this.divEmail] }),
+        new ProfileItem({ title: "Логин", children: [this.inputLogin, this.divLogin] }),
+        new ProfileItem({ title: "Имя", children: [this.inputFirstName, this.divFirstName] }),
+        new ProfileItem({ title: "Фамилия", children: [this.inputSecondName, this.divSecondName] }),
+        new ProfileItem({ title: "Имя в чате", children: [this.inputDisplayName, this.divDisplayName] }),
+        new ProfileItem({ title: "Телефон", children: [this.inputPhone, this.divPhone] }),
     ];
 
     profileClose = new Universal("a", {
-        children: new Universal("img", { attrib: { src: "/close.svg", alt: "Закрыть редактирование данных пользователя" } }),
-        attrib: { class: "profile-close__button" },
+        children: new Universal("img", { attrib: { src: "/images/close.svg", alt: "Закрыть редактирование данных пользователя" } }),
+        attrib: { href: "/", class: "profile-close__button" },
     });
 
     profilePhoto = [
-        new Universal("img", { attrib: { src: "/defphoto.svg", class: "profile-photo__image", alt: "Аватар пользователя" } }),
+        new Universal("img", { attrib: { src: "/images/defphoto.svg", class: "profile-photo__image", alt: "Аватар пользователя" } }),
         new Universal("input", { attrib: { type: "hidden", name: "avatar", value: "" } }),
     ];
 
@@ -112,6 +118,7 @@ export default class ProfileEditPage {
     });
 
     constructor(selector: string) {
+        document.title = "Редактирование профиля";
         renderDom(selector, this.main);
     }
 }

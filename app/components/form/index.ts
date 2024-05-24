@@ -51,12 +51,18 @@ export default class Form extends Block {
         let result = true;
         if (formEl.Props["validate"]) {
             const em = formEl.element.parentElement.querySelector(".form-input-error");
-            if (em != null) em.textContent = "";
+            if (em != null) {
+                em.textContent = "";
+                em.classList.add("hidden");
+            }
             formEl.element.classList.remove("form-error__input");
             if (!Validator.validate(formEl.element, formEl.Props["validate"], this._formElements)) {
                 result = false;
                 formEl.element.classList.add("form-error__input");
-                if (em != null) em.textContent = Validator.message;
+                if (em != null) {
+                    em.textContent = Validator.message;
+                    em.classList.remove("hidden");
+                }
             }
         }
         return result;

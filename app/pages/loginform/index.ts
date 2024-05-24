@@ -40,7 +40,7 @@ export default class LoginFormPage {
     link = new Universal("a", {
         children: "Нет аккаунта?",
         attrib: {
-            href: "#",
+            href: "/reg.html",
             class: "form__link link text-center mt14",
         },
     });
@@ -80,6 +80,7 @@ export default class LoginFormPage {
     });
 
     constructor(selector: string) {
+        document.title = "Авторизация";
         renderDom(selector, this.main);
     }
 }

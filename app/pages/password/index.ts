@@ -5,6 +5,7 @@ import ProfileItem from "../../components/profileitem";
 import Form from "../../components/form";
 
 export default class PasswordPage {
+    divOldPassword = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputOldPassword = new Universal("input", {
         attrib: {
             type: "password",
@@ -15,6 +16,7 @@ export default class PasswordPage {
         validate: ["required"],
     });
 
+    divNewPassword = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputNewPassword = new Universal("input", {
         attrib: {
             type: "password",
@@ -25,6 +27,7 @@ export default class PasswordPage {
         validate: ["required", "password:newPassword_again"],
     });
 
+    divNewPasswordAgain = new Universal("div", { attrib: { class: "form-input-error hidden" } });
     inputNewPasswordAgain = new Universal("input", {
         attrib: {
             type: "password",
@@ -36,18 +39,18 @@ export default class PasswordPage {
     });
 
     profileItems = [
-        new ProfileItem({ title: "Старый пароль", children: this.inputOldPassword }),
-        new ProfileItem({ title: "Новый пароль", children: this.inputNewPassword }),
-        new ProfileItem({ title: "Повторите новый пароль", children: this.inputNewPasswordAgain }),
+        new ProfileItem({ title: "Старый пароль", children: [this.inputOldPassword, this.divOldPassword] }),
+        new ProfileItem({ title: "Новый пароль", children: [this.inputNewPassword, this.divNewPassword] }),
+        new ProfileItem({ title: "Повторите новый пароль", children: [this.inputNewPasswordAgain, this.divNewPasswordAgain] }),
     ];
 
     profileClose = new Universal("a", {
-        children: new Universal("img", { attrib: { src: "/close.svg", alt: "Закрыть редактирование данных пользователя" } }),
-        attrib: { class: "profile-close__button" },
+        children: new Universal("img", { attrib: { src: "/images/close.svg", alt: "Закрыть редактирование данных пользователя" } }),
+        attrib: { href: "/", class: "profile-close__button" },
     });
 
     profilePhoto = [
-        new Universal("img", { attrib: { src: "/defphoto.svg", class: "profile-photo__image", alt: "Аватар пользователя" } }),
+        new Universal("img", { attrib: { src: "/images/defphoto.svg", class: "profile-photo__image", alt: "Аватар пользователя" } }),
         new Universal("input", { attrib: { type: "hidden", name: "avatar", value: "" } }),
     ];
 
@@ -79,6 +82,7 @@ export default class PasswordPage {
     });
 
     constructor(selector: string) {
+        document.title = "Изменение пароля";
         renderDom(selector, this.main);
     }
 }

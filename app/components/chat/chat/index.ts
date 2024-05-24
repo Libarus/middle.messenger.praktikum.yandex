@@ -21,7 +21,7 @@ export default class Chat extends Block {
             item.messages.forEach((message: IMessage) => {
                 let msg: any = {};
                 const type = message.self ? "question" : "answer";
-                const status_image = "/galki.svg";
+                const status_image = "/images/galki.svg";
                 const status_alt = "Сообщение доставлено и прочитано";
                 switch (message.type) {
                     case "text":

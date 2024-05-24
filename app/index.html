@@ -4,24 +4,12 @@
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="./shared/assets/megachat.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MegaChat</title>
         <link rel="stylesheet" href="./shared/styles/style.scss" />
+        <title>MegaChat - Авторизация</title>
     </head>
 
-    <body>
-        <nav class="nav">
-            <h1>Навигация по свёрстанным страницам:</h1>
-            <ul class="nav-list">
-                <li class="nav-list-item"><a href="./login.html" class="nav-list-item__link">{{login_page}}</a></li>
-                <li class="nav-list-item"><a href="./reg.html" class="nav-list-item__link">{{reg_page}}</a></li>
-                <li class="nav-list-item"><a href="./chat_list.html" class="nav-list-item__link">{{chat_list_page}}</a></li>
-                <li class="nav-list-item"><a href="./chat_chat.html" class="nav-list-item__link">{{chat_chat_page}}</a></li>
-                <li class="nav-list-item"><a href="./profile.html" class="nav-list-item__link">{{profile_page}}</a></li>
-                <li class="nav-list-item"><a href="./profileedit.html" class="nav-list-item__link">{{profile_edit_page}}</a></li>
-                <li class="nav-list-item"><a href="./profilepassword.html" class="nav-list-item__link">{{profile_password_page}}</a></li>
-                <li class="nav-list-item"><a href="./error500.html" class="nav-list-item__link">{{error_500_page}}</a></li>
-                <li class="nav-list-item"><a href="./error404.html" class="nav-list-item__link">{{error_404_page}}</a></li>
-            </ul>
-        </nav>
+    <body class="body">
+        <div id="app"></div>
+        <script type="module" src="./shared/src/index.ts"></script>
     </body>
 </html>

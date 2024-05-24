@@ -9,9 +9,10 @@
     "scripts": {
         "dev": "vite",
         "start": "vite",
-        "build": "tsc && vite build --emptyOutDir",
+        "build": "tsc --noEmit && vite build --emptyOutDir",
         "preview": "vite preview",
-        "serve": "npm run build && node server.js"
+        "serve": "npm run build && node server.js",
+        "eslint": "eslint ."
     },
     "devDependencies": {
         "@types/node": "^20.12.7",
