@@ -1,138 +1,138 @@
-import { renderDom } from "../../utils/render-dom";
+import { renderDom } from '../../utils/render-dom';
 
-import Universal from "../../components/universal";
-import Form from "../../components/form";
+import Universal from '../../components/universal';
+import Form from '../../components/form';
 
 export default class RegPage {
     // LOGIN
-    divEmail = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputEmail = new Universal("input", {
+    divEmail = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputEmail = new Universal('input', {
         attrib: {
-            type: "text",
-            name: "email",
-            class: "form-text__input",
-            value: "",
+            type: 'text',
+            name: 'email',
+            class: 'form-text__input',
+            value: '',
         },
-        validate: ["required", "email"],
+        validate: ['required', 'email'],
     });
-    email = new Universal("label", {
-        children: ["Email", this.inputEmail, this.divEmail],
-        attrib: { class: "form__label" },
+    email = new Universal('label', {
+        children: ['Email', this.inputEmail, this.divEmail],
+        attrib: { class: 'form__label' },
     });
 
     // login
-    divLogin = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputLogin = new Universal("input", {
+    divLogin = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputLogin = new Universal('input', {
         attrib: {
-            type: "text",
-            name: "login",
-            class: "form-text__input",
-            value: "",
+            type: 'text',
+            name: 'login',
+            class: 'form-text__input',
+            value: '',
         },
-        validate: ["required"],
+        validate: ['required'],
     });
-    login = new Universal("label", {
-        children: ["Логин", this.inputLogin, this.divLogin],
-        attrib: { class: "form__label" },
+    login = new Universal('label', {
+        children: ['Логин', this.inputLogin, this.divLogin],
+        attrib: { class: 'form__label' },
     });
 
     // firstName
-    divFirstName = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputFirstName = new Universal("input", {
+    divFirstName = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputFirstName = new Universal('input', {
         attrib: {
-            type: "text",
-            name: "first_name",
-            class: "form-text__input",
-            value: "",
+            type: 'text',
+            name: 'first_name',
+            class: 'form-text__input',
+            value: '',
         },
-        validate: ["required"],
+        validate: ['required'],
     });
-    firstName = new Universal("label", {
-        children: ["Имя", this.inputFirstName, this.divFirstName],
-        attrib: { class: "form__label" },
+    firstName = new Universal('label', {
+        children: ['Имя', this.inputFirstName, this.divFirstName],
+        attrib: { class: 'form__label' },
     });
 
     // secondName
-    divSecondName = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputSecondName = new Universal("input", {
+    divSecondName = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputSecondName = new Universal('input', {
         attrib: {
-            type: "text",
-            name: "second_name",
-            class: "form-text__input",
-            value: "",
+            type: 'text',
+            name: 'second_name',
+            class: 'form-text__input',
+            value: '',
         },
-        validate: ["required"],
+        validate: ['required'],
     });
-    secondName = new Universal("label", {
-        children: ["Фамилия", this.inputSecondName, this.divSecondName],
-        attrib: { class: "form__label" },
+    secondName = new Universal('label', {
+        children: ['Фамилия', this.inputSecondName, this.divSecondName],
+        attrib: { class: 'form__label' },
     });
 
     // phone
-    divPhone = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputPhone = new Universal("input", {
+    divPhone = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputPhone = new Universal('input', {
         attrib: {
-            type: "text",
-            name: "phone",
-            class: "form-text__input",
-            value: "",
+            type: 'text',
+            name: 'phone',
+            class: 'form-text__input',
+            value: '',
         },
-        validate: ["required"],
+        validate: ['required'],
     });
-    phone = new Universal("label", {
-        children: ["Телефон", this.inputPhone, this.divPhone],
-        attrib: { class: "form__label" },
+    phone = new Universal('label', {
+        children: ['Телефон', this.inputPhone, this.divPhone],
+        attrib: { class: 'form__label' },
     });
 
     // password
-    divPassword = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputPassword = new Universal("input", {
+    divPassword = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputPassword = new Universal('input', {
         attrib: {
-            type: "password",
-            name: "password",
-            class: "form-password__input",
-            value: "",
+            type: 'password',
+            name: 'password',
+            class: 'form-password__input',
+            value: '',
         },
-        validate: ["required", "password:password_again"],
+        validate: ['required', 'password:password_again'],
     });
-    password = new Universal("label", {
-        children: ["Пароль", this.inputPassword, this.divPassword],
-        attrib: { class: "form__label" },
+    password = new Universal('label', {
+        children: ['Пароль', this.inputPassword, this.divPassword],
+        attrib: { class: 'form__label' },
     });
 
     // passwordAgain
-    divPasswordAgain = new Universal("div", { attrib: { class: "form-input-error" } });
-    inputPasswordAgain = new Universal("input", {
+    divPasswordAgain = new Universal('div', { attrib: { class: 'form-input-error' } });
+    inputPasswordAgain = new Universal('input', {
         attrib: {
-            type: "password",
-            name: "password_again",
-            class: "form-password__input",
-            value: "",
+            type: 'password',
+            name: 'password_again',
+            class: 'form-password__input',
+            value: '',
         },
-        validate: ["required", "password:password"],
+        validate: ['required', 'password:password'],
     });
-    passwordAgain = new Universal("label", {
-        children: ["Пароль", this.inputPasswordAgain, this.divPasswordAgain],
-        attrib: { class: "form__label" },
+    passwordAgain = new Universal('label', {
+        children: ['Пароль', this.inputPasswordAgain, this.divPasswordAgain],
+        attrib: { class: 'form__label' },
     });
 
-    button = new Universal("button", { children: "Зарегистрироваться", attrib: { class: "form-button" } });
-    link = new Universal("a", {
-        children: "Войти",
+    button = new Universal('button', { children: 'Зарегистрироваться', attrib: { class: 'form-button' } });
+    link = new Universal('a', {
+        children: 'Войти',
         attrib: {
-            href: "/loginform.html",
-            class: "form__link link text-center mt14",
+            href: '/loginform.html',
+            class: 'form__link link text-center mt14',
         },
     });
 
-    regBox = new Universal("div", {
+    regBox = new Universal('div', {
         children: [
-            new Universal("div", {
+            new Universal('div', {
                 children: [
-                    new Universal("div", {
-                        children: "Регистрация",
+                    new Universal('div', {
+                        children: 'Регистрация',
                         attrib: {
-                            class: "reg-title",
+                            class: 'reg-title',
                         },
                     }),
                     this.email,
@@ -144,16 +144,16 @@ export default class RegPage {
                     this.passwordAgain,
                 ],
             }),
-            new Universal("div", {
+            new Universal('div', {
                 children: [this.button, this.link],
             }),
         ],
         attrib: {
-            class: "reg-box",
+            class: 'reg-box',
         },
     });
 
-    main = new Universal("main", {
+    main = new Universal('main', {
         children: new Form({
             children: this.regBox,
             formElements: [
@@ -166,14 +166,14 @@ export default class RegPage {
                 this.inputPasswordAgain,
             ],
             submit: (ev: any, valid: boolean, data: any = {}) => {
-                console.info(`Form is ${valid ? "" : "NOT"} valid. Form data:`, data);
+                console.info(`Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
                 ev.preventDefault();
             },
         }),
     });
 
     constructor(selector: string) {
-        document.title = "Регистрация";
+        document.title = 'Регистрация';
         renderDom(selector, this.main);
     }
 }

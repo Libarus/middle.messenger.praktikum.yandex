@@ -1,9 +1,9 @@
-import Block from "../../../modules/block";
-import { template } from "./template";
+import Block from '../../../modules/block';
+import { template } from './template';
 
 export default class ChatItem extends Block {
     constructor(props: any = {}) {
-        super("div", props);
+        super('div', props);
     }
 
     render(): HTMLElement {

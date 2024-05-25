@@ -1,5 +1,5 @@
-import Block from "../../modules/block";
-import { template } from "./template";
+import Block from '../../modules/block.ts';
+import { template } from './template.ts';
 
 export default class Universal extends Block {
     constructor(tagName: string, props: any = {}) {

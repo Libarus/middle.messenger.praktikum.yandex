@@ -1,19 +1,19 @@
-import { EventBus } from "./event-bus";
-import { v4 as makeUUID } from "uuid";
-import Handlebars from "handlebars";
+import { EventBus } from './event-bus.ts';
+import { v4 as makeUUID } from 'uuid';
+import Handlebars from 'handlebars';
 
 // Нельзя создавать экземпляр данного класса
 class Block {
     static EVENTS = {
-        INIT: "init",
-        FLOW_CDM: "flow:component-did-mount",
-        FLOW_CDU: "flow:component-did-update",
-        FLOW_RENDER: "flow:render",
+        INIT: 'init',
+        FLOW_CDM: 'flow:component-did-mount',
+        FLOW_CDU: 'flow:component-did-update',
+        FLOW_RENDER: 'flow:render',
     };
 
     eventBus: any;
 
-    _element: HTMLElement = document.createElement("template"); // временная инициализация
+    _element: HTMLElement = document.createElement('template'); // временная инициализация
     _meta: any = null;
     _events: any = null;
 
@@ -23,7 +23,7 @@ class Block {
     _settings: any = {};
     _attrib: any = {};
 
-    _id: string = "";
+    _id: string = '';
     _setRender: boolean = false;
 
     _plugins: any[] = [];
@@ -34,9 +34,9 @@ class Block {
      *
      * @returns {void}
      */
-    constructor(tagName: string = "", propsAndChildren: any = {}) {
-        if (tagName == "") {
-            throw new Error("The tag name is not specified");
+    constructor(tagName: string = '', propsAndChildren: any = {}) {
+        if (tagName == '') {
+            throw new Error('The tag name is not specified');
         }
 
         tagName = tagName.toLowerCase();
@@ -92,11 +92,11 @@ class Block {
     };
 
     show() {
-        this.getContent.style.display = "block";
+        this.getContent.style.display = 'block';
     }
 
     hide() {
-        this.getContent.style.display = "none";
+        this.getContent.style.display = 'none';
     }
 
     compile(template: string, props: any) {
@@ -107,7 +107,7 @@ class Block {
         });
 
         Object.entries(this._list).forEach(([key, items]: [key: string, items: any]) => {
-            propsAndStubs[key] = "";
+            propsAndStubs[key] = '';
             Object.entries(items).forEach(([_, child]: [keyChild: string, child: any]) => {
                 if (child instanceof Block) {
                     propsAndStubs[key] += `<div data-id="__L_${child.Id}"></div>`;
@@ -117,7 +117,7 @@ class Block {
             });
         });
 
-        const fragment: any = this._createDocumentElement("template");
+        const fragment: any = this._createDocumentElement('template');
         const stringContent = Handlebars.compile(template)(propsAndStubs);
         fragment.innerHTML = stringContent;
 
@@ -185,14 +185,14 @@ class Block {
         let settings: any = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
-            if (key.toLowerCase() == "settings") {
+            if (key.toLowerCase() == 'settings') {
                 settings = value;
-            } else if (key.toLowerCase() == "attrib") {
+            } else if (key.toLowerCase() == 'attrib') {
                 attrib = value;
             } else {
                 if (value instanceof Block) {
                     children[key] = value;
-                } else if (Array.isArray(value) && key.toLowerCase() != "validate") {
+                } else if (Array.isArray(value) && key.toLowerCase() != 'validate') {
                     list[key] = value;
                 } else {
                     props[key] = value;
@@ -225,7 +225,7 @@ class Block {
         // Нужно компилировать не в строку (или делать это правильно),
         // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
         this._removeEvents();
-        this._element.innerHTML = "";
+        this._element.innerHTML = '';
         this._element.appendChild(block);
         this._addEvents();
     }
@@ -235,11 +235,11 @@ class Block {
 
         return new Proxy(props, {
             get(target: any, prop: string) {
-                if (prop.indexOf("_") === 0) {
+                if (prop.indexOf('_') === 0) {
                     return;
                 }
                 const value = target[prop];
-                return typeof value === "function" ? value.bind(target) : value;
+                return typeof value === 'function' ? value.bind(target) : value;
             },
 
             set(target: any, prop: string, value: any) {
@@ -251,7 +251,7 @@ class Block {
             },
 
             deleteProperty() {
-                throw new Error("Отказано в доступе");
+                throw new Error('Отказано в доступе');
             },
         });
     }
@@ -260,7 +260,7 @@ class Block {
         // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
         const element: HTMLElement = document.createElement(tagName);
         if (this._settings?.withInternalID) {
-            element.setAttribute("data-id", this.Id);
+            element.setAttribute('data-id', this.Id);
         }
         this._addAttributes();
         return element;
@@ -303,7 +303,7 @@ class Block {
     dispatchComponentDidMount(): void {}
 
     render(): HTMLElement {
-        return document.createElement("template");
+        return document.createElement('template');
     } // Необходимо вернуть разметку
 }
 

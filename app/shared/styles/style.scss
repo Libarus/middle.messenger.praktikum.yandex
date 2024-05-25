@@ -11,14 +11,14 @@ $silver_text: #999;
 $silver_text_bg: #525252;
 $question_bg: #e4fdf1;
 
-@import url("./nav.scss");
-@import url("./login.scss");
-@import url("./reg.scss");
-@import url("./header.scss");
-@import url("./chatlist.scss");
-@import url("./chatcontent.scss");
-@import url("./errors.scss");
-@import url("./profile.scss");
+@import url('./nav.scss');
+@import url('./login.scss');
+@import url('./reg.scss');
+@import url('./header.scss');
+@import url('./chatlist.scss');
+@import url('./chatcontent.scss');
+@import url('./errors.scss');
+@import url('./profile.scss');
 
 .body {
     padding: 0;
@@ -31,8 +31,8 @@ $question_bg: #e4fdf1;
 }
 
 .link {
-    font-family: $font-family;
-    color: $link-color;
+    font-family: global.$font-family;
+    color: global.$link-color;
     text-decoration: none;
 
     &:hover {
@@ -62,12 +62,12 @@ $question_bg: #e4fdf1;
         display: block;
         color: #999;
         font-size: 9px;
-        font-family: $font-family;
+        font-family: global.$font-family;
         margin-bottom: 16px;
     }
 
     &-input-error {
-        font-family: $font-family;
+        font-family: global.$font-family;
         color: red;
         padding-top: 9px;
         font-size: 10px;
@@ -78,10 +78,10 @@ $question_bg: #e4fdf1;
     &-password__input {
         width: 100%;
         display: block;
-        font-family: $font-family;
+        font-family: global.$font-family;
         height: 27px;
         border: 0;
-        border-bottom: 1px solid $primary-color;
+        border-bottom: 1px solid global.$primary-color;
 
         &:focus {
             outline-width: 0;
@@ -95,8 +95,8 @@ $question_bg: #e4fdf1;
     &-button {
         width: 100%;
         height: 37px;
-        font-family: $font-family;
-        background: $primary-color;
+        font-family: global.$font-family;
+        background: global.$primary-color;
         border-radius: 20px;
         border: 0;
         color: white;

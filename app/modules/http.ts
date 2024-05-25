@@ -1,9 +1,9 @@
 export default class HTTP {
     static METHODS = {
-        GET: "GET",
-        POST: "POST",
-        PUT: "PUT",
-        DELETE: "DELETE",
+        GET: 'GET',
+        POST: 'POST',
+        PUT: 'PUT',
+        DELETE: 'DELETE',
     };
 
     static get = (url: string, options = { timeout: 5000 }) => {
@@ -27,7 +27,7 @@ export default class HTTP {
         const { method, data, headers } = options;
 
         if (method === this.METHODS.GET && !!data) {
-            url += typeof data === "string" ? data : this._queryStringify(data);
+            url += typeof data === 'string' ? data : this._queryStringify(data);
             alert(url);
         }
 
@@ -53,25 +53,25 @@ export default class HTTP {
             if (method === this.METHODS.GET || !data) {
                 xhr.send();
             } else {
-                xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+                xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
                 xhr.send(JSON.stringify(data));
             }
         });
     };
 
     static _queryStringify(data: any) {
-        if (typeof data !== "object") {
-            throw new Error("Data должна быть объектом");
+        if (typeof data !== 'object') {
+            throw new Error('Data должна быть объектом');
         }
 
         return (
-            "?" +
+            '?' +
             Object.keys(data)
                 .map((key) => {
                     const value = data[key];
                     if (Array.isArray(value)) {
                         // Для массивов создаем строку с разделителем ','
-                        return key + "=" + value.join(",");
+                        return key + '=' + value.join(',');
                     }
                     //else if (typeof value === 'object' && value !== null) {
                     // // Для объектов рекурсивно вызываем функцию
@@ -79,10 +79,10 @@ export default class HTTP {
                     // }
                     else {
                         // Для остальных значений просто кодируем ключ и значение
-                        return encodeURIComponent(key) + "=" + encodeURIComponent(value);
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(value);
                     }
                 })
-                .join("&")
+                .join('&')
         );
     }
 }

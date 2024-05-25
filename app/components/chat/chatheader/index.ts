@@ -1,9 +1,9 @@
-import Block from "../../../modules/block";
-import { template } from "./template";
+import Block from '../../../modules/block.ts';
+import { template } from './template.ts';
 
 export default class ChatHeader extends Block {
     constructor(props: any = {}) {
-        super("div", Object.assign({ attrib: { class: "content-chat-header" } }, props));
+        super('div', Object.assign({ attrib: { class: 'content-chat-header' } }, props));
     }
 
     render(): HTMLElement {

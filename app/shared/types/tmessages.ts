@@ -1,4 +1,4 @@
-import { TMessage } from "./tmessage";
+import { TMessage } from './tmessage';
 
 export type TMessages = {
     id: number;

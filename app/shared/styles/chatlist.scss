@@ -1,7 +1,7 @@
 .chats {
     width: 100%;
     height: calc(100vh - 56px);
-    border-right: 1px solid $silverstroke-color;
+    border-right: 1px solid global.$silverstroke-color;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -9,7 +9,7 @@
     padding: 0;
 
     &-upline {
-        border-top: 1px solid $silverstroke-color;
+        border-top: 1px solid global.$silverstroke-color;
         margin: 2px 10px;
     }
 
@@ -18,7 +18,7 @@
         padding: 0 10px;
 
         &__selected {
-            background-color: $chat-selected;
+            background-color: global.$chat-selected;
         }
 
         &-block {
@@ -51,7 +51,7 @@
                 justify-content: space-between;
 
                 &__name {
-                    font-family: $font-family;
+                    font-family: global.$font-family;
                     font-weight: 600;
                     font-size: 13px;
                     line-height: 13px;
@@ -59,7 +59,7 @@
                 }
 
                 &__datetime {
-                    font-family: $font-family;
+                    font-family: global.$font-family;
                     font-size: 13px;
                     text-align: center;
                     color: #999;
@@ -74,7 +74,7 @@
 
                 &__text {
                     flex-grow: 1;
-                    font-family: $font-family;
+                    font-family: global.$font-family;
                     font-style: normal;
                     font-weight: 500;
                     font-size: 12px;
@@ -93,9 +93,9 @@
                 &__unread {
                     flex: 0 0 20px;
                     box-sizing: border-box;
-                    font-family: $font-family;
+                    font-family: global.$font-family;
                     font-size: 12px;
-                    background-color: $primary-color;
+                    background-color: global.$primary-color;
                     width: 20px;
                     height: 20px;
                     color: white;
