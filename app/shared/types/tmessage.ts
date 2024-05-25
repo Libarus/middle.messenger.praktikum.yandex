@@ -1,4 +1,4 @@
-export interface IMessage {
+export type TMessage = {
     id: number;
     self: boolean;
     date: string;
@@ -6,4 +6,4 @@ export interface IMessage {
     type: string;
     data: string;
     status: number;
-}
+};

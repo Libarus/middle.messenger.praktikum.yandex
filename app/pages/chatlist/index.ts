@@ -3,7 +3,7 @@ import { renderDom } from "../../utils/render-dom";
 import Universal from "../../components/universal";
 import HTTP from "../../modules/http";
 import ChatItem from "../../components/chat/chatitem";
-import { IChatItem } from "../../shared/interfaces/ichatitem";
+import { TChatItem } from "../../shared/types/tchatitem";
 
 export default class ChatListPage {
     searchBlock = new Universal("div", {
@@ -83,16 +83,16 @@ export default class ChatListPage {
     _loadChatsData() {
         HTTP.get("/mockdata/chatlistdata.json")
             .then((x: any) => {
-                let data: IChatItem[] = JSON.parse(x.response);
+                let data: TChatItem[] = JSON.parse(x.response);
                 this._updateChats(data);
             })
             .catch((err: any) => console.error(err));
     }
 
-    _updateChats(items: IChatItem[]) {
+    _updateChats(items: TChatItem[]) {
         console.info(items);
         const props: any = [];
-        items.forEach((item: IChatItem) => {
+        items.forEach((item: TChatItem) => {
             const prop = new ChatItem(item);
             props.push(prop);
         });

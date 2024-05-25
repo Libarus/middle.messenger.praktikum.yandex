@@ -1,8 +1,8 @@
-import Block from "../../modules/block";
+//import Block from "../../modules/block";
 import Validator from "../../modules/validator";
-import { template } from "./template";
+import Universal from "../universal";
 
-export default class Form extends Block {
+export default class Form extends Universal {
     _formElements: any[] = [];
     _isValidate: boolean = false;
 
@@ -15,11 +15,6 @@ export default class Form extends Block {
             });
         });
         this._prepareElements();
-    }
-
-    render(): HTMLElement {
-        super.render();
-        return this.compile(template, this.Props);
     }
 
     get formValid(): boolean {

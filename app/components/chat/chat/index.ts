@@ -2,8 +2,8 @@ import Block from "../../../modules/block";
 import Universal from "../../universal";
 import { template } from "./template";
 
-import { IMessages } from "../../../shared/interfaces/imessages";
-import { IMessage } from "../../../shared/interfaces/imessage";
+import { TMessages } from "../../../shared/types/tmessages";
+import { TMessage } from "../../../shared/types/tmessage";
 import ChatText from "../chattext";
 import ChatImage from "../chatimage";
 
@@ -12,13 +12,13 @@ export default class Chat extends Block {
         super("div", props);
     }
 
-    update(data: IMessages[]) {
+    update(data: TMessages[]) {
         console.info("update", data);
         const children: any = [];
-        data.forEach((item: IMessages) => {
+        data.forEach((item: TMessages) => {
             const datetime = new Universal("div", { children: item.datetime, attrib: { class: "content-chat-content-date" } });
             children.push(datetime);
-            item.messages.forEach((message: IMessage) => {
+            item.messages.forEach((message: TMessage) => {
                 let msg: any = {};
                 const type = message.self ? "question" : "answer";
                 const status_image = "/images/galki.svg";

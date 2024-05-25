@@ -6,8 +6,8 @@ import ChatItem from "../../components/chat/chatitem";
 import ChatHeader from "../../components/chat/chatheader";
 import Form from "../../components/form";
 import Chat from "../../components/chat/chat";
-import { IChatItem } from "../../shared/interfaces/ichatitem";
-import { IMessages } from "../../shared/interfaces/imessages";
+import { TChatItem } from "../../shared/types/tchatitem";
+import { TMessages } from "../../shared/types/tmessages";
 
 export default class ChatChatPage {
     searchBlock = new Universal("div", {
@@ -139,8 +139,8 @@ export default class ChatChatPage {
     _loadChatsData() {
         HTTP.get("/mockdata/chatlistdata.json")
             .then((x: any) => {
-                let data: IChatItem[] = JSON.parse(x.response);
-                data = data.map((item: IChatItem) => {
+                let data: TChatItem[] = JSON.parse(x.response);
+                data = data.map((item: TChatItem) => {
                     item.selected = false;
                     if (item.id == 4) item.selected = true;
                     return item;
@@ -151,16 +151,16 @@ export default class ChatChatPage {
 
         HTTP.get("/mockdata/messages.json")
             .then((x: any) => {
-                let data: IMessages[] = JSON.parse(x.response);
+                let data: TMessages[] = JSON.parse(x.response);
                 this._updateChat(data);
             })
             .catch((err: any) => console.error(err));
     }
 
-    _updateChatList(items: IChatItem[]) {
+    _updateChatList(items: TChatItem[]) {
         console.info(items);
         const props: any = [];
-        items.forEach((item: IChatItem) => {
+        items.forEach((item: TChatItem) => {
             const prop = new ChatItem(item);
             props.push(prop);
         });
@@ -168,7 +168,7 @@ export default class ChatChatPage {
         this.chats.setProps({ children: props });
     }
 
-    _updateChat(data: IMessages[]) {
+    _updateChat(data: TMessages[]) {
         this.chat.update(data);
     }
 }

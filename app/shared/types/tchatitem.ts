@@ -1,4 +1,4 @@
-export interface IChatItem {
+export type TChatItem = {
     id: number;
     name: string;
     message: string;
@@ -8,4 +8,4 @@ export interface IChatItem {
     avatar: string;
 
     selected?: boolean;
-}
+};

@@ -9,17 +9,6 @@ import ChatChatPage from "../../pages/chatchat";
 import Error500Page from "../../pages/error500";
 import Error404Page from "../../pages/error404";
 
-//const moduleName = "index"; // Форма авторизации
-//const moduleName = "loginform"; // Форма авторизации
-//const moduleName = "reg"; // Форма авторизации
-//const moduleName = "profile"; // Профиль
-//const moduleName = "profileedit"; // Редактирование профиля
-//const moduleName = "password"; // Редактирование пароля
-//const moduleName = "error500"; // Ошибка 500
-//const moduleName = "error404"; // Ошибка 404
-//const moduleName = "chatlist"; // Список чатов
-//const moduleName = "chatchat"; // Список чатов + чат
-
 var getLocation = function (href: string) {
     var l = document.createElement("a");
     l.href = href;
@@ -30,32 +19,32 @@ let moduleName = l.pathname.toLowerCase().replace("/", "").replace(".html", "").
 
 switch (moduleName) {
     case "":
-        new IndexPage("#app");
+        new IndexPage("#app"); // Начальная страница
         break;
     case "loginform":
-        new LoginFormPage("#app");
+        new LoginFormPage("#app"); // Форма авторизации
         break;
     case "reg":
-        new RegPage("#app");
+        new RegPage("#app"); // Форма регистрации
         break;
     case "profile":
-        new ProfilePage("#app");
+        new ProfilePage("#app"); // Профиль пользователя
         break;
     case "profileedit":
-        new ProfileEditPage("#app");
+        new ProfileEditPage("#app"); // Редактирование профиля
         break;
     case "password":
-        new PasswordPage("#app");
+        new PasswordPage("#app"); // Изменение пароля
         break;
     case "error500":
-        new Error500Page("#app");
+        new Error500Page("#app"); // Страница 500й ошибки
         break;
     case "chatlist":
-        new ChatListPage("#app");
+        new ChatListPage("#app"); // Страница со списком чатов
         break;
     case "chatchat":
-        new ChatChatPage("#app");
+        new ChatChatPage("#app"); // Страница с чатом
         break;
     default:
-        new Error404Page("#app");
+        new Error404Page("#app"); // Страница 404й ошибки
 }
