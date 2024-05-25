@@ -10,7 +10,7 @@
         position: relative;
         top: 50%;
         font-size: 12px;
-        color: #999999;
+        color: #999;
     }
 
     &-chat {
@@ -71,8 +71,8 @@
         &-content {
             flex-grow: 1;
             overflow: scroll;
-            -ms-overflow-style: none; // * IE 10+ * /
-            scrollbar-width: none; // Firefox
+            -ms-overflow-style: none;
+            scrollbar-width: none;
 
             &-date {
                 font-family: $font-family;
@@ -82,7 +82,7 @@
                 line-height: 12px;
 
                 text-align: center;
-                color: #999999;
+                color: #999;
                 padding: 20px;
             }
 
@@ -162,8 +162,8 @@
         }
 
         &-content::-webkit-scrollbar {
-            width: 0px; // ширина scrollbar'a
-            background: transparent; // опционально
+            width: 0px;
+            background: transparent;
         }
 
         &-action {
@@ -175,9 +175,6 @@
             &-upload {
                 width: 32px;
                 align-self: center;
-
-                &__button {
-                }
             }
 
             &-message {
@@ -204,34 +201,29 @@
                 }
 
                 &__input::-webkit-input-placeholder {
-                    color: #999999;
+                    color: #999;
                 }
 
                 &__input:-moz-placeholder {
-                    /* Mozilla Firefox 4 to 18 */
-                    color: #999999;
+                    color: #999;
                     opacity: 1;
                 }
 
                 &__input::-moz-placeholder {
-                    /* Mozilla Firefox 19+ */
-                    color: #999999;
+                    color: #999;
                     opacity: 1;
                 }
 
                 &__input:-ms-input-placeholder {
-                    /* Internet Explorer 10-11 */
-                    color: #999999;
+                    color: #999;
                 }
 
                 &__input::-ms-input-placeholder {
-                    /* Microsoft Edge */
-                    color: #999999;
+                    color: #999;
                 }
 
                 &__input::placeholder {
-                    /* Most modern browsers support this now. */
-                    color: #999999;
+                    color: #999;
                 }
             }
 

@@ -7,7 +7,7 @@ $silverbg-color: #fbfbfb;
 $silverstroke-color: #eaeaea;
 $chat-selected: #e4fdf1;
 $bg_input: #efefef;
-$silver_text: #999999;
+$silver_text: #999;
 $silver_text_bg: #525252;
 $question_bg: #e4fdf1;
 
@@ -60,7 +60,7 @@ $question_bg: #e4fdf1;
     &__label {
         width: 100%;
         display: block;
-        color: #999999;
+        color: #999;
         font-size: 9px;
         font-family: $font-family;
         margin-bottom: 16px;

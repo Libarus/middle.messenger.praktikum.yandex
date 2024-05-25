@@ -80,34 +80,29 @@
         }
 
         &__input::-webkit-input-placeholder {
-            color: #999999;
+            color: #999;
         }
 
         &__input:-moz-placeholder {
-            /* Mozilla Firefox 4 to 18 */
-            color: #999999;
+            color: #999;
             opacity: 1;
         }
 
         &__input::-moz-placeholder {
-            /* Mozilla Firefox 19+ */
-            color: #999999;
+            color: #999;
             opacity: 1;
         }
 
         &__input:-ms-input-placeholder {
-            /* Internet Explorer 10-11 */
-            color: #999999;
+            color: #999;
         }
 
         &__input::-ms-input-placeholder {
-            /* Microsoft Edge */
-            color: #999999;
+            color: #999;
         }
 
         &__input::placeholder {
-            /* Most modern browsers support this now. */
-            color: #999999;
+            color: #999;
         }
 
         &__button {

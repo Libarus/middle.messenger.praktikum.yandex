@@ -2,26 +2,13 @@
     &-box {
         width: 340px;
         min-height: 655px;
-
         margin: 50px auto;
         position: relative;
-
-        /*
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        */
-
-        background: #ffffff;
+        background: #fff;
         box-shadow: $shadow;
         border-radius: 12px;
         box-sizing: border-box;
-
         padding: 30px;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -30,7 +17,6 @@
     &-title {
         font-family: $font-family;
         text-align: center;
-
         font-style: normal;
         font-weight: 500;
         font-size: 20px;
