@@ -1,11 +1,11 @@
-import Block from "../../../modules/block";
-import Universal from "../../universal";
-import { template } from "./template";
+import Block from "../../../modules/block.ts";
+import Universal from "../../universal/index.ts";
+import { template } from "./template.ts";
 
-import { TMessages } from "../../../shared/types/tmessages";
-import { TMessage } from "../../../shared/types/tmessage";
-import ChatText from "../chattext";
-import ChatImage from "../chatimage";
+import { TMessages } from "../../../shared/types/tmessages.ts";
+import { TMessage } from "../../../shared/types/tmessage.ts";
+import ChatText from "../chattext/index.ts";
+import ChatImage from "../chatimage/index.ts";
 
 export default class Chat extends Block {
     constructor(props: any = {}) {
