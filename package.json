@@ -33,5 +33,11 @@
         "@types/handlebars": "^4.1.0",
         "express": "^4.19.2",
         "uuid": "^9.0.1"
+    },
+    "stylelint": {
+        "extends": "stylelint-config-standard",
+        "rules": {
+            "indentation": 4
+        }
     }
 }
