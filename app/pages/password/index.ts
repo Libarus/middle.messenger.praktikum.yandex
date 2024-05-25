@@ -1,8 +1,8 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
-import ProfileItem from '../../components/profileitem';
-import Form from '../../components/form';
+import Universal from '../../components/universal/index.ts';
+import ProfileItem from '../../components/profileitem/index.ts';
+import Form from '../../components/form/index.ts';
 
 export default class PasswordPage {
     divOldPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });

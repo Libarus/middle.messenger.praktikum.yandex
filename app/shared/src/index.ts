@@ -1,13 +1,13 @@
-import IndexPage from '../../pages/index';
-import LoginFormPage from '../../pages/loginform';
-import RegPage from '../../pages/reg';
-import ProfilePage from '../../pages/profile';
-import ProfileEditPage from '../../pages/profileedit';
-import PasswordPage from '../../pages/password';
-import ChatListPage from '../../pages/chatlist';
-import ChatChatPage from '../../pages/chatchat';
-import Error500Page from '../../pages/error500';
-import Error404Page from '../../pages/error404';
+import IndexPage from '../../pages/index/index.ts';
+import LoginFormPage from '../../pages/loginform/index.ts';
+import RegPage from '../../pages/reg/index.ts';
+import ProfilePage from '../../pages/profile/index.ts';
+import ProfileEditPage from '../../pages/profileedit/index.ts';
+import PasswordPage from '../../pages/password/index.ts';
+import ChatListPage from '../../pages/chatlist/index.ts';
+import ChatChatPage from '../../pages/chatchat/index.ts';
+import Error500Page from '../../pages/error500/index.ts';
+import Error404Page from '../../pages/error404/index.ts';
 
 var getLocation = function (href: string) {
     var l = document.createElement('a');

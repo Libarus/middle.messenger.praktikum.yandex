@@ -1,7 +1,7 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
-import { TNav } from '../../shared/types/tnav';
+import Universal from '../../components/universal/index.ts';
+import { TNav } from '../../shared/types/tnav.ts';
 
 const navList: TNav[] = [
     { link: 'loginform.html', title: 'Страница авторизации' },

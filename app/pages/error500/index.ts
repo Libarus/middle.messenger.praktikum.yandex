@@ -1,6 +1,6 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
+import Universal from '../../components/universal/index.ts';
 
 export default class Error500Page {
     main = new Universal('main', {

@@ -1,9 +1,9 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
-import HTTP from '../../modules/http';
-import ChatItem from '../../components/chat/chatitem';
-import { TChatItem } from '../../shared/types/tchatitem';
+import Universal from '../../components/universal/index.ts';
+import HTTP from '../../modules/http.ts';
+import ChatItem from '../../components/chat/chatitem/index.ts';
+import { TChatItem } from '../../shared/types/tchatitem.ts';
 
 export default class ChatListPage {
     searchBlock = new Universal('div', {

@@ -1,7 +1,7 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
-import ProfileItem from '../../components/profileitem';
+import Universal from '../../components/universal/index.ts';
+import ProfileItem from '../../components/profileitem/index.ts';
 
 export default class ProfilePage {
     profileItems = [

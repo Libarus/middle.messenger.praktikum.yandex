@@ -1,7 +1,7 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
-import Form from '../../components/form';
+import Universal from '../../components/universal/index.ts';
+import Form from '../../components/form/index.ts';
 
 export default class LoginFormPage {
     // LOGIN

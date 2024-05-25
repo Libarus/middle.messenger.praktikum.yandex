@@ -1,13 +1,13 @@
-import { renderDom } from '../../utils/render-dom';
+import { renderDom } from '../../utils/render-dom.ts';
 
-import Universal from '../../components/universal';
-import HTTP from '../../modules/http';
-import ChatItem from '../../components/chat/chatitem';
-import ChatHeader from '../../components/chat/chatheader';
-import Form from '../../components/form';
-import Chat from '../../components/chat/chat';
-import { TChatItem } from '../../shared/types/tchatitem';
-import { TMessages } from '../../shared/types/tmessages';
+import Universal from '../../components/universal/index.ts';
+import HTTP from '../../modules/http.ts';
+import ChatItem from '../../components/chat/chatitem/index.ts';
+import ChatHeader from '../../components/chat/chatheader/index.ts';
+import Form from '../../components/form/index.ts';
+import Chat from '../../components/chat/chat/index.ts';
+import { TChatItem } from '../../shared/types/tchatitem.ts';
+import { TMessages } from '../../shared/types/tmessages.ts';
 
 export default class ChatChatPage {
     searchBlock = new Universal('div', {
