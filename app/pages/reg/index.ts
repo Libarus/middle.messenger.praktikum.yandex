@@ -116,7 +116,10 @@ export default class RegPage {
         attrib: { class: 'form__label' },
     });
 
-    button = new Universal('button', { children: 'Зарегистрироваться', attrib: { class: 'form-button' } });
+    button = new Universal('button', {
+        children: 'Зарегистрироваться',
+        attrib: { class: 'form-button' },
+    });
     link = new Universal('a', {
         children: 'Войти',
         attrib: {
@@ -166,7 +169,7 @@ export default class RegPage {
                 this.inputPasswordAgain,
             ],
             submit: (ev: any, valid: boolean, data: any = {}) => {
-                console.info(`Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
+                console.log(`Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
                 ev.preventDefault();
             },
         }),

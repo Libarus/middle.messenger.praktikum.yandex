@@ -1,6 +1,6 @@
-import { EventBus } from './event-bus.ts';
 import { v4 as makeUUID } from 'uuid';
 import Handlebars from 'handlebars';
+import { EventBus } from './event-bus.ts';
 
 // Нельзя создавать экземпляр данного класса
 class Block {
@@ -13,7 +13,7 @@ class Block {
 
     eventBus: any;
 
-    _element: HTMLElement = document.createElement('template'); // временная инициализация
+    _element: any = document.createElement('template'); // временная инициализация
     _meta: any = null;
     _events: any = null;
 
@@ -99,7 +99,7 @@ class Block {
         this.getContent.style.display = 'none';
     }
 
-    compile(template: string, props: any) {
+    compile(template: string, props: any): any {
         const propsAndStubs = { ...props };
 
         Object.entries(this._children).forEach(([key, child]: [key: string, child: any]) => {
@@ -150,7 +150,7 @@ class Block {
         return this._id;
     }
 
-    get Props(): string {
+    get Props(): any {
         return this._props;
     }
 
@@ -302,7 +302,7 @@ class Block {
 
     dispatchComponentDidMount(): void {}
 
-    render(): HTMLElement {
+    render(): any {
         return document.createElement('template');
     } // Необходимо вернуть разметку
 }

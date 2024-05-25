@@ -1,12 +1,12 @@
 import Block from '../../../modules/block.ts';
-import { template } from './template.ts';
+import template from './template.ts';
 
 export default class ChatItem extends Block {
     constructor(props: any = {}) {
         super('div', props);
     }
 
-    render(): HTMLElement {
+    render(): any {
         super.render();
         return this.compile(template, this.Props);
     }

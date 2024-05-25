@@ -1,12 +1,13 @@
 import Block from '../../modules/block.ts';
-import { template } from './template.ts';
+import template from './template.ts';
 
 export default class ProfileItems extends Block {
     constructor(props: any = {}) {
-        super('div', Object.assign({ attrib: { class: 'profile-item' } }, props));
+        const initObj = { attrib: { class: 'profile-item' } };
+        super('div', { ...initObj, ...props });
     }
 
-    render(): HTMLElement {
+    render(): any {
         super.render();
         return this.compile(template, this.Props);
     }

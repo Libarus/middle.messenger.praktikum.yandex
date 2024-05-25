@@ -1,6 +1,7 @@
-export const template = `
+export default `
     <div class="content-chat-content-{{type}}-image">
-        <img src="{{src}}" class="content-chat-content-{{type}}-image__image" alt="Изображение в чате от {{time}}">
+        <img src="{{src}}" class="content-chat-content-{{type}}-image__image"
+             alt="Изображение в чате от {{time}}">
         <br>
         <div class="content-chat-content-{{type}}-image__time">
             {{time}}

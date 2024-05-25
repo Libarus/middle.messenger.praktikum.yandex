@@ -2,55 +2,55 @@ import Validator from '../../modules/validator.ts';
 import Universal from '../universal/index.ts';
 
 export default class Form extends Universal {
-    _formElements: any[] = [];
-    _isValidate: boolean = false;
+    private formElements: any[] = [];
+
+    private isValidate: boolean = false;
 
     constructor(props: any) {
         super('form', props);
-        this._formElements = props['formElements'];
-        this._formElements.forEach((formEl) => {
+        this.formElements = props.formElements;
+        this.formElements.forEach((formEl) => {
             formEl.element.addEventListener('blur', () => {
-                this._validateOne(formEl);
+                this.validateOne(formEl);
             });
         });
-        this._prepareElements();
+        this.prepareElements();
     }
 
     get formValid(): boolean {
-        return this._isValidate;
+        return this.isValidate;
     }
 
     get formInvalid(): boolean {
-        return !this._isValidate;
+        return !this.isValidate;
     }
 
-    _prepareElements() {
+    private prepareElements() {
         this.element.addEventListener('submit', (ev: any) => {
             const data: any = {};
 
-            const valid = this._validateAll();
+            const valid = this.validateAll();
             if (valid) {
-                this._formElements.forEach((formEl) => {
+                this.formElements.forEach((formEl) => {
                     data[formEl.element.name] = formEl.element.value;
                 });
             }
 
-            // @ts-ignore
-            this.Props['submit'](ev, valid, data);
+            this.Props.submit(ev, valid, data);
             ev.preventDefault();
         });
     }
 
-    _validateOne(formEl: any): boolean {
+    private validateOne(formEl: any): boolean {
         let result = true;
-        if (formEl.Props['validate']) {
+        if (formEl.Props.validate) {
             const em = formEl.element.parentElement.querySelector('.form-input-error');
             if (em != null) {
                 em.textContent = '';
                 em.classList.add('hidden');
             }
             formEl.element.classList.remove('form-error__input');
-            if (!Validator.validate(formEl.element, formEl.Props['validate'], this._formElements)) {
+            if (!Validator.validate(formEl.element, formEl.Props.validate, this.formElements)) {
                 result = false;
                 formEl.element.classList.add('form-error__input');
                 if (em != null) {
@@ -62,14 +62,13 @@ export default class Form extends Universal {
         return result;
     }
 
-    _validateAll(): boolean {
-        this._isValidate = true;
-        console.info(this._formElements);
-        this._formElements.forEach((formEl) => {
-            if (!this._validateOne(formEl)) {
-                this._isValidate = false;
+    private validateAll(): boolean {
+        this.isValidate = true;
+        this.formElements.forEach((formEl) => {
+            if (!this.validateOne(formEl)) {
+                this.isValidate = false;
             }
         });
-        return this._isValidate;
+        return this.isValidate;
     }
 }

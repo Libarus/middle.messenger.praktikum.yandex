@@ -1,4 +1,4 @@
-export const template = `
+export default `
     <div class="chats-upline"></div>
 
 
@@ -22,7 +22,8 @@ export const template = `
                         {{#if self}}<span class="chats-item-block-message__self">Вы:</span>{{/if}}
                         {{message}}
                     </div>
-                    <div class="chats-item-block-message__unread {{#unless unread}}hidden{{/unless}}">{{unread}}</div>
+                    <div class="chats-item-block-message__unread 
+                         {{#unless unread}}hidden{{/unless}}">{{unread}}</div>
                 </div>
             </div>
 

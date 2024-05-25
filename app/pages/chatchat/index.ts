@@ -12,9 +12,13 @@ import { TMessages } from '../../shared/types/tmessages.ts';
 export default class ChatChatPage {
     searchBlock = new Universal('div', {
         children: [
-            new Universal('input', { attrib: { type: 'text', class: 'search-block__input', placeholder: 'Поиск' } }),
+            new Universal('input', {
+                attrib: { type: 'text', class: 'search-block__input', placeholder: 'Поиск' },
+            }),
             new Universal('div', {
-                children: new Universal('img', { attrib: { src: '/images/search_btn.svg', alt: 'Поиск чата' } }),
+                children: new Universal('img', {
+                    attrib: { src: '/images/search_btn.svg', alt: 'Поиск чата' },
+                }),
                 attrib: { class: 'search-block__button' },
             }),
         ],
@@ -24,7 +28,10 @@ export default class ChatChatPage {
     });
 
     chats = new Universal('div', {
-        children: new Universal('div', { children: 'Loading chat list ...', attrib: { class: 'p20' } }),
+        children: new Universal('div', {
+            children: 'Loading chat list ...',
+            attrib: { class: 'p20' },
+        }),
         attrib: { class: 'chats' },
     });
 
@@ -44,7 +51,9 @@ export default class ChatChatPage {
             children: [
                 new Universal('div', {
                     children: new Universal('div', {
-                        children: new Universal('img', { attrib: { src: '/images/skrepka.svg', alt: 'Вложить объект' } }),
+                        children: new Universal('img', {
+                            attrib: { src: '/images/skrepka.svg', alt: 'Вложить объект' },
+                        }),
                         attrib: { class: 'content-chat-action-upload__button' },
                     }),
                     attrib: { class: 'content-chat-action-upload' },
@@ -56,7 +65,11 @@ export default class ChatChatPage {
                 new Universal('div', {
                     children: new Universal('button', {
                         children: new Universal('img', {
-                            attrib: { src: '/images/arrow.svg', class: 'content-chat-action-send__image', alt: 'Отправить сообщение' },
+                            attrib: {
+                                src: '/images/arrow.svg',
+                                class: 'content-chat-action-send__image',
+                                alt: 'Отправить сообщение',
+                            },
                         }),
                         attrib: { type: 'submit', class: 'content-chat-action-send__button' },
                     }),
@@ -67,13 +80,16 @@ export default class ChatChatPage {
         }),
         formElements: [this.message],
         submit: (ev: any, valid: boolean, data: any = {}) => {
-            console.info(`Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+            console.log(`Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
             ev.preventDefault();
         },
         attrib: { id: 'message_form_send' },
     });
 
-    chat = new Chat({ children: 'Loading messages ...', attrib: { class: 'content-chat-content' } });
+    chat = new Chat({
+        children: 'Loading messages ...',
+        attrib: { class: 'content-chat-content' },
+    });
 
     content = new Universal('div', {
         children: [new ChatHeader({ name: 'Вадим' }), this.chat, this.form],
@@ -100,15 +116,25 @@ export default class ChatChatPage {
                         children: [
                             new Universal('div', {
                                 children: new Universal('img', {
-                                    attrib: { src: '/images/cog.svg', class: 'header-profile__icon', alt: 'Профиль пользователя' },
+                                    attrib: {
+                                        src: '/images/cog.svg',
+                                        class: 'header-profile__icon',
+                                        alt: 'Профиль пользователя',
+                                    },
                                 }),
                                 attrib: { class: 'header-profile' },
                             }),
                             new Universal('div', {
-                                children: new Universal('div', { children: '&nbsp;', attrib: { class: 'header-photo__avatar' } }),
+                                children: new Universal('div', {
+                                    children: '&nbsp;',
+                                    attrib: { class: 'header-photo__avatar' },
+                                }),
                                 attrib: { class: 'header-photo' },
                             }),
-                            new Universal('div', { children: 'Илья', attrib: { class: 'header__name' } }),
+                            new Universal('div', {
+                                children: 'Илья',
+                                attrib: { class: 'header__name' },
+                            }),
                         ],
                         attrib: { class: 'header' },
                     }),
