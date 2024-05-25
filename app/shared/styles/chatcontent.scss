@@ -78,7 +78,6 @@
                 font-weight: 500;
                 font-size: 12px;
                 line-height: 12px;
-
                 text-align: center;
                 color: #999;
                 padding: 20px;
@@ -159,14 +158,12 @@
         }
 
         &-content::-webkit-scrollbar {
-            width: 0px;
             background: transparent;
         }
 
         &-action {
             flex: 0 0 55px;
             display: flex;
-
             border-top: 1px solid $silverstroke-color;
 
             &-upload {
@@ -203,9 +200,7 @@
             }
 
             &-send {
-                width: 32px;
                 align-self: center;
-
                 width: 28px;
                 height: 28px;
 

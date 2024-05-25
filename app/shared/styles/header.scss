@@ -36,6 +36,7 @@
 
     &-photo {
         padding: 5px 10px;
+
         &__avatar {
             background-color: $silverstroke-color;
             width: 47px;
@@ -46,6 +47,7 @@
 
     &-profile {
         align-self: center;
+
         &__icon {
             width: 20px;
             height: 20px;
@@ -77,28 +79,6 @@
 
         &__input:focus {
             outline: none;
-        }
-
-        &__input::-webkit-input-placeholder {
-            color: #999;
-        }
-
-        &__input:-moz-placeholder {
-            color: #999;
-            opacity: 1;
-        }
-
-        &__input::-moz-placeholder {
-            color: #999;
-            opacity: 1;
-        }
-
-        &__input:-ms-input-placeholder {
-            color: #999;
-        }
-
-        &__input::-ms-input-placeholder {
-            color: #999;
         }
 
         &__input::placeholder {

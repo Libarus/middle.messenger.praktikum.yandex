@@ -1,7 +1,7 @@
-$font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+$font-family: inter, system-ui, avenir, helvetica, arial, sans-serif;
 $primary-color: #068832;
 $button-radius: 8px;
-$shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+$shadow: 0 0 6px rgb(0 0 0 / 14%);
 $link-color: #3369f3;
 $silverbg-color: #fbfbfb;
 $silverstroke-color: #eaeaea;
@@ -11,14 +11,14 @@ $silver_text: #999;
 $silver_text_bg: #525252;
 $question_bg: #e4fdf1;
 
-@import "./nav.scss";
-@import "./login.scss";
-@import "./reg.scss";
-@import "./header.scss";
-@import "./chatlist.scss";
-@import "./chatcontent.scss";
-@import "./errors.scss";
-@import "./profile.scss";
+@import url("./nav.scss");
+@import url("./login.scss");
+@import url("./reg.scss");
+@import url("./header.scss");
+@import url("./chatlist.scss");
+@import url("./chatcontent.scss");
+@import url("./errors.scss");
+@import url("./profile.scss");
 
 .body {
     padding: 0;

@@ -37,7 +37,7 @@
             width: 32px;
             height: 32px;
             display: block;
-            margin: auto auto;
+            margin: auto;
         }
 
         &__offset {
@@ -114,11 +114,11 @@
         }
 
         &__padding {
-            padding: 59px 115px 0 115px;
+            padding: 59px 115px 0;
         }
 
         &-password__padding {
-            padding: 161px 115px 0 115px;
+            padding: 161px 115px 0;
         }
     }
 }
