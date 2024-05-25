@@ -6,5 +6,10 @@
         "max-len": [2, 100],
         "@typescript-eslint/no-unused-vars": 2,
         "indent": ["error", 4]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
