@@ -12,7 +12,7 @@
         "build": "tsc --noEmit && vite build --emptyOutDir",
         "preview": "vite preview",
         "serve": "npm run build && node server.js",
-        "eslint": "eslint ."
+        "eslint": "eslint . --fix"
     },
     "devDependencies": {
         "@types/node": "^20.12.7",
