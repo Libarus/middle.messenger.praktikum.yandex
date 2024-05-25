@@ -12,7 +12,8 @@
         "build": "tsc --noEmit && vite build --emptyOutDir",
         "preview": "vite preview",
         "serve": "npm run build && node server.js",
-        "eslint": "eslint . --fix"
+        "eslint": "eslint . --fix",
+        "stylelint": "npx stylelint \"**/*.scss\""
     },
     "devDependencies": {
         "@types/node": "^20.12.7",
@@ -36,8 +37,6 @@
     },
     "stylelint": {
         "extends": "stylelint-config-standard",
-        "rules": {
-            "indentation": 4
-        }
+        "rules": {}
     }
 }
