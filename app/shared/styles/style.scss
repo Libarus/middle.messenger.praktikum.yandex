@@ -2,14 +2,14 @@ $font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 $primary-color: #068832;
 $button-radius: 8px;
 $shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
-$link-color: #3369F3;
-$silverbg-color: #FBFBFB;
-$silverstroke-color: #EAEAEA;
-$chat-selected: #E4FDF1;
-$bg_input: #EFEFEF;
+$link-color: #3369f3;
+$silverbg-color: #fbfbfb;
+$silverstroke-color: #eaeaea;
+$chat-selected: #e4fdf1;
+$bg_input: #efefef;
 $silver_text: #999999;
 $silver_text_bg: #525252;
-$question_bg: #E4FDF1;
+$question_bg: #e4fdf1;
 
 @import "./nav.scss";
 @import "./login.scss";
@@ -57,7 +57,6 @@ $question_bg: #E4FDF1;
 }
 
 .form {
-
     &__label {
         width: 100%;
         display: block;
@@ -106,5 +105,4 @@ $question_bg: #E4FDF1;
     &__link {
         font-size: 11px;
     }
-
 }

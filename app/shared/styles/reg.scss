@@ -1,12 +1,10 @@
 .reg {
-
     &-box {
         width: 340px;
         min-height: 655px;
 
         margin: 50px auto;
         position: relative;
-
 
         /*
         position: absolute;
@@ -17,7 +15,7 @@
         margin: auto;
         */
 
-        background: #FFFFFF;
+        background: #ffffff;
         box-shadow: $shadow;
         border-radius: 12px;
         box-sizing: border-box;
@@ -37,8 +35,7 @@
         font-weight: 500;
         font-size: 20px;
         line-height: 20px;
-        color: #1E1E1E;
+        color: #1e1e1e;
         margin-bottom: 40px;
     }
-
 }

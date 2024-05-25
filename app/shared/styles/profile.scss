@@ -1,5 +1,4 @@
 .profile {
-
     &-box {
         box-sizing: border-box;
         width: 510px;
@@ -16,14 +15,13 @@
         font-weight: bold;
         font-size: 16px;
         line-height: 16px;
-        color: #1E1E1E;
+        color: #1e1e1e;
         margin-bottom: 40px;
 
         padding-top: 11px;
     }
 
     &-close {
-
         width: 24px;
         height: 24px;
         float: right;
@@ -59,11 +57,10 @@
         font-family: $font-family;
 
         &__title {
-
             font-style: normal;
             font-weight: 500;
             font-size: 13px;
-            color: #1E1E1E;
+            color: #1e1e1e;
         }
 
         &__value {
@@ -91,7 +88,6 @@
         &__input:focus {
             outline: none;
         }
-
     }
 
     &-item:last-child {
@@ -99,7 +95,6 @@
     }
 
     &-action {
-
         padding-top: 30px;
 
         &__link {
@@ -107,7 +102,7 @@
             font-size: 13px;
             display: block;
             padding: 11px 0;
-            color: #3369F3;
+            color: #3369f3;
             text-decoration: none;
             border-bottom: 1px solid $silverstroke-color;
         }
@@ -128,7 +123,5 @@
         &-password__padding {
             padding: 161px 115px 0 115px;
         }
-
     }
-
 }

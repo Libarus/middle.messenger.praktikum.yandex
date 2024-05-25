@@ -48,10 +48,9 @@
                     font-size: 13px;
                     line-height: 13px;
                     text-align: right;
-                    color: #1E1E1E;
+                    color: #1e1e1e;
                     align-self: center;
                 }
-
             }
 
             &-menu {
@@ -67,7 +66,6 @@
                     background-color: $silverbg-color;
                 }
             }
-
         }
 
         &-content {
@@ -89,7 +87,6 @@
             }
 
             &-answer {
-
                 &-text {
                     width: 50%;
                     box-sizing: border-box;
@@ -107,7 +104,6 @@
                 }
 
                 &-image {
-
                     box-sizing: border-box;
                     float: left;
                     margin-bottom: 10px;
@@ -131,9 +127,6 @@
                         margin-top: -25px;
                         margin-right: 5px;
                     }
-
-
-
                 }
 
                 &__image {
@@ -142,7 +135,6 @@
             }
 
             &-question {
-
                 &-text {
                     float: right;
                     box-sizing: border-box;
@@ -163,12 +155,10 @@
                     color: $silver_text;
                     font-size: 9px;
                     text-align: right;
-                    color: #3369F3;
+                    color: #3369f3;
                     margin-top: -10px;
                 }
-
             }
-
         }
 
         &-content::-webkit-scrollbar {
@@ -186,7 +176,8 @@
                 width: 32px;
                 align-self: center;
 
-                &__button {}
+                &__button {
+                }
             }
 
             &-message {
@@ -270,5 +261,4 @@
             }
         }
     }
-
 }

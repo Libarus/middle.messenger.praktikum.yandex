@@ -17,9 +17,7 @@ export class EventBus {
 
     off(event: string, callback: TCallback) {
         this._checkEvent(event);
-        this.listeners[event] = this.listeners[event].filter(
-            (cb: TCallback) => cb != callback
-        );
+        this.listeners[event] = this.listeners[event].filter((cb: TCallback) => cb != callback);
     }
 
     emit(event: string, ...args: any) {
