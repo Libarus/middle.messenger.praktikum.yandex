@@ -14,16 +14,23 @@ class Block {
     eventBus: any;
 
     _element: any = document.createElement('template'); // временная инициализация
+
     _meta: any = null;
+
     _events: any = null;
 
     _children: any = {};
+
     _list: any = {};
+
     _props: any = {};
+
     _settings: any = {};
+
     _attrib: any = {};
 
     _id: string = '';
+
     _setRender: boolean = false;
 
     _plugins: any[] = [];
@@ -35,7 +42,7 @@ class Block {
      * @returns {void}
      */
     constructor(tagName: string = '', propsAndChildren: any = {}) {
-        if (tagName == '') {
+        if (tagName === '') {
             throw new Error('The tag name is not specified');
         }
 
@@ -185,22 +192,26 @@ class Block {
         let settings: any = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
-            if (key.toLowerCase() == 'settings') {
+            if (key.toLowerCase() === 'settings') {
                 settings = value;
-            } else if (key.toLowerCase() == 'attrib') {
+            } else if (key.toLowerCase() === 'attrib') {
                 attrib = value;
+            } else if (value instanceof Block) {
+                children[key] = value;
+            } else if (Array.isArray(value) && key.toLowerCase() !== 'validate') {
+                list[key] = value;
             } else {
-                if (value instanceof Block) {
-                    children[key] = value;
-                } else if (Array.isArray(value) && key.toLowerCase() != 'validate') {
-                    list[key] = value;
-                } else {
-                    props[key] = value;
-                }
+                props[key] = value;
             }
         });
 
-        return { children, list, props, settings, attrib };
+        return {
+            children,
+            list,
+            props,
+            settings,
+            attrib,
+        };
     }
 
     _componentDidMount(oldProps: any): void {
@@ -208,14 +219,10 @@ class Block {
     }
 
     _componentDidUpdate(oldProps: any, newProps: any): void {
-        let isReRender: boolean = this.componentDidUpdate(oldProps, newProps);
+        const isReRender: boolean = this.componentDidUpdate(oldProps, newProps);
         if (isReRender) {
             this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
         }
-    }
-
-    _dispatchComponentDidMount(): void {
-        this.dispatchComponentDidMount();
     }
 
     _render() {
@@ -291,16 +298,15 @@ class Block {
     /* ABSTRACT */
 
     // Методы могут переопределяться
-    // @ts-ignore
-    componentDidMount(oldProps: any = null): void {}
-
-    // @ts-ignore
-    componentDidUpdate(oldProps: any, newProps: any): boolean {
-        // TODO: Сделать корректное сравнение объектов
-        return oldProps != newProps;
+    componentDidMount(oldProps: any = null): void {
+        const fivtiveProps = { ...oldProps };
+        fivtiveProps.fictive = null;
     }
 
-    dispatchComponentDidMount(): void {}
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+        // TODO: Сделать корректное сравнение объектов
+        return oldProps !== newProps;
+    }
 
     render(): any {
         return document.createElement('template');
