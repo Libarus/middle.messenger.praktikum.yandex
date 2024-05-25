@@ -36,6 +36,21 @@
 
 Главный компонент - "Universal" - универсальный копонент, из которого строятся все остальные компоненты. Компонент Form наследован от Universal, так как в нём реализовано дополнительное поведение для формы.
 
+### Ссылки на страницы
+
+Ссылки даны относительно корня сайта. Так же проект развёрнут на https://splendid-torte-395024.netlify.app/
+
+-   Основная страница с которой ведут ссылки на все внутренние страницы -- корень сайта -- https://splendid-torte-395024.netlify.app/
+-   Страница авторизации -- /loginform.html -- https://splendid-torte-395024.netlify.app//loginform.html
+-   Страница регистрации -- /reg.html -- https://splendid-torte-395024.netlify.app/reg.html
+-   Страница со списком чатов -- /chatlist.html -- https://splendid-torte-395024.netlify.app/chatlist.html
+-   Страница с чатом -- /chatchat.html -- https://splendid-torte-395024.netlify.app/chatchat.html
+-   Профиль -- /profile.html -- https://splendid-torte-395024.netlify.app/profile.html
+-   Профиль / изменение данных -- /profileedit.html -- https://splendid-torte-395024.netlify.app/profileedit.html
+-   Профиль / изменение пароля -- /password.html -- https://splendid-torte-395024.netlify.app/password.html
+-   Страница 500 -- /error500.html -- https://splendid-torte-395024.netlify.app/error500.html
+-   Страница 404 -- /error404.html -- https://splendid-torte-395024.netlify.app/error404.html
+
 ### Checklist
 
 -   [+] Подключён TypeScript.
@@ -100,19 +115,3 @@ https://www.figma.com/file/GypDDFtoxfnhJbDktDa0yN/MegaChat?type=design&node-id=0
 -   [+] Разбить проект на модули.
 -   [+] Настроить выкладку статических файлов в Netlify и выложить свёрстанные макеты в интернет.
 -   [+] Подготовить репозиторий, то есть описать проект в README.md.
-
-### Ссылки на страницы
-
-Ссылки даны относительно корня сайта. Так же проект развёрнут на https://splendid-torte-395024.netlify.app/
-
--   Основная страница с которой ведут ссылки на все внутренние страницы -- корень сайта -- https://splendid-torte-395024.netlify.app/
--   Страница авторизации -- /login.html -- https://splendid-torte-395024.netlify.app/login
--   Страница авторизации (с ошибкой) -- /login_error.html -- https://splendid-torte-395024.netlify.app/login_error
--   Страница регистрации -- /reg.html -- https://splendid-torte-395024.netlify.app/reg
--   Страница со списком чатов -- /chat_list.html -- https://splendid-torte-395024.netlify.app/chat_list
--   Страница с чатом -- /chat_chat.html -- https://splendid-torte-395024.netlify.app/chat_chat
--   Профиль -- /profile.html -- https://splendid-torte-395024.netlify.app/profile
--   Профиль / изменение данных -- /profileedit.html -- https://splendid-torte-395024.netlify.app/profileedit
--   Профиль / изменение пароля -- /profilepassword.html -- https://splendid-torte-395024.netlify.app/profilepassword
--   Страница 500 -- /error500.html -- https://splendid-torte-395024.netlify.app/error500
--   Страница 404 -- /error404.html -- https://splendid-torte-395024.netlify.app/error404
