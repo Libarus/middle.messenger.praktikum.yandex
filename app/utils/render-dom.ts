@@ -8,7 +8,5 @@ export default function renderDom(selector: string, block: any) {
     // Можно завязаться на реализации вашего класса Block
     root.replaceWith(block.getContent);
 
-    block.dispatchComponentDidMount();
-
     return root;
 }

@@ -9,7 +9,6 @@ class Block {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
         FLOW_CDU: 'flow:component-did-update',
-        FLOW_DCDM: 'flow:dispatch-component-did-mount',
         FLOW_RENDER: 'flow:render',
     };
 
@@ -176,7 +175,6 @@ class Block {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this.p_componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this.p_componentDidUpdate.bind(this));
-        eventBus.on(Block.EVENTS.FLOW_DCDM, this.p_dispatchComponentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this.p_render.bind(this));
     }
 
@@ -214,10 +212,6 @@ class Block {
             settings,
             attrib,
         };
-    }
-
-    private p_dispatchComponentDidMount(): void {
-        this.dispatchComponentDidMount();
     }
 
     private p_componentDidMount(oldProps: any): void {
@@ -311,8 +305,6 @@ class Block {
         // TODO: Сделать корректное сравнение объектов
         return oldProps !== newProps;
     }
-
-    dispatchComponentDidMount(): void {}
 
     render(): any {
         return Helpers.GetDocument().createElement('template');
