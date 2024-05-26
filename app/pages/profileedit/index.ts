@@ -1,11 +1,13 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
 
 import Universal from '../../components/universal/index.ts';
 import ProfileItem from '../../components/profileitem/index.ts';
 import Form from '../../components/form/index.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class ProfileEditPage {
     divEmail = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputEmail = new Universal('input', {
         attrib: {
             type: 'text',
@@ -17,6 +19,7 @@ export default class ProfileEditPage {
     });
 
     divLogin = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputLogin = new Universal('input', {
         attrib: {
             type: 'text',
@@ -28,6 +31,7 @@ export default class ProfileEditPage {
     });
 
     divFirstName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputFirstName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -39,6 +43,7 @@ export default class ProfileEditPage {
     });
 
     divSecondName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputSecondName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -50,6 +55,7 @@ export default class ProfileEditPage {
     });
 
     divDisplayName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputDisplayName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -61,6 +67,7 @@ export default class ProfileEditPage {
     });
 
     divPhone = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputPhone = new Universal('input', {
         attrib: {
             type: 'text',
@@ -126,7 +133,7 @@ export default class ProfileEditPage {
             this.inputPhone,
         ],
         submit: (ev: any, valid: boolean, data: any = {}) => {
-            console.log(`Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
+            Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
             ev.preventDefault();
         },
     });
@@ -151,7 +158,7 @@ export default class ProfileEditPage {
     });
 
     constructor(selector: string) {
-        document.title = 'Редактирование профиля';
+        Helpers.SetDocumentTitle('Редактирование профиля');
         renderDom(selector, this.main);
     }
 }

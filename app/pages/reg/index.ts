@@ -1,11 +1,13 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
 
 import Universal from '../../components/universal/index.ts';
 import Form from '../../components/form/index.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class RegPage {
     // LOGIN
     divEmail = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputEmail = new Universal('input', {
         attrib: {
             type: 'text',
@@ -15,6 +17,7 @@ export default class RegPage {
         },
         validate: ['required', 'email'],
     });
+
     email = new Universal('label', {
         children: ['Email', this.inputEmail, this.divEmail],
         attrib: { class: 'form__label' },
@@ -22,6 +25,7 @@ export default class RegPage {
 
     // login
     divLogin = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputLogin = new Universal('input', {
         attrib: {
             type: 'text',
@@ -31,6 +35,7 @@ export default class RegPage {
         },
         validate: ['required'],
     });
+
     login = new Universal('label', {
         children: ['Логин', this.inputLogin, this.divLogin],
         attrib: { class: 'form__label' },
@@ -38,6 +43,7 @@ export default class RegPage {
 
     // firstName
     divFirstName = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputFirstName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -47,6 +53,7 @@ export default class RegPage {
         },
         validate: ['required'],
     });
+
     firstName = new Universal('label', {
         children: ['Имя', this.inputFirstName, this.divFirstName],
         attrib: { class: 'form__label' },
@@ -54,6 +61,7 @@ export default class RegPage {
 
     // secondName
     divSecondName = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputSecondName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -63,6 +71,7 @@ export default class RegPage {
         },
         validate: ['required'],
     });
+
     secondName = new Universal('label', {
         children: ['Фамилия', this.inputSecondName, this.divSecondName],
         attrib: { class: 'form__label' },
@@ -70,6 +79,7 @@ export default class RegPage {
 
     // phone
     divPhone = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputPhone = new Universal('input', {
         attrib: {
             type: 'text',
@@ -79,6 +89,7 @@ export default class RegPage {
         },
         validate: ['required'],
     });
+
     phone = new Universal('label', {
         children: ['Телефон', this.inputPhone, this.divPhone],
         attrib: { class: 'form__label' },
@@ -86,6 +97,7 @@ export default class RegPage {
 
     // password
     divPassword = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputPassword = new Universal('input', {
         attrib: {
             type: 'password',
@@ -95,6 +107,7 @@ export default class RegPage {
         },
         validate: ['required', 'password:password_again'],
     });
+
     password = new Universal('label', {
         children: ['Пароль', this.inputPassword, this.divPassword],
         attrib: { class: 'form__label' },
@@ -102,6 +115,7 @@ export default class RegPage {
 
     // passwordAgain
     divPasswordAgain = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputPasswordAgain = new Universal('input', {
         attrib: {
             type: 'password',
@@ -111,6 +125,7 @@ export default class RegPage {
         },
         validate: ['required', 'password:password'],
     });
+
     passwordAgain = new Universal('label', {
         children: ['Пароль', this.inputPasswordAgain, this.divPasswordAgain],
         attrib: { class: 'form__label' },
@@ -120,6 +135,7 @@ export default class RegPage {
         children: 'Зарегистрироваться',
         attrib: { class: 'form-button' },
     });
+
     link = new Universal('a', {
         children: 'Войти',
         attrib: {
@@ -169,14 +185,14 @@ export default class RegPage {
                 this.inputPasswordAgain,
             ],
             submit: (ev: any, valid: boolean, data: any = {}) => {
-                console.log(`Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+                Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
                 ev.preventDefault();
             },
         }),
     });
 
     constructor(selector: string) {
-        document.title = 'Регистрация';
+        Helpers.SetDocumentTitle('Регистрация');
         renderDom(selector, this.main);
     }
 }

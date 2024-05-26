@@ -1,9 +1,10 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
 
 import Universal from '../../components/universal/index.ts';
 import HTTP from '../../modules/http.ts';
 import ChatItem from '../../components/chat/chatitem/index.ts';
 import { TChatItem } from '../../shared/types/tchatitem.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class ChatListPage {
     searchBlock = new Universal('div', {
@@ -92,24 +93,24 @@ export default class ChatListPage {
     });
 
     constructor(selector: string) {
-        document.title = 'Список чатов';
+        Helpers.SetDocumentTitle('Список чатов');
         renderDom(selector, this.main);
 
         setTimeout(() => {
-            this._loadChatsData();
+            this.p_loadChatsData();
         }, 2000);
     }
 
-    _loadChatsData() {
+    p_loadChatsData() {
         HTTP.get('/mockdata/chatlistdata.json')
             .then((x: any) => {
-                let data: TChatItem[] = JSON.parse(x.response);
-                this._updateChats(data);
+                const data: TChatItem[] = JSON.parse(x.response);
+                this.p_updateChats(data);
             })
-            .catch((err: any) => console.error(err));
+            .catch((err: any) => Helpers.Log('ERROR', err));
     }
 
-    _updateChats(items: TChatItem[]) {
+    p_updateChats(items: TChatItem[]) {
         const props: any = [];
         items.forEach((item: TChatItem) => {
             const prop = new ChatItem(item);

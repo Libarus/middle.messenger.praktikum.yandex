@@ -1,14 +1,21 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
 
 import Universal from '../../components/universal/index.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class Error404Page {
     main = new Universal('main', {
         children: new Universal('div', {
             children: [
                 new Universal('div', { children: '404', attrib: { class: 'error-title' } }),
-                new Universal('div', { children: 'Не туда попали', attrib: { class: 'error-description' } }),
-                new Universal('a', { children: 'Назад к чатам', attrib: { class: 'error-link', href: '/chatchat.html' } }),
+                new Universal('div', {
+                    children: 'Не туда попали',
+                    attrib: { class: 'error-description' },
+                }),
+                new Universal('a', {
+                    children: 'Назад к чатам',
+                    attrib: { class: 'error-link', href: '/chatchat.html' },
+                }),
             ],
             attrib: {
                 class: 'error-box',
@@ -17,7 +24,7 @@ export default class Error404Page {
     });
 
     constructor(selector: string) {
-        document.title = '404 ошибка';
+        Helpers.SetDocumentTitle('404 ошибка');
         renderDom(selector, this.main);
     }
 }

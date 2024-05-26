@@ -1,11 +1,13 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
 
 import Universal from '../../components/universal/index.ts';
 import Form from '../../components/form/index.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class LoginFormPage {
     // LOGIN
     divLogin = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputLogin = new Universal('input', {
         attrib: {
             type: 'text',
@@ -15,6 +17,7 @@ export default class LoginFormPage {
         },
         validate: ['required'],
     });
+
     login = new Universal('label', {
         children: ['Логин', this.inputLogin, this.divLogin],
         attrib: { class: 'form__label' },
@@ -22,6 +25,7 @@ export default class LoginFormPage {
 
     // PASSWORD
     divPassword = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputPassword = new Universal('input', {
         attrib: {
             type: 'password',
@@ -31,12 +35,17 @@ export default class LoginFormPage {
         },
         validate: ['required'],
     });
+
     password = new Universal('label', {
         children: ['Пароль', this.inputPassword, this.divPassword],
         attrib: { class: 'form__label' },
     });
 
-    button = new Universal('button', { children: 'Авторизоваться', attrib: { class: 'form-button' } });
+    button = new Universal('button', {
+        children: 'Авторизоваться',
+        attrib: { class: 'form-button' },
+    });
+
     link = new Universal('a', {
         children: 'Нет аккаунта?',
         attrib: {
@@ -73,14 +82,14 @@ export default class LoginFormPage {
             children: this.loginBox,
             formElements: [this.inputLogin, this.inputPassword],
             submit: (ev: any, valid: boolean, data: any = {}) => {
-                console.info(`Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
+                Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
                 ev.preventDefault();
             },
         }),
     });
 
     constructor(selector: string) {
-        document.title = 'Авторизация';
+        Helpers.SetDocumentTitle('Авторизация');
         renderDom(selector, this.main);
     }
 }

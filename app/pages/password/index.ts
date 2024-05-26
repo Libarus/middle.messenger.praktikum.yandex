@@ -1,11 +1,13 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
 
 import Universal from '../../components/universal/index.ts';
 import ProfileItem from '../../components/profileitem/index.ts';
 import Form from '../../components/form/index.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class PasswordPage {
     divOldPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputOldPassword = new Universal('input', {
         attrib: {
             type: 'password',
@@ -17,6 +19,7 @@ export default class PasswordPage {
     });
 
     divNewPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputNewPassword = new Universal('input', {
         attrib: {
             type: 'password',
@@ -28,6 +31,7 @@ export default class PasswordPage {
     });
 
     divNewPasswordAgain = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
+
     inputNewPasswordAgain = new Universal('input', {
         attrib: {
             type: 'password',
@@ -89,7 +93,7 @@ export default class PasswordPage {
         ],
         formElements: [this.inputOldPassword, this.inputNewPassword, this.inputNewPasswordAgain],
         submit: (ev: any, valid: boolean, data: any = {}) => {
-            console.log(`Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+            Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
             ev.preventDefault();
         },
     });
@@ -114,7 +118,7 @@ export default class PasswordPage {
     });
 
     constructor(selector: string) {
-        document.title = 'Изменение пароля';
+        Helpers.SetDocumentTitle('Изменение пароля');
         renderDom(selector, this.main);
     }
 }

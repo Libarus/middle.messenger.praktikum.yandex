@@ -26,20 +26,20 @@ export default class Chat extends Block {
                 const statusImage = '/images/galki.svg';
                 const statusAlt = 'Сообщение доставлено и прочитано';
                 switch (message.type) {
-                    case 'text':
-                        msg = new ChatText({
-                            text: message.data,
-                            time: message.time,
-                            type,
-                            statusImage,
-                            statusAlt,
-                        });
-                        break;
-                    case 'image':
-                        msg = new ChatImage({ src: message.data, time: message.time, type });
-                        break;
-                    default:
-                        msg = '';
+                case 'text':
+                    msg = new ChatText({
+                        text: message.data,
+                        time: message.time,
+                        type,
+                        statusImage,
+                        statusAlt,
+                    });
+                    break;
+                case 'image':
+                    msg = new ChatImage({ src: message.data, time: message.time, type });
+                    break;
+                default:
+                    msg = '';
                 }
                 children.push(msg);
             });

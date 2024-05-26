@@ -1,6 +1,6 @@
 type TCallback = (...args: any) => {};
 
-export class EventBus {
+export default class EventBus {
     listeners: Record<string, TCallback[]> = {};
 
     constructor() {
@@ -16,18 +16,18 @@ export class EventBus {
     }
 
     off(event: string, callback: TCallback) {
-        this._checkEvent(event);
-        this.listeners[event] = this.listeners[event].filter((cb: TCallback) => cb != callback);
+        this.p_checkEvent(event);
+        this.listeners[event] = this.listeners[event].filter((cb: TCallback) => cb !== callback);
     }
 
     emit(event: string, ...args: any) {
-        this._checkEvent(event);
+        this.p_checkEvent(event);
         this.listeners[event].forEach((callback: TCallback) => {
             callback(...args);
         });
     }
 
-    private _checkEvent(event: string) {
+    private p_checkEvent(event: string) {
         if (this.listeners[event]) return;
         throw new Error(`Нет события: ${event}`);
     }

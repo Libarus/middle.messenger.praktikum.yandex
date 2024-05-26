@@ -1,10 +1,11 @@
-const isValidateEmail = (email: string): boolean => {
+function isValidateEmail(email: string): boolean {
     return (
         email.match(
+            // eslint-disable-next-line
             /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         ) != null
     );
-};
+}
 
 export default class Validator {
     static message: string[] = [];
@@ -13,30 +14,35 @@ export default class Validator {
         this.message = [];
         let result: boolean = true;
         rules.forEach((rule: string) => {
-            const value = element.value;
-            const ruleData = rule.split(":");
+            const { value } = element;
+            const ruleData = rule.split(':');
             switch (ruleData[0].toLowerCase()) {
-                case "required":
-                    if (value.trim() == "") {
+                case 'required':
+                    if (value.trim() === '') {
                         result = false;
-                        this.message.push("Поле обязательно должно быть заполнено");
+                        this.message.push('Поле обязательно должно быть заполнено');
                     }
                     break;
-                case "password":
+                case 'password':
                     formElements.forEach((fe: any) => {
-                        if (ruleData[1] && fe.element.name.toLowerCase() == ruleData[1].toLowerCase()) {
-                            if (fe.element.value != value) {
+                        if (
+                            ruleData[1] &&
+                            fe.element.name.toLowerCase() === ruleData[1].toLowerCase()
+                        ) {
+                            if (fe.element.value !== value) {
                                 result = false;
-                                this.message.push("Пароли не совпадают");
+                                this.message.push('Пароли не совпадают');
                             }
                         }
                     });
                     break;
-                case "email":
+                case 'email':
                     if (!isValidateEmail(value)) {
                         result = false;
-                        this.message.push("Введённый email некорректен");
+                        this.message.push('Введённый email некорректен');
                     }
+                    break;
+                default:
                     break;
             }
         });

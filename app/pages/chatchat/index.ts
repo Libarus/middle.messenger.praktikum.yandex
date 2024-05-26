@@ -1,4 +1,6 @@
-import { renderDom } from '../../utils/render-dom.ts';
+import renderDom from '../../utils/render-dom.ts';
+import { TChatItem } from '../../shared/types/tchatitem.ts';
+import { TMessages } from '../../shared/types/tmessages.ts';
 
 import Universal from '../../components/universal/index.ts';
 import HTTP from '../../modules/http.ts';
@@ -6,8 +8,7 @@ import ChatItem from '../../components/chat/chatitem/index.ts';
 import ChatHeader from '../../components/chat/chatheader/index.ts';
 import Form from '../../components/form/index.ts';
 import Chat from '../../components/chat/chat/index.ts';
-import { TChatItem } from '../../shared/types/tchatitem.ts';
-import { TMessages } from '../../shared/types/tmessages.ts';
+import Helpers from '../../utils/helpers.ts';
 
 export default class ChatChatPage {
     searchBlock = new Universal('div', {
@@ -80,7 +81,7 @@ export default class ChatChatPage {
         }),
         formElements: [this.message],
         submit: (ev: any, valid: boolean, data: any = {}) => {
-            console.log(`Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+            Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
             ev.preventDefault();
         },
         attrib: { id: 'message_form_send' },
@@ -154,37 +155,38 @@ export default class ChatChatPage {
     });
 
     constructor(selector: string) {
-        document.title = 'Чат с пользователем - Вадим';
+        Helpers.SetDocumentTitle('Чат с пользователем - Вадим');
         renderDom(selector, this.main);
 
         setTimeout(() => {
-            this._loadChatsData();
+            this.p_loadChatsData();
         }, 2000);
     }
 
-    _loadChatsData() {
+    p_loadChatsData() {
         HTTP.get('/mockdata/chatlistdata.json')
             .then((x: any) => {
                 let data: TChatItem[] = JSON.parse(x.response);
-                data = data.map((item: TChatItem) => {
+                data = data.map((itemParam: TChatItem) => {
+                    const item: TChatItem = itemParam;
                     item.selected = false;
-                    if (item.id == 4) item.selected = true;
+                    if (item.id === 4) item.selected = true;
                     return item;
                 });
-                this._updateChatList(data);
+                this.p_updateChatList(data);
             })
-            .catch((err: any) => console.error(err));
+            .catch((err: any) => Helpers.Log('ERROR', err));
 
         HTTP.get('/mockdata/messages.json')
             .then((x: any) => {
-                let data: TMessages[] = JSON.parse(x.response);
-                this._updateChat(data);
+                const data: TMessages[] = JSON.parse(x.response);
+                this.p_updateChat(data);
             })
-            .catch((err: any) => console.error(err));
+            .catch((err: any) => Helpers.Log('ERROR', err));
     }
 
-    _updateChatList(items: TChatItem[]) {
-        console.info(items);
+    p_updateChatList(items: TChatItem[]) {
+        Helpers.Log('INFO', items);
         const props: any = [];
         items.forEach((item: TChatItem) => {
             const prop = new ChatItem(item);
@@ -194,7 +196,7 @@ export default class ChatChatPage {
         this.chats.setProps({ children: props });
     }
 
-    _updateChat(data: TMessages[]) {
+    p_updateChat(data: TMessages[]) {
         this.chat.update(data);
     }
 }

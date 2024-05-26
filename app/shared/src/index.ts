@@ -8,14 +8,15 @@ import ChatListPage from '../../pages/chatlist/index.ts';
 import ChatChatPage from '../../pages/chatchat/index.ts';
 import Error500Page from '../../pages/error500/index.ts';
 import Error404Page from '../../pages/error404/index.ts';
+import Helpers from '../../utils/helpers.ts';
 
-var getLocation = function (href: string) {
-    var l = document.createElement('a');
+function getLocation(href: string): any {
+    const l = Helpers.GetDocument().createElement('a');
     l.href = href;
     return l;
-};
-var l = getLocation(window.location.href);
-let moduleName = l.pathname.toLowerCase().replace('/', '').replace('.html', '').trim();
+}
+const l = getLocation(Helpers.GetWindow().location.href);
+const moduleName = l.pathname.toLowerCase().replace('/', '').replace('.html', '').trim();
 
 switch (moduleName) {
     case '':
