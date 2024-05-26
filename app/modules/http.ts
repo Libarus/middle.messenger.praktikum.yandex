@@ -7,6 +7,7 @@ export default class HTTP {
     };
 
     static get(url: string, options = { timeout: 5000 }): Promise<any> {
+        console.info('GET', url);
         return this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
     }
 
@@ -31,13 +32,15 @@ export default class HTTP {
             url += typeof data === 'string' ? data : this.p_queryStringify(data);
         }
 
+        console.info(url);
+
         return new Promise((resolve, reject) => {
             // eslint-disable-next-line no-undef
             const xhr = new XMLHttpRequest();
             xhr.open(method, url);
             xhr.timeout = timeout;
 
-            if (!headers) {
+            if (!headers && headers !== undefined) {
                 Object.keys(headers).forEach((key: string) => {
                     xhr.setRequestHeader(key, headers[key]);
                 });

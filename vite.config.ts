@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import sass from 'sass';
 import path from 'path';
-import handlebars from './vite-plugin-handlebars-precompile.ts';
 
 export default defineConfig({
     base: './',
@@ -19,5 +18,4 @@ export default defineConfig({
     server: {
         port: 3000,
     },
-    plugins: [handlebars()],
 });

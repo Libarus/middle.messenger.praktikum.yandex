@@ -214,6 +214,10 @@ class Block {
         };
     }
 
+    private p_dispatchComponentDidMount(): void {
+        this.dispatchComponentDidMount();
+    }
+
     private p_componentDidMount(oldProps: any): void {
         this.componentDidMount(oldProps);
     }
@@ -305,6 +309,8 @@ class Block {
         // TODO: Сделать корректное сравнение объектов
         return oldProps !== newProps;
     }
+
+    dispatchComponentDidMount(): void {}
 
     render(): any {
         return Helpers.GetDocument().createElement('template');
