@@ -7,7 +7,9 @@
 @import url('./errors.scss');
 @import url('./profile.scss');
 
+/* stylelint-disable */
 @use 'global' as global;
+/* stylelint-enable */
 
 .body {
     padding: 0;
