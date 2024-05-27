@@ -15,7 +15,7 @@ export default class PasswordPage {
             class: 'profile-item__input',
             value: 'pochta@yandex.ru',
         },
-        validate: ['required'],
+        validate: ['required', 'password'],
     });
 
     divNewPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -27,7 +27,7 @@ export default class PasswordPage {
             class: 'profile-item__input',
             value: 'ivanivanov',
         },
-        validate: ['required', 'password:newPassword_again'],
+        validate: ['required', 'passwordmatch:newPassword_again', 'password'],
     });
 
     divNewPasswordAgain = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -39,7 +39,7 @@ export default class PasswordPage {
             class: 'profile-item__input',
             value: 'Иван',
         },
-        validate: ['required', 'password:newPassword'],
+        validate: ['required', 'passwordmatch:newPassword', 'password'],
     });
 
     profileItems = [

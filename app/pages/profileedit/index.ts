@@ -27,7 +27,7 @@ export default class ProfileEditPage {
             class: 'profile-item__input',
             value: 'ivanivanov',
         },
-        validate: ['required'],
+        validate: ['required', 'login'],
     });
 
     divFirstName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -39,7 +39,7 @@ export default class ProfileEditPage {
             class: 'profile-item__input',
             value: 'Иван',
         },
-        validate: ['required'],
+        validate: ['required', 'capitalize', 'username'],
     });
 
     divSecondName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -51,7 +51,7 @@ export default class ProfileEditPage {
             class: 'profile-item__input',
             value: 'Иванов',
         },
-        validate: ['required'],
+        validate: ['required', 'capitalize', 'username'],
     });
 
     divDisplayName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -63,7 +63,7 @@ export default class ProfileEditPage {
             class: 'profile-item__input',
             value: 'Иван',
         },
-        validate: ['required'],
+        validate: ['required', 'username'],
     });
 
     divPhone = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -73,9 +73,9 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'phone',
             class: 'profile-item__input',
-            value: '+7 (909) 967 30 30',
+            value: '+79099673030',
         },
-        validate: ['required'],
+        validate: ['required', 'phone'],
     });
 
     profileItems = [

@@ -6,7 +6,7 @@ import Helpers from '../../utils/helpers.ts';
 
 export default class RegPage {
     // LOGIN
-    divEmail = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divEmail = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputEmail = new Universal('input', {
         attrib: {
@@ -24,7 +24,7 @@ export default class RegPage {
     });
 
     // login
-    divLogin = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divLogin = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputLogin = new Universal('input', {
         attrib: {
@@ -42,7 +42,7 @@ export default class RegPage {
     });
 
     // firstName
-    divFirstName = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divFirstName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputFirstName = new Universal('input', {
         attrib: {
@@ -60,7 +60,7 @@ export default class RegPage {
     });
 
     // secondName
-    divSecondName = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divSecondName = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputSecondName = new Universal('input', {
         attrib: {
@@ -78,7 +78,7 @@ export default class RegPage {
     });
 
     // phone
-    divPhone = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divPhone = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputPhone = new Universal('input', {
         attrib: {
@@ -96,7 +96,7 @@ export default class RegPage {
     });
 
     // password
-    divPassword = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputPassword = new Universal('input', {
         attrib: {
@@ -114,7 +114,7 @@ export default class RegPage {
     });
 
     // passwordAgain
-    divPasswordAgain = new Universal('div', { attrib: { class: 'form-input-error' } });
+    divPasswordAgain = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputPasswordAgain = new Universal('input', {
         attrib: {
