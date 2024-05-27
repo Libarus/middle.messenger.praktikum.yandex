@@ -9,11 +9,6 @@ export default class Form extends Universal {
     constructor(props: any) {
         super('form', props);
         this.formElements = props.formElements;
-        this.formElements.forEach((formEl) => {
-            formEl.element.addEventListener('blur', () => {
-                this.validateOne(formEl);
-            });
-        });
         this.prepareElements();
     }
 
@@ -26,6 +21,16 @@ export default class Form extends Universal {
     }
 
     private prepareElements() {
+        this.formElements.forEach((formEl) => {
+            const events = Object.assign({}, formEl.getEvents, {
+                blur: () => {
+                    this.validateOne(formEl);
+                },
+            });
+
+            formEl.setProps({ events });
+        });
+
         this.element.addEventListener('submit', (ev: any) => {
             const data: any = {};
 
@@ -54,7 +59,7 @@ export default class Form extends Universal {
                 result = false;
                 formEl.element.classList.add('form-error__input');
                 if (em != null) {
-                    em.textContent = Validator.message;
+                    em.innerHTML = Validator.message.join('<br>');
                     em.classList.remove('hidden');
                 }
             }

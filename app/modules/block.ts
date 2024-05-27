@@ -4,7 +4,7 @@ import EventBus from './event-bus.ts';
 import Helpers from '../utils/helpers.ts';
 
 // Нельзя создавать экземпляр данного класса
-class Block {
+class Block<TProps extends Record<string, any> = any> {
     static EVENTS = {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
@@ -17,23 +17,21 @@ class Block {
     // временная инициализация
     private p_element: any = Helpers.GetDocument().createElement('template');
 
-    private p_meta: any = null;
+    private p_tagName: string = '';
 
-    private p_children: any = {};
+    private p_children: TProps = {} as TProps;
 
-    private p_list: any = {};
+    private p_list: TProps = {} as TProps;
 
-    private p_props: any = {};
+    private p_props: TProps = {} as TProps;
 
-    private p_settings: any = {};
+    private p_settings: TProps = {} as TProps;
 
-    private p_attrib: any = {};
+    private p_attrib: TProps = {} as TProps;
 
     private p_id: string = '';
 
     private p_setRender: boolean = false;
-
-    private p_plugins: any[] = [];
 
     /** JSDoc
      * @param {string} tagName
@@ -41,19 +39,14 @@ class Block {
      *
      * @returns {void}
      */
-    constructor(tagNameParam: string = '', propsAndChildren: any = {}) {
+    constructor(tagNameParam: string = '', propsAndChildren: TProps = {} as TProps) {
         if (tagNameParam === '') {
             throw new Error('The tag name is not specified');
         }
 
-        const tagName = tagNameParam.toLowerCase();
+        this.p_tagName = tagNameParam.toLowerCase();
 
         const eventBus = new EventBus();
-
-        this.p_meta = {
-            tagName,
-            propsAndChildren,
-        };
 
         // Генерируем уникальный UUID V4
         this.p_id = makeUUID();
@@ -143,10 +136,6 @@ class Block {
         return fragment.content;
     }
 
-    addPlugin(plugin: any) {
-        this.p_plugins.push(plugin);
-    }
-
     /* GETTER */
 
     get element(): any {
@@ -166,7 +155,12 @@ class Block {
     }
 
     get tagName(): string {
-        return this.p_meta.tagName;
+        return this.p_tagName;
+    }
+
+    get getEvents(): TProps {
+        const { events = {} } = this.p_props;
+        return events;
     }
 
     /* PRIVATE */
@@ -179,8 +173,7 @@ class Block {
     }
 
     private p_createResources() {
-        const { tagName } = this.p_meta;
-        const element: any = this.p_createDocumentElement(tagName);
+        const element: any = this.p_createDocumentElement(this.p_tagName);
         this.p_element = element;
     }
 

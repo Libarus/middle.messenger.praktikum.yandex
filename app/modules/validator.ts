@@ -23,7 +23,7 @@ export default class Validator {
                         this.message.push('Поле обязательно должно быть заполнено');
                     }
                     break;
-                case 'password':
+                case 'passwordmatch':
                     formElements.forEach((fe: any) => {
                         if (
                             ruleData[1] &&
@@ -36,10 +36,69 @@ export default class Validator {
                         }
                     });
                     break;
+                case 'password':
+                    //  от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра.
+                    const regex1 = /^(?=.{8,40}$)(?=. * ?[A-Z])(?=. * ?[0-9]). * $/;
+                    if (!regex1.test(value)) {
+                        this.message.push('Некорректный пароль:');
+                        this.message.push('- длина от 8 до 40 символов');
+                        this.message.push('- обязательно хотя бы одна заглавная буква и цифра');
+                    }
+                    break;
                 case 'email':
                     if (!isValidateEmail(value)) {
                         result = false;
                         this.message.push('Введённый email некорректен');
+                    }
+                    break;
+                case 'capitalize':
+                    // Проверка на первую заглавную букву
+                    var regex3 = /^[A-Z]/;
+                    if (!regex3.test(value)) {
+                        this.message.push('Должна быть первая заглавная буква');
+                    }
+                    break;
+                case 'username':
+                    // Символы: только латиница или только кириллица, без пробелов и без цифр, без спецсимволов допустим только дефис
+                    var russianRegex = new RegExp(/^[а-я-]+$/, 'i');
+                    var latinRegex = new RegExp(/^[a-z-]+$/, 'i');
+                    if (!russianRegex.test(value) && !latinRegex.test(value)) {
+                        this.message.push(
+                            'Допустимы только русские или только латиница, без пробелов, без цифр, без спецсимволов, допустимы дефисы'
+                        );
+                    }
+                    break;
+                case 'rangelength':
+                    // длина введённого от минимума до максимума
+                    break;
+                case 'minlength':
+                    // не меньше
+                    break;
+                case 'maxlength':
+                    // не больше
+                    break;
+                case 'phone':
+                    // от 10 до 15 символов, состоит из цифр, может начинается с плюса.
+                    var regexPhone = /^[+]?\d{10,15}$/;
+                    if (!regexPhone.test(value)) {
+                        this.message.push(
+                            'Допустимо от 10 до 15 символов, состоит только из цифр, может начинается с плюса'
+                        );
+                    }
+                    break;
+                case 'login':
+                    // от 3 до 20 символов, только латиница, может содержать цифры, обязательно первый символ не цифра
+                    // без пробелов, без спецсимволов, допустимы дефис и нижнее подчёркивание
+                    const regex2 = /^[a-zA-Z][a-zA-Z0-9-_]{2,18}[a-zA-Z0-9]$/;
+                    if (!regex2.test(value)) {
+                        result = false;
+                        this.message.push('Некорректные данные:');
+                        this.message.push('- длина от 3 до 20 символов');
+                        this.message.push('- только линица');
+                        this.message.push('- может содержать цифры, но не первым символом');
+                        this.message.push('- без пробелов');
+                        this.message.push('- без без спецсимволов');
+                        this.message.push('- допустимо "_" и "-"');
                     }
                     break;
                 default:

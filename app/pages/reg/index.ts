@@ -33,7 +33,7 @@ export default class RegPage {
             class: 'form-text__input',
             value: '',
         },
-        validate: ['required'],
+        validate: ['required', 'login'],
     });
 
     login = new Universal('label', {
@@ -51,7 +51,7 @@ export default class RegPage {
             class: 'form-text__input',
             value: '',
         },
-        validate: ['required'],
+        validate: ['required', 'capitalize', 'username'],
     });
 
     firstName = new Universal('label', {
@@ -69,7 +69,7 @@ export default class RegPage {
             class: 'form-text__input',
             value: '',
         },
-        validate: ['required'],
+        validate: ['required', 'capitalize', 'username'],
     });
 
     secondName = new Universal('label', {
@@ -87,7 +87,7 @@ export default class RegPage {
             class: 'form-text__input',
             value: '',
         },
-        validate: ['required'],
+        validate: ['required', 'phone'],
     });
 
     phone = new Universal('label', {
@@ -105,7 +105,7 @@ export default class RegPage {
             class: 'form-password__input',
             value: '',
         },
-        validate: ['required', 'password:password_again'],
+        validate: ['required', 'passwordmatch:password_again', 'password'],
     });
 
     password = new Universal('label', {
@@ -123,7 +123,7 @@ export default class RegPage {
             class: 'form-password__input',
             value: '',
         },
-        validate: ['required', 'password:password'],
+        validate: ['required', 'passwordmatch:password', 'password'],
     });
 
     passwordAgain = new Universal('label', {

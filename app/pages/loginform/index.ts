@@ -15,7 +15,7 @@ export default class LoginFormPage {
             class: 'form-text__input',
             value: '',
         },
-        validate: ['required'],
+        validate: ['required', 'login'],
     });
 
     login = new Universal('label', {
