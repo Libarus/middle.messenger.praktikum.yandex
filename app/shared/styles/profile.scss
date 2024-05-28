@@ -17,7 +17,7 @@
         font-weight: bold;
         font-size: 16px;
         line-height: 16px;
-        color: #1e1e1e;
+        color: global.$color-name;
         margin-bottom: 40px;
         padding-top: 11px;
     }
@@ -31,7 +31,7 @@
     &-photo {
         width: 130px;
         height: 130px;
-        background-color: global.$bg_input;
+        background-color: global.$bg-input;
         margin: 0 auto;
         box-sizing: border-box;
         padding-top: 48px;
@@ -61,7 +61,7 @@
             font-style: normal;
             font-weight: 500;
             font-size: 13px;
-            color: #1e1e1e;
+            color: global.$color-name;
         }
 
         &__value {
@@ -70,7 +70,7 @@
             font-size: 13px;
             line-height: 13px;
             text-align: right;
-            color: #999;
+            color: global.$silver-text;
         }
 
         &__input {
@@ -82,7 +82,7 @@
             font-weight: 500;
             font-size: 13px;
             line-height: 13px;
-            color: #999;
+            color: global.$silver-text;
         }
 
         &__input:focus {
@@ -102,7 +102,7 @@
             font-size: 13px;
             display: block;
             padding: 11px 0;
-            color: #3369f3;
+            color: global.$link-color;
             text-decoration: none;
             border-bottom: 1px solid global.$silverstroke-color;
         }

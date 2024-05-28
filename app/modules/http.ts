@@ -23,24 +23,17 @@ export default class HTTP {
         UNKNOWN: 'UNKNOWN', // задел на будущие доработки
     };
 
-    static get: HTTPMethod = (
-        url: string,
-        options: TOptions = { timeout: this.defTimeout }
-    ): Promise<unknown> => {
-        return this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
-    };
+    static get: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+        this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
 
-    static post: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) => {
-        return this.p_request(url, { ...options, method: this.METHODS.POST }, options.timeout);
-    };
+    static post: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+        this.p_request(url, { ...options, method: this.METHODS.POST }, options.timeout);
 
-    static put: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) => {
-        return this.p_request(url, { ...options, method: this.METHODS.PUT }, options.timeout);
-    };
+    static put: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+        this.p_request(url, { ...options, method: this.METHODS.PUT }, options.timeout);
 
-    static delete: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) => {
-        return this.p_request(url, { ...options, method: this.METHODS.DELETE }, options.timeout);
-    };
+    static delete: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+        this.p_request(url, { ...options, method: this.METHODS.DELETE }, options.timeout);
 
     static p_request(purl: string, options: TRequest = {}, timeout = 5000) {
         const { method = '', data, headers } = options;

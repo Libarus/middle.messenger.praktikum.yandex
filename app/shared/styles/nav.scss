@@ -12,7 +12,7 @@
 
         &-item {
             &__link {
-                color: #3369f3;
+                color: global.$link-color;
                 text-decoration: none;
 
                 &::before {

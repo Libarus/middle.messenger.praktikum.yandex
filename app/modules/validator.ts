@@ -7,6 +7,27 @@ function isValidateEmail(email: string): boolean {
     );
 }
 
+// Описание и регулярные выражения для проверок:
+
+// -- password - от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра.
+const regexPassword = /^(?=.{8,40}$)(?=.*?[A-Z])(?=.*?[0-9]).*$/;
+
+// сapitalize - Проверка на первую заглавную букву
+const regexСapitalize = /^[А-ЯA-Z]/;
+
+// username - только латиница или только кириллица, без пробелов
+// и без цифр, без спецсимволов допустим только дефис
+const russianRegex = /^[а-я-]+$/i;
+const latinRegex = /^[a-z-]+$/i;
+
+// phone - от 10 до 15 символов, состоит из цифр, может начинается с плюса.
+const regexPhone = /^[+]?\d{10,15}$/;
+
+// login - от 3 до 20 символов, только латиница, может содержать цифры,
+// обязательно первый символ не цифра без пробелов, без спецсимволов,
+// допустимы дефис и нижнее подчёркивание
+const regexLogin = /^[a-zA-Z][a-zA-Z0-9-_]{2,18}[a-zA-Z0-9]$/;
+
 export default class Validator {
     static message: string[] = [];
 
@@ -37,9 +58,7 @@ export default class Validator {
                     });
                     break;
                 case 'password':
-                    //  от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра.
-                    const regex1 = /^(?=.{8,40}$)(?=.*?[A-Z])(?=.*?[0-9]).*$/;
-                    if (!regex1.test(value)) {
+                    if (!regexPassword.test(value)) {
                         result = false;
                         this.message.push('Некорректный пароль:');
                         this.message.push('- длина от 8 до 40 символов');
@@ -53,18 +72,12 @@ export default class Validator {
                     }
                     break;
                 case 'capitalize':
-                    // Проверка на первую заглавную букву
-                    var regex3 = /^[А-ЯA-Z]/;
-                    if (!regex3.test(value)) {
+                    if (!regexСapitalize.test(value)) {
                         result = false;
                         this.message.push('Должна быть первая заглавная буква');
                     }
                     break;
                 case 'username':
-                    // Символы: только латиница или только кириллица, без пробелов
-                    // и без цифр, без спецсимволов допустим только дефис
-                    var russianRegex = new RegExp(/^[а-я-]+$/, 'i');
-                    var latinRegex = new RegExp(/^[a-z-]+$/, 'i');
                     if (!russianRegex.test(value) && !latinRegex.test(value)) {
                         result = false;
                         this.message.push(
@@ -74,8 +87,6 @@ export default class Validator {
                     }
                     break;
                 case 'phone':
-                    // от 10 до 15 символов, состоит из цифр, может начинается с плюса.
-                    var regexPhone = /^[+]?\d{10,15}$/;
                     if (!regexPhone.test(value)) {
                         result = false;
                         this.message.push(
@@ -85,11 +96,7 @@ export default class Validator {
                     }
                     break;
                 case 'login':
-                    // от 3 до 20 символов, только латиница, может содержать цифры,
-                    // обязательно первый символ не цифра без пробелов, без спецсимволов,
-                    // допустимы дефис и нижнее подчёркивание
-                    const regex2 = /^[a-zA-Z][a-zA-Z0-9-_]{2,18}[a-zA-Z0-9]$/;
-                    if (!regex2.test(value)) {
+                    if (!regexLogin.test(value)) {
                         result = false;
                         this.message.push('Некорректные данные:');
                         this.message.push('- длина от 3 до 20 символов');

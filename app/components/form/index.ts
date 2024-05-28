@@ -22,11 +22,13 @@ export default class Form extends Universal {
 
     private prepareElements() {
         this.formElements.forEach((formEl) => {
-            const events = Object.assign({}, formEl.getEvents, {
+            const blurEvent = {
                 blur: () => {
                     this.validateOne(formEl);
                 },
-            });
+            };
+
+            const events = { ...formEl.getEvents, ...blurEvent };
 
             formEl.setProps({ events });
         });
