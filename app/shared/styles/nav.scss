@@ -1,18 +1,18 @@
-.nav {
+/* stylelint-disable */
+@use 'global';
+/* stylelint-enable */
 
-    font-family: $font-family;
+.nav {
+    font-family: global.$font-family;
 
     &-list {
-
         list-style: none;
         padding: 0 0 0 10px;
         margin: 0;
 
         &-item {
-
             &__link {
-
-                color: #3369F3;
+                color: global.$link-color;
                 text-decoration: none;
 
                 &::before {
@@ -23,11 +23,7 @@
                 &:hover {
                     text-decoration: underline;
                 }
-
             }
-
         }
-
     }
-
 }

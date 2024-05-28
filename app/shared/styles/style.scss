@@ -1,24 +1,15 @@
-$font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-$primary-color: #068832;
-$button-radius: 8px;
-$shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
-$link-color: #3369F3;
-$silverbg-color: #FBFBFB;
-$silverstroke-color: #EAEAEA;
-$chat-selected: #E4FDF1;
-$bg_input: #EFEFEF;
-$silver_text: #999999;
-$silver_text_bg: #525252;
-$question_bg: #E4FDF1;
+/* stylelint-disable */
+@use 'global';
 
-@import "./nav.scss";
-@import "./login.scss";
-@import "./reg.scss";
-@import "./header.scss";
-@import "./chatlist.scss";
-@import "./chatcontent.scss";
-@import "./errors.scss";
-@import "./profile.scss";
+@import url('./nav.scss');
+@import url('./login.scss');
+@import url('./reg.scss');
+@import url('./header.scss');
+@import url('./chatlist.scss');
+@import url('./chatcontent.scss');
+@import url('./errors.scss');
+@import url('./profile.scss');
+/* stylelint-enable */
 
 .body {
     padding: 0;
@@ -31,8 +22,8 @@ $question_bg: #E4FDF1;
 }
 
 .link {
-    font-family: $font-family;
-    color: $link-color;
+    font-family: global.$font-family;
+    color: global.$link-color;
     text-decoration: none;
 
     &:hover {
@@ -44,6 +35,10 @@ $question_bg: #E4FDF1;
     margin-top: 14px;
 }
 
+.p20 {
+    padding: 20px;
+}
+
 .hidden {
     display: none;
 }
@@ -53,19 +48,20 @@ $question_bg: #E4FDF1;
 }
 
 .form {
-
     &__label {
         width: 100%;
         display: block;
-        color: #999999;
+        color: global.$silver-text;
         font-size: 9px;
-        font-family: $font-family;
+        font-family: global.$font-family;
         margin-bottom: 16px;
     }
 
     &-input-error {
+        font-family: global.$font-family;
         color: red;
         padding-top: 9px;
+        font-size: 10px;
     }
 
     &-text__input,
@@ -73,10 +69,10 @@ $question_bg: #E4FDF1;
     &-password__input {
         width: 100%;
         display: block;
-        font-family: $font-family;
+        font-family: global.$font-family;
         height: 27px;
         border: 0;
-        border-bottom: 1px solid $primary-color;
+        border-bottom: 1px solid global.$primary-color;
 
         &:focus {
             outline-width: 0;
@@ -90,11 +86,14 @@ $question_bg: #E4FDF1;
     &-button {
         width: 100%;
         height: 37px;
-        font-family: $font-family;
-        background: $primary-color;
+        font-family: global.$font-family;
+        background: global.$primary-color;
         border-radius: 20px;
         border: 0;
         color: white;
     }
 
+    &__link {
+        font-size: 11px;
+    }
 }

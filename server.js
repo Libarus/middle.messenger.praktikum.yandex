@@ -6,7 +6,11 @@ import { fileURLToPath } from 'url';
 const app = express();
 const port = 3000;
 
-app.use(express.static(path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'dist'), { index: false }));
+app.use(
+    express.static(path.resolve(path.dirname(
+        fileURLToPath(import.meta.url),
+    ), 'dist'), { index: false }),
+);
 
 app.use('*', async (_, res) => {
     try {
@@ -18,5 +22,5 @@ app.use('*', async (_, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    // console.log(`http://localhost:${port}`);
 });

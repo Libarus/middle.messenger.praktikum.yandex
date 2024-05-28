@@ -1,39 +1,32 @@
-.login {
+/* stylelint-disable */
+@use 'global';
+/* stylelint-enable */
 
+.login {
     &-box {
         width: 340px;
         height: 450px;
-
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-
+        inset: 0;
         margin: auto;
-
-        background: #FFFFFF;
-        box-shadow: $shadow;
+        background: #fff;
+        box-shadow: global.$shadow;
         border-radius: 12px;
         box-sizing: border-box;
-
         padding: 30px;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 
     &-title {
-        font-family: $font-family;
+        font-family: global.$font-family;
         text-align: center;
-
         font-style: normal;
         font-weight: 500;
         font-size: 20px;
         line-height: 20px;
-        color: #1E1E1E;
+        color: global.$color-name;
         margin-bottom: 40px;
     }
-
 }

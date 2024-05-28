@@ -1,29 +1,28 @@
-.profile {
+/* stylelint-disable */
+@use 'global';
+/* stylelint-enable */
 
+.profile {
     &-box {
         box-sizing: border-box;
         width: 510px;
         margin: 0 auto;
-
         padding-top: 60px;
     }
 
     &-title {
-        font-family: $font-family;
+        font-family: global.$font-family;
         text-align: center;
-
         font-style: normal;
         font-weight: bold;
         font-size: 16px;
         line-height: 16px;
-        color: #1E1E1E;
+        color: global.$color-name;
         margin-bottom: 40px;
-
         padding-top: 11px;
     }
 
     &-close {
-
         width: 24px;
         height: 24px;
         float: right;
@@ -32,7 +31,7 @@
     &-photo {
         width: 130px;
         height: 130px;
-        background-color: $bg_input;
+        background-color: global.$bg-input;
         margin: 0 auto;
         box-sizing: border-box;
         padding-top: 48px;
@@ -42,7 +41,7 @@
             width: 32px;
             height: 32px;
             display: block;
-            margin: auto auto;
+            margin: auto;
         }
 
         &__offset {
@@ -53,17 +52,16 @@
     &-item {
         padding-top: 5px;
         padding-bottom: 5px;
-        border-bottom: 1px solid $silverstroke-color;
+        border-bottom: 1px solid global.$silverstroke-color;
         display: flex;
         justify-content: space-between;
-        font-family: $font-family;
+        font-family: global.$font-family;
 
         &__title {
-
             font-style: normal;
             font-weight: 500;
             font-size: 13px;
-            color: #1E1E1E;
+            color: global.$color-name;
         }
 
         &__value {
@@ -72,7 +70,7 @@
             font-size: 13px;
             line-height: 13px;
             text-align: right;
-            color: #999999;
+            color: global.$silver-text;
         }
 
         &__input {
@@ -84,14 +82,12 @@
             font-weight: 500;
             font-size: 13px;
             line-height: 13px;
-            text-align: right;
-            color: #999999;
+            color: global.$silver-text;
         }
 
         &__input:focus {
             outline: none;
         }
-
     }
 
     &-item:last-child {
@@ -99,21 +95,20 @@
     }
 
     &-action {
-
         padding-top: 30px;
 
         &__link {
-            font-family: $font-family;
+            font-family: global.$font-family;
             font-size: 13px;
             display: block;
             padding: 11px 0;
-            color: #3369F3;
+            color: global.$link-color;
             text-decoration: none;
-            border-bottom: 1px solid $silverstroke-color;
+            border-bottom: 1px solid global.$silverstroke-color;
         }
 
         &__exit {
-            font-family: $font-family;
+            font-family: global.$font-family;
             font-size: 13px;
             display: block;
             padding: 11px 0;
@@ -122,13 +117,11 @@
         }
 
         &__padding {
-            padding: 59px 115px 0 115px;
+            padding: 59px 115px 0;
         }
 
         &-password__padding {
-            padding: 161px 115px 0 115px;
+            padding: 161px 115px 0;
         }
-
     }
-
 }
