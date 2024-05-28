@@ -23,7 +23,10 @@ export default class HTTP {
         UNKNOWN: 'UNKNOWN', // задел на будущие доработки
     };
 
-    static get: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) => {
+    static get: HTTPMethod = (
+        url: string,
+        options: TOptions = { timeout: this.defTimeout }
+    ): Promise<unknown> => {
         return this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
     };
 
