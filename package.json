@@ -9,10 +9,10 @@
     "scripts": {
         "dev": "vite",
         "start": "vite",
-        "build": "tsc --noEmit && vite build --emptyOutDir",
+        "build": "tsc --noEmit && npm run eslint && npm run stylelint && vite build --emptyOutDir",
         "preview": "vite preview",
         "serve": "npm run build && node server.js",
-        "eslint": "eslint . --fix",
+        "eslint": "eslint .",
         "stylelint": "npx stylelint \"**/*.scss\""
     },
     "devDependencies": {
