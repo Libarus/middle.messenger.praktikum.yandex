@@ -1,10 +1,18 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
+import { TSignUpRequest } from '../../shared/types/user.ts';
+import AuthAPI from '../../modules/api/auth-api.ts';
+import Router from '../../modules/router.ts';
+import Modal from '../../components/modal/index.ts';
 
-export default class RegPage {
+const authApi = new AuthAPI();
+
+const rnd = Math.round(Math.random() * 1000) + 1000;
+console.info(rnd);
+
+export default class RegPage extends Block {
     // LOGIN
     divEmail = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
@@ -13,7 +21,7 @@ export default class RegPage {
             type: 'text',
             name: 'email',
             class: 'form-text__input',
-            value: '',
+            value: `aaa${rnd}@sss.dd`,
         },
         validate: ['required', 'email'],
     });
@@ -31,7 +39,7 @@ export default class RegPage {
             type: 'text',
             name: 'login',
             class: 'form-text__input',
-            value: '',
+            value: `usr${rnd}`,
         },
         validate: ['required', 'login'],
     });
@@ -49,7 +57,7 @@ export default class RegPage {
             type: 'text',
             name: 'first_name',
             class: 'form-text__input',
-            value: '',
+            value: 'Антон',
         },
         validate: ['required', 'capitalize', 'username'],
     });
@@ -67,7 +75,7 @@ export default class RegPage {
             type: 'text',
             name: 'second_name',
             class: 'form-text__input',
-            value: '',
+            value: 'Парарара',
         },
         validate: ['required', 'capitalize', 'username'],
     });
@@ -85,7 +93,7 @@ export default class RegPage {
             type: 'text',
             name: 'phone',
             class: 'form-text__input',
-            value: '',
+            value: `+7888555${rnd}`,
         },
         validate: ['required', 'phone'],
     });
@@ -103,7 +111,7 @@ export default class RegPage {
             type: 'password',
             name: 'password',
             class: 'form-password__input',
-            value: '',
+            value: '123QWEasd!@#',
         },
         validate: ['required', 'passwordmatch:password_again', 'password'],
     });
@@ -121,7 +129,7 @@ export default class RegPage {
             type: 'password',
             name: 'password_again',
             class: 'form-password__input',
-            value: '',
+            value: '123QWEasd!@#',
         },
         validate: ['required', 'passwordmatch:password', 'password'],
     });
@@ -136,10 +144,20 @@ export default class RegPage {
         attrib: { class: 'form-button' },
     });
 
+    waiter = new Universal('div', {
+        children: 'Ждите ...',
+        attrib: { class: 'waiter' },
+    });
+
+    errorMessage = new Universal('div', {
+        children: 'Error message',
+        attrib: { class: 'error-message' },
+    });
+
     link = new Universal('a', {
         children: 'Войти',
         attrib: {
-            href: '/loginform.html',
+            href: '/',
             class: 'form__link link text-center mt14',
         },
     });
@@ -164,7 +182,7 @@ export default class RegPage {
                 ],
             }),
             new Universal('div', {
-                children: [this.button, this.link],
+                children: [this.errorMessage, this.button, this.waiter, this.link],
             }),
         ],
         attrib: {
@@ -172,27 +190,81 @@ export default class RegPage {
         },
     });
 
-    main = new Universal('main', {
-        children: new Form({
-            children: this.regBox,
-            formElements: [
-                this.inputEmail,
-                this.inputLogin,
-                this.inputFirstName,
-                this.inputSecondName,
-                this.inputPhone,
-                this.inputPassword,
-                this.inputPasswordAgain,
-            ],
-            submit: (ev: any, valid: boolean, data: any = {}) => {
-                Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
-                ev.preventDefault();
-            },
-        }),
+    modal = new Modal({
+        children: '',
     });
 
-    constructor(selector: string) {
+    props = {
+        children: [
+            this.modal,
+            new Form({
+                children: this.regBox,
+                formElements: [
+                    this.inputEmail,
+                    this.inputLogin,
+                    this.inputFirstName,
+                    this.inputSecondName,
+                    this.inputPhone,
+                    this.inputPassword,
+                    this.inputPasswordAgain,
+                ],
+                afterSubmit: (ev: any, valid: boolean, data: TSignUpRequest) => {
+                    Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+                    if (valid) {
+                        try {
+                            this.button.hide();
+                            this.waiter.show();
+
+                            console.info(data);
+                            authApi.signup(data).then(
+                                (response: any) => {
+                                    const data = JSON.parse(response.response);
+
+                                    this.modal.setProps({
+                                        children: [
+                                            new Universal('div', {
+                                                children: `Спасибо за регистрацию! Ваш ID: ${data.id}`,
+                                            }),
+                                            new Universal('a', {
+                                                children: 'Войти всистему',
+                                                attrib: { href: '/' },
+                                            }),
+                                        ],
+                                    });
+                                    this.waiter.hide();
+                                    this.modal.show();
+                                },
+                                (error: any) => {
+                                    this.button.show();
+                                    this.errorMessage.show();
+                                    this.waiter.hide();
+                                    const reason: TError = JSON.parse(error.response) as TError;
+                                    this.errorMessage.setProps({ children: reason.reason });
+                                }
+                            );
+                        } catch (error) {
+                            // Логика обработки ошибок
+                            // TODO: Логирование ошибок
+                            Router.instance.go('/error500');
+                        }
+                    }
+                    ev.preventDefault();
+                },
+            }),
+        ],
+    };
+
+    constructor(props: any = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('Регистрация');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+        this.waiter.hide();
+        this.errorMessage.hide();
+        this.modal.hide();
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
     }
 }

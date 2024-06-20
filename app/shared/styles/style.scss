@@ -31,6 +31,10 @@
     }
 }
 
+.invisible-link {
+    text-decoration: none;
+}
+
 .mt14 {
     margin-top: 14px;
 }
@@ -95,5 +99,69 @@
 
     &__link {
         font-size: 11px;
+    }
+}
+
+.waiter {
+    text-align: center;
+    font-size: 12px;
+    font-family: global.$font-family;
+}
+
+.error-message,
+.success-message {
+    text-align: center;
+    font-size: 12px;
+    font-family: global.$font-family;
+    color: global.$error-color;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.success-message {
+    color: global.$success-color;
+}
+
+//  Стили для модального окна
+.modal {
+    // display: none; //  Скрыть модальное окно по умолчанию
+    position: fixed; //  Оставаться на месте при прокрутке
+    z-index: 1000; //  Сидеть над всеми другими элементами
+    inset: 0;
+    overflow: auto; //  Включить прокрутку, если нужно
+    background-color: global.$bg-modal; //  Затемнение фона
+
+    //  Стили для содержимого модального окна
+    &-content {
+        position: relative;
+        background-color: global.$bg-white;
+        margin: 15% auto; //  15% от верхней части окна, автоматически центрировано
+        padding: 20px;
+        border: 0;
+        border-radius: 12px;
+        width: 400px; //  Можно изменить на любую ширину
+        box-shadow: global.$modal-shadow;
+
+        // Стили для кнопки закрытия
+        &__close {
+            color: global.$silver-text-bg;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        &__close:hover,
+        &__close:focus {
+            color: global.$link-color;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        &__content {
+            font-size: 14px;
+            padding-top: 30px;
+            font-family: global.$font-family;
+            text-align: center;
+        }
     }
 }

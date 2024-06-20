@@ -1,19 +1,13 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import ProfileItem from '../../components/profileitem/index.ts';
 import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
+import AuthAPI from '../../modules/api/auth-api.ts';
+import { TUser } from '../../shared/types/user.ts';
 
-export default class ProfilePage {
-    profileItems = [
-        new ProfileItem({ title: 'Почта', children: 'pochta@yandex.ru' }),
-        new ProfileItem({ title: 'Логин', children: 'ivanivanov' }),
-        new ProfileItem({ title: 'Имя', children: 'Иван' }),
-        new ProfileItem({ title: 'Фамилия', children: 'Иванов' }),
-        new ProfileItem({ title: 'Имя в чате', children: 'Иван' }),
-        new ProfileItem({ title: 'Телефон', children: '+7 (909) 967 30 30' }),
-    ];
+const authApi = new AuthAPI();
 
+export default class ProfilePage extends Block {
     profileClose = new Universal('a', {
         children: new Universal('img', {
             attrib: { src: '/images/close.svg', alt: 'Закрыть профиль пользователя' },
@@ -32,19 +26,30 @@ export default class ProfilePage {
     profileActionChildren = [
         new Universal('a', {
             children: 'Изменить данные',
-            attrib: { class: 'profile-action__link', href: '/profileedit.html' },
+            attrib: { class: 'profile-action__link', href: '/settings' },
         }),
         new Universal('a', {
             children: 'Изменить пароль',
-            attrib: { class: 'profile-action__link', href: '/password.html' },
+            attrib: { class: 'profile-action__link', href: '/password' },
         }),
         new Universal('a', {
             children: 'Выход',
             attrib: { class: 'profile-action__exit', href: '/' },
+            events: {
+                click: (ev: Event) => {
+                    ev.preventDefault();
+                    authApi.logout();
+                },
+            },
         }),
     ];
 
-    main = new Universal('main', {
+    profItem = new Universal('div', {
+        children: '',
+        attrib: { class: 'profile-items' },
+    });
+
+    props = {
         children: new Universal('div', {
             children: [
                 new Universal('div', {
@@ -56,10 +61,7 @@ export default class ProfilePage {
                     attrib: { class: 'profile-photo' },
                 }),
                 new Universal('div', { children: 'Иван', attrib: { class: 'profile-title' } }),
-                new Universal('div', {
-                    children: this.profileItems,
-                    attrib: { class: 'profile-items' },
-                }),
+                this.profItem,
                 new Universal('div', {
                     children: this.profileActionChildren,
                     attrib: { class: 'profile-action' },
@@ -69,10 +71,37 @@ export default class ProfilePage {
                 class: 'profile-box',
             },
         }),
-    });
+    };
 
-    constructor(selector: string) {
+    constructor(props: any = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('Профиль');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
+    }
+
+    async afterInit(): Promise<unknown> {
+        function setEmpty(value: unknown): string {
+            return value == null ? '' : '' + value;
+        }
+
+        const user: TUser = await authApi.getuser();
+
+        const profileItems = [
+            new ProfileItem({ title: 'Почта', children: setEmpty(user.email) }),
+            new ProfileItem({ title: 'Логин', children: setEmpty(user.login) }),
+            new ProfileItem({ title: 'Имя', children: setEmpty(user.first_name) }),
+            new ProfileItem({ title: 'Фамилия', children: setEmpty(user.second_name) }),
+            new ProfileItem({ title: 'Имя в чате', children: setEmpty(user.display_name) }),
+            new ProfileItem({ title: 'Телефон', children: setEmpty(user.phone) }),
+        ];
+
+        this.profItem.setProps({ children: profileItems });
+
+        return;
     }
 }

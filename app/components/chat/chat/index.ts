@@ -1,49 +1,72 @@
 import Block from '../../../modules/block.ts';
 import Universal from '../../universal/index.ts';
 import template from './template.ts';
-
-import { TMessages } from '../../../shared/types/tmessages.ts';
-import { TMessage } from '../../../shared/types/tmessage.ts';
 import ChatText from '../chattext/index.ts';
 import ChatImage from '../chatimage/index.ts';
+import { TChatMessage } from '../../../shared/types/chat.ts';
 
 export default class Chat extends Block {
     constructor(props: any = {}) {
         super('div', props);
     }
 
-    update(data: TMessages[]) {
+    update(messages: TChatMessage[], userId: number) {
+        const data: Record<string, TChatMessage[]> = {};
+
+        messages.forEach((chatMsg: TChatMessage) => {
+            const dt: Date = new Date(chatMsg.time);
+            const dateTitle: string = dt.toLocaleString('ru', {
+                month: 'long', // Используем полное название месяца
+                day: 'numeric',
+            });
+
+            if (!data[dateTitle]) data[dateTitle] = [];
+
+            data[dateTitle].push(chatMsg);
+        });
+
         const children: any = [];
-        data.forEach((item: TMessages) => {
+        for (let dt in data) {
+            console.info(dt);
+
             const datetime = new Universal('div', {
-                children: item.datetime,
+                children: dt,
                 attrib: { class: 'content-chat-content-date' },
             });
             children.push(datetime);
-            item.messages.forEach((message: TMessage) => {
+
+            data[dt];
+
+            data[dt].forEach((message: TChatMessage) => {
+                const time: Date = new Date(message.time);
+
                 let msg: any = {};
-                const type = message.self ? 'question' : 'answer';
+                const type = message.user_id == userId ? 'question' : 'answer';
                 const statusImage = '/images/galki.svg';
                 const statusAlt = 'Сообщение доставлено и прочитано';
                 switch (message.type) {
-                case 'text':
-                    msg = new ChatText({
-                        text: message.data,
-                        time: message.time,
-                        type,
-                        statusImage,
-                        statusAlt,
-                    });
-                    break;
-                case 'image':
-                    msg = new ChatImage({ src: message.data, time: message.time, type });
-                    break;
-                default:
-                    msg = '';
+                    case 'message':
+                        msg = new ChatText({
+                            text: message.content,
+                            time: time.toLocaleTimeString('ru', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            }),
+                            type,
+                            statusImage,
+                            statusAlt,
+                        });
+                        break;
+                    case 'image':
+                        msg = new ChatImage({ src: message.content, time: '222', type });
+                        break;
+                    default:
+                        msg = '';
                 }
                 children.push(msg);
             });
-        });
+        }
+
         this.setProps({ children });
     }
 

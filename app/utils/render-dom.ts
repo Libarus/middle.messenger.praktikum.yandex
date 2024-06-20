@@ -6,7 +6,7 @@ export default function renderDom(selector: string, block: any) {
     }
 
     // Можно завязаться на реализации вашего класса Block
-    root.replaceWith(block.getContent);
+    root.appendChild(block.getContent);
 
     return root;
 }

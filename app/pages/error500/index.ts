@@ -1,10 +1,9 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
+import Block from '../../modules/block.ts';
 import Helpers from '../../utils/helpers.ts';
 
-export default class Error500Page {
-    main = new Universal('main', {
+export default class Error500Page extends Block {
+    props = {
         children: new Universal('div', {
             children: [
                 new Universal('div', { children: '500', attrib: { class: 'error-title' } }),
@@ -21,10 +20,16 @@ export default class Error500Page {
                 class: 'error-box',
             },
         }),
-    });
+    };
 
-    constructor(selector: string) {
+    constructor(props: any = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('500 ошибка');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
     }
 }

@@ -1,8 +1,6 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import { TNav } from '../../shared/types/tnav.ts';
-import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
 
 const navList: TNav[] = [
     { link: 'loginform.html', title: 'Страница авторизации' },
@@ -16,8 +14,8 @@ const navList: TNav[] = [
     { link: 'error404.html', title: 'Страница 404' },
 ];
 
-export default class IndexPage {
-    main = new Universal('main', {
+export default class IndexPage extends Block {
+    props = {
         children: new Universal('nav', {
             children: [
                 new Universal('h1', { children: 'Навигация по свёрстанным страницам:' }),
@@ -40,13 +38,21 @@ export default class IndexPage {
                 class: 'nav',
             },
         }),
-        attrib: {
-            class: 'p20',
-        },
-    });
+    };
 
-    constructor(selector: string) {
-        Helpers.SetDocumentTitle('Навигация');
-        renderDom(selector, this.main);
+    constructor(props: any = {}) {
+        const attrib = {
+            attrib: {
+                class: 'p20',
+            },
+        };
+        super('main', { ...props, ...attrib });
+
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
     }
 }

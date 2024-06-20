@@ -228,3 +228,37 @@
         }
     }
 }
+
+.chat-menu {
+    box-shadow: global.$shadow;
+    position: absolute;
+    width: 200px;
+    right: 10px;
+    z-index: 1000;
+    margin-top: 75px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: global.$bg-white;
+
+    &-ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    &__link {
+        font-family: global.$font-family;
+        font-size: 14px;
+        color: global.$color-name;
+        text-decoration: none;
+    }
+
+    &-item__image {
+        margin-right: 10px;
+        float: left;
+    }
+
+    &-item__label {
+        font-family: global.$font-family;
+    }
+}

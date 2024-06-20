@@ -33,19 +33,26 @@ export default class Form extends Universal {
             formEl.setProps({ events });
         });
 
-        this.element.addEventListener('submit', (ev: any) => {
-            const data: any = {};
+        const submitEvent = {
+            submit: (ev: any) => {
+                ev.preventDefault();
+                const data: any = {};
 
-            const valid = this.validateAll();
-            if (valid) {
-                this.formElements.forEach((formEl) => {
-                    data[formEl.element.name] = formEl.element.value;
-                });
-            }
+                const valid = this.validateAll();
+                if (valid) {
+                    this.formElements.forEach((formEl) => {
+                        data[formEl.element.name] = formEl.element.value;
+                    });
+                }
 
-            this.Props.submit(ev, valid, data);
-            ev.preventDefault();
-        });
+                this.Props.afterSubmit(ev, valid, data);
+                ev.preventDefault();
+            },
+        };
+
+        const elementEvents = { ...this.getEvents, ...submitEvent };
+
+        this.setProps({ events: elementEvents });
     }
 
     private validateOne(formEl: any): boolean {

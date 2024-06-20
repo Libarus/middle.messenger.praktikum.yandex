@@ -1,11 +1,10 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import ProfileItem from '../../components/profileitem/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
 
-export default class PasswordPage {
+export default class PasswordPage extends Block {
     divOldPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputOldPassword = new Universal('input', {
@@ -61,7 +60,7 @@ export default class PasswordPage {
         children: new Universal('img', {
             attrib: { src: '/images/close.svg', alt: 'Закрыть редактирование данных пользователя' },
         }),
-        attrib: { href: '/', class: 'profile-close__button' },
+        attrib: { href: '/messenger', class: 'profile-close__button' },
     });
 
     profilePhoto = [
@@ -98,7 +97,7 @@ export default class PasswordPage {
         },
     });
 
-    main = new Universal('main', {
+    props = {
         children: new Universal('div', {
             children: [
                 new Universal('div', {
@@ -115,10 +114,16 @@ export default class PasswordPage {
                 class: 'profile-box',
             },
         }),
-    });
+    };
 
-    constructor(selector: string) {
+    constructor(props: any = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('Изменение пароля');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
     }
 }

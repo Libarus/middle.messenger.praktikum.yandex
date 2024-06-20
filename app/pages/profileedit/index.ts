@@ -1,11 +1,17 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import ProfileItem from '../../components/profileitem/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
+import AuthAPI from '../../modules/api/auth-api.ts';
+import { TUser } from '../../shared/types/user.ts';
+import Router from '../../modules/router.ts';
+import UserAPI from '../../modules/api/user-api.ts';
 
-export default class ProfileEditPage {
+const authApi = new AuthAPI();
+const userApi = new UserAPI();
+
+export default class ProfileEditPage extends Block {
     divEmail = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputEmail = new Universal('input', {
@@ -13,7 +19,7 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'email',
             class: 'profile-item__input',
-            value: 'pochta@yandex.ru',
+            value: '',
         },
         validate: ['required', 'email'],
     });
@@ -25,7 +31,7 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'login',
             class: 'profile-item__input',
-            value: 'ivanivanov',
+            value: '',
         },
         validate: ['required', 'login'],
     });
@@ -37,7 +43,7 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'first_name',
             class: 'profile-item__input',
-            value: 'Иван',
+            value: '',
         },
         validate: ['required', 'capitalize', 'username'],
     });
@@ -49,7 +55,7 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'second_name',
             class: 'profile-item__input',
-            value: 'Иванов',
+            value: '',
         },
         validate: ['required', 'capitalize', 'username'],
     });
@@ -61,7 +67,7 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'display_name',
             class: 'profile-item__input',
-            value: 'Иван',
+            value: '',
         },
         validate: ['required', 'username'],
     });
@@ -73,9 +79,19 @@ export default class ProfileEditPage {
             type: 'text',
             name: 'phone',
             class: 'profile-item__input',
-            value: '+79099673030',
+            value: '',
         },
         validate: ['required', 'phone'],
+    });
+
+    errorMessage = new Universal('div', {
+        children: 'Error message',
+        attrib: { class: 'error-message' },
+    });
+
+    successMessage = new Universal('div', {
+        children: 'Success message',
+        attrib: { class: 'success-message' },
     });
 
     profileItems = [
@@ -94,18 +110,70 @@ export default class ProfileEditPage {
         children: new Universal('img', {
             attrib: { src: '/images/close.svg', alt: 'Закрыть редактирование данных пользователя' },
         }),
-        attrib: { href: '/', class: 'profile-close__button' },
+        attrib: { href: '/messenger', class: 'profile-close__button' },
+    });
+
+    formAvatar = new Universal('form', {
+        children: [
+            new Universal('input', {
+                attrib: {
+                    type: 'file',
+                    id: 'avatar',
+                    name: 'avatar',
+                    accept: 'image/*',
+                    class: 'hidden',
+                },
+                events: {
+                    change: (ev: Event) => {
+                        console.info('change', ev);
+                        const target: EventTarget | null = ev.target;
+                        if (target != null) {
+                            // выбор был
+                            document.getElementById('avatarFormSubmitButton')?.click();
+                        }
+                        ev.preventDefault();
+                    },
+                },
+            }),
+            new Universal('button', {
+                children: 'Отправить',
+                attrib: { id: 'avatarFormSubmitButton', type: 'submit', class: 'hidden' },
+            }),
+        ],
+        attrib: {
+            id: 'avatarForm',
+            method: 'post',
+            enctype: 'multipart/form-data',
+        },
+        events: {
+            submit: (ev: Event) => {
+                ev.preventDefault();
+
+                const formAva: any = document.getElementById('avatarForm');
+                userApi.updateavatar(new FormData(formAva)).then(
+                    (response: any) => {
+                        this.p_updateUserData(JSON.parse(response.response) as TUser);
+                    },
+                    (err) => console.error(err)
+                );
+            },
+        },
+    });
+
+    avaPhoto = new Universal('img', {
+        attrib: {
+            src: '/images/defphoto.svg',
+            class: 'profile-photo__image',
+            alt: 'Аватар пользователя',
+        },
     });
 
     profilePhoto = [
-        new Universal('img', {
-            attrib: {
-                src: '/images/defphoto.svg',
-                class: 'profile-photo__image',
-                alt: 'Аватар пользователя',
-            },
+        this.avaPhoto,
+        new Universal('div', {
+            children: 'Изменить',
+            attrib: { class: 'profile-photo-link__label' },
         }),
-        new Universal('input', { attrib: { type: 'hidden', name: 'avatar', value: '' } }),
     ];
 
     profileActionChildren = new Universal('button', {
@@ -120,7 +188,7 @@ export default class ProfileEditPage {
                 attrib: { class: 'profile-items' },
             }),
             new Universal('div', {
-                children: this.profileActionChildren,
+                children: [this.errorMessage, this.successMessage, this.profileActionChildren],
                 attrib: { class: 'profile-action profile-action__padding' },
             }),
         ],
@@ -132,22 +200,64 @@ export default class ProfileEditPage {
             this.inputDisplayName,
             this.inputPhone,
         ],
-        submit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
+            if (valid) {
+                try {
+                    this.errorMessage.hide();
+                    this.successMessage.hide();
+                    userApi.updateuser(data).then(
+                        (response: any) => {
+                            this.p_updateUserData(JSON.parse(response.response) as TUser);
+                            this.successMessage.show();
+                            this.successMessage.setProps({
+                                children: 'Данные сохранены',
+                            });
+                        },
+                        (error: any) => {
+                            this.errorMessage.show();
+                            const reason: TError = JSON.parse(error.response) as TError;
+                            this.errorMessage.setProps({
+                                children: reason.reason,
+                            });
+                        }
+                    );
+                } catch (error) {
+                    // Логика обработки ошибок
+                    // TODO: Логирование ошибок
+                    Router.instance.go('/error500');
+                }
+            }
+
             ev.preventDefault();
         },
     });
 
-    main = new Universal('main', {
+    props = {
         children: new Universal('div', {
             children: [
+                this.formAvatar,
                 new Universal('div', {
                     children: this.profileClose,
                     attrib: { class: 'profile-close' },
                 }),
                 new Universal('div', {
-                    children: this.profilePhoto,
-                    attrib: { class: 'profile-photo profile-photo__offset' },
+                    children: new Universal('div', {
+                        children: this.profilePhoto,
+                        attrib: { class: 'profile-photo profile-photo__offset' },
+                    }),
+                    attrib: {
+                        class: 'profile-photo-link',
+                    },
+                    events: {
+                        click: (ev: Event) => {
+                            ev.preventDefault();
+                            const avatar = document.getElementById('avatar');
+                            if (avatar != null) {
+                                avatar.click();
+                            }
+                        },
+                    },
                 }),
                 this.form,
             ],
@@ -155,10 +265,47 @@ export default class ProfileEditPage {
                 class: 'profile-box',
             },
         }),
-    });
+    };
 
-    constructor(selector: string) {
+    constructor(props: any = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('Редактирование профиля');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
+    }
+
+    async p_updateUserData(user: TUser): Promise<void> {
+        console.info('p_updateUserData', user);
+
+        function setEmpty(value: unknown): string {
+            return value == null ? '' : '' + value;
+        }
+
+        this.inputEmail.setProps({ attrib: { value: setEmpty(user.email) } });
+        this.inputLogin.setProps({ attrib: { value: setEmpty(user.login) } });
+        this.inputFirstName.setProps({ attrib: { value: setEmpty(user.first_name) } });
+        this.inputSecondName.setProps({ attrib: { value: setEmpty(user.second_name) } });
+        this.inputDisplayName.setProps({ attrib: { value: setEmpty(user.display_name) } });
+        this.inputPhone.setProps({ attrib: { value: setEmpty(user.phone) } });
+
+        if (setEmpty(user.avatar) != '') {
+            const src = 'https://ya-praktikum.tech/api/v2/resources' + setEmpty(user.avatar);
+            console.info(src);
+            this.avaPhoto.setProps({ attrib: { src } });
+        }
+    }
+
+    async afterInit(): Promise<unknown> {
+        this.errorMessage.hide();
+        this.successMessage.hide();
+
+        const user: TUser = await authApi.getuser();
+        this.p_updateUserData(user);
+
+        return;
     }
 }
