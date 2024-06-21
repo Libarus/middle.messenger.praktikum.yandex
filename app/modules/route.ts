@@ -1,6 +1,6 @@
-import isEqual from '../utils/isequal';
-import renderDom from '../utils/render-dom';
-import Block from './block';
+import isEqual from '../utils/isequal.ts';
+import renderDom from '../utils/render-dom.ts';
+import Block from './block.ts';
 
 export default class Route<TProps extends Record<string, any> = any> {
     //

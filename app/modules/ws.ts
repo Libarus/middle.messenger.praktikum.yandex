@@ -1,3 +1,5 @@
+import Helpers from '../utils/helpers';
+
 export default class WS {
     //
     private p_url: string;
@@ -5,6 +7,7 @@ export default class WS {
     private p_pingpongInterval = 15000;
 
     private p_reconnectAttempts: number = 3;
+
     private p_reconnectCurrentAttempt: number = 1;
 
     private p_reconnectTimeout = 10000;
@@ -12,8 +15,11 @@ export default class WS {
     private p_socket: WebSocket;
 
     private p_onOpenEvent: (event: Event) => void;
+
     private p_onMessageEvent: (event: MessageEvent) => void;
+
     private p_onErrorEvent: (event: Event) => void;
+
     private p_onCloseEvent: (event: CloseEvent) => void;
 
     constructor(
@@ -23,8 +29,6 @@ export default class WS {
         errorCallback: (event: Event) => void,
         closeCallback: (event: CloseEvent) => void
     ) {
-        console.log(`Websocket url: ${url}`);
-
         this.p_onOpenEvent = openCallback;
         this.p_onMessageEvent = messageCallback;
         this.p_onErrorEvent = errorCallback;
@@ -54,14 +58,13 @@ export default class WS {
     }
 
     private p_onOpen(event: Event) {
-        console.info('Websocket - OnOpen - Соединение установлено');
         this.p_onOpenEvent(event);
     }
 
     private p_onMessage(event: MessageEvent) {
-        console.info('Websocket - OnMessage');
         const data = JSON.parse(event.data);
-        if (data.type == 'pong') {
+        if (data.type === 'pong') {
+            // eslint-disable-next-line no-console
             console.info('pong');
             setTimeout(this.p_pingpong.bind(this), this.p_pingpongInterval);
         } else {
@@ -70,28 +73,28 @@ export default class WS {
     }
 
     private p_onError(event: Event) {
-        console.info('Websocket - OnError');
         this.p_onErrorEvent(event);
     }
 
     private p_onClose(event: CloseEvent) {
-        console.info('Websocket - OnClose', event);
-
         if (event.wasClean) {
-            console.log(
+            Helpers.Log(
+                'INFO',
                 `[close] Соединение закрыто чисто, код: ${event.code}; причина: "${event.reason}"`
             );
         } else {
             console.log('[close] Соединение прервано');
 
             if (this.p_reconnectCurrentAttempt <= this.p_reconnectAttempts) {
-                console.log(
+                Helpers.Log(
+                    'INFO',
                     `Websocket - Reconnect will be attempted in ${this.p_reconnectTimeout} seconds.
                     Attempt from ${this.p_reconnectCurrentAttempt} from ${this.p_reconnectAttempts}`
                 );
                 this.p_reconnectCurrentAttempt++;
                 setTimeout(this.p_reconnect.bind(this), this.p_reconnectTimeout);
             } else {
+                // eslint-disable-next-line no-console
                 console.log('Подключение не возможно');
             }
         }
@@ -101,8 +104,9 @@ export default class WS {
 
     private p_pingpong() {
         const ping: any = { type: 'ping' };
-        console.info('ping');
-        if (this.p_socket && this.p_socket.readyState == 1) {
+        // eslint-disable-next-line no-console
+        Helpers.Log('INFO', 'ping');
+        if (this.p_socket && this.p_socket.readyState === 1) {
             this.p_socket.send(JSON.stringify(ping));
         }
     }

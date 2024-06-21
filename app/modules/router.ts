@@ -45,9 +45,8 @@ export default class Router {
 
     start() {
         // Реагируем на изменения в адресной строке и вызываем перерисовку
-        window.onpopstate = (event: Event) => {
-            const eventTarget: EventTarget | null = event.currentTarget;
-            // @ts-ignore
+        window.onpopstate = (event: any) => {
+            const eventTarget: Window | null = event.currentTarget;
             const pathName = eventTarget != null ? eventTarget.location.pathname : '';
             this.onRoute(pathName);
         };
@@ -58,7 +57,6 @@ export default class Router {
     }
 
     private onRoute(pathName: string) {
-        console.info('on route', pathName);
         const params: string[] = pathName.split('/').splice(2);
         const route: Route | undefined = this.getRoute(pathName);
 

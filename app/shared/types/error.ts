@@ -1,4 +1,4 @@
-type TError = {
+export type TError = {
     reason: string;
     error: string;
 };

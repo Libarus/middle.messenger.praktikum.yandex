@@ -26,6 +26,7 @@ export default class MessengerPage extends Block {
 
     /* MODAL WINDOW */
     divChatName = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputChatName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -36,6 +37,7 @@ export default class MessengerPage extends Block {
         },
         validate: ['required'],
     });
+
     сhatName = new Universal('label', {
         children: ['Название чата', this.inputChatName, this.divChatName],
         attrib: { class: 'form__label' },
@@ -195,9 +197,7 @@ export default class MessengerPage extends Block {
                                 ],
                                 attrib: { class: 'header' },
                             }),
-                            ///////////////////////////////////////////////////////////////////////////////////////
                             this.chatContent,
-                            ///////////////////////////////////////////////////////////////////////////////////////
                         ],
                         attrib: {
                             class: 'section',
@@ -315,7 +315,7 @@ export default class MessengerPage extends Block {
             (user: TUser) => {
                 console.info('user', user);
                 this.userName.setProps({ children: user.display_name ?? user.first_name });
-                if (user.avatar != '' && user.avatar != null)
+                if (user.avatar !== '' && user.avatar !== null)
                     this.userAvatarImage.setProps({
                         attrib: { src: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar },
                     });
@@ -331,15 +331,13 @@ export default class MessengerPage extends Block {
         chatApi.getchats().then((value: any) => {
             const chatList: TChat[] = JSON.parse(value.response) as TChat[];
 
-            if (chatList.length == 0) {
+            if (chatList.length === 0) {
                 this.chatListContent.setProps({ children: 'Chat list is empty' });
             } else {
                 const props: any = [];
-                console.info('chatList', chatList);
 
                 this.selectedChat = null;
                 chatList.forEach((chat: TChat) => {
-                    console.info(chat);
                     const item: TChatItem = {
                         id: chat.id,
                         name: `Чат "${chat.title}"`,
@@ -351,18 +349,18 @@ export default class MessengerPage extends Block {
                         selected: this.Params.id == chat.id,
                     };
 
-                    if (this.Params.id == chat.id) {
+                    if (this.Params.id === chat.id) {
                         this.selectedChat = item;
                     }
 
-                    if (chat.last_message != null) {
+                    if (chat.last_message !== null) {
                         item.name =
                             chat.last_message.user.display_name ??
                             chat.last_message.user.first_name;
                         item.message = chat.last_message.content;
 
                         const u = chat.last_message.user;
-                        if (u.avatar != null && u.avatar != '') {
+                        if (u.avatar !== null && u.avatar !== '') {
                             item.avatar = 'https://ya-praktikum.tech/api/v2/resources' + u.avatar;
                         }
                     }
@@ -374,11 +372,6 @@ export default class MessengerPage extends Block {
                             },
                         },
                     };
-
-                    console.info('###', {
-                        ...item,
-                        ...events,
-                    });
 
                     const prop = new ChatItem({
                         ...item,
@@ -411,10 +404,10 @@ export default class MessengerPage extends Block {
             avatar: this.selectedChat?.avatar,
         });
 
-        let user = await authApi.getuser();
+        const user = await authApi.getuser();
         this.p_userId = user.id;
 
-        let token: string = await chatApi.gettoken(chatId);
+        const token: string = await chatApi.gettoken(chatId);
 
         this.ws = new WS(
             `wss://ya-praktikum.tech/ws/chats/${this.p_userId}/${chatId}/${token}`,
@@ -429,20 +422,15 @@ export default class MessengerPage extends Block {
         // запрос последних 20 сообщений
         const data: any = { type: 'get old', content: '0' };
         if (this.ws != null) this.ws.send(JSON.stringify(data));
-        else console.error('ws is null');
     }
 
     onMessage(event: MessageEvent) {
-        console.info('#### onMessage ', event);
         const parseData: any = JSON.parse(event.data);
         if (Array.isArray(parseData)) {
             const messages: TChatMessage[] = JSON.parse(event.data);
-            console.info(messages);
             this.chat.addmessages(messages.reverse(), this.p_userId);
         } else {
-            console.info();
             const message: TChatMessage = parseData;
-            console.info('MESSAGE: ', message);
             this.chat.addmessage(message, this.p_userId);
             this.p_updateChats(false);
         }

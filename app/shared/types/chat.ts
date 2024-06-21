@@ -1,4 +1,4 @@
-import { TUser } from './user';
+import { TUser } from './user.ts';
 
 export type TLastMessage = {
     user: TUser;

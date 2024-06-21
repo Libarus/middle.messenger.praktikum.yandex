@@ -96,7 +96,7 @@ export default class PasswordPage extends Block {
         formElements: [this.inputOldPassword, this.inputNewPassword, this.inputNewPasswordAgain],
         afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
-            alert('Сохранение в разработке');
+            Helpers.Log('INFO', 'Сохранение в разработке');
             ev.preventDefault();
         },
     });
@@ -133,17 +133,16 @@ export default class PasswordPage extends Block {
 
     async afterInit(): Promise<unknown> {
         function setEmpty(value: unknown): string {
-            return value == null ? '' : '' + value;
+            return value == null ? '' : (value as string);
         }
 
         const user: TUser = await authApi.getuser();
 
-        if (setEmpty(user.avatar) != '') {
-            const src = 'https://ya-praktikum.tech/api/v2/resources' + setEmpty(user.avatar);
-            console.info(src);
+        if (setEmpty(user.avatar) !== '') {
+            const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
             this.profilePhoto.setProps({ attrib: { src } });
         }
 
-        return;
+        return false;
     }
 }

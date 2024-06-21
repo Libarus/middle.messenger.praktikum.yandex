@@ -2,7 +2,7 @@ import Universal from '../../components/universal/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
 import Block from '../../modules/block.ts';
-import { TSignUpRequest } from '../../shared/types/user.ts';
+import { TSignUpRequest, TUser } from '../../shared/types/user.ts';
 import AuthAPI from '../../modules/api/auth-api.ts';
 import Router from '../../modules/router.ts';
 import Modal from '../../components/modal/index.ts';
@@ -212,15 +212,15 @@ export default class RegPage extends Block {
                             this.button.hide();
                             this.waiter.show();
 
-                            console.info(data);
                             authApi.signup(data).then(
                                 (response: any) => {
-                                    const data = JSON.parse(response.response);
+                                    const data: TUser = JSON.parse(response.response);
 
                                     this.modal.setProps({
                                         children: [
                                             new Universal('div', {
-                                                children: `Спасибо за регистрацию! Ваш ID: ${data.id}`,
+                                                children: `Спасибо за регистрацию!
+                                                           Ваш ID: ${data.id}`,
                                             }),
                                             new Universal('a', {
                                                 children: 'Войти всистему',
@@ -228,6 +228,7 @@ export default class RegPage extends Block {
                                             }),
                                         ],
                                     });
+
                                     this.waiter.hide();
                                     this.modal.show();
                                 },

@@ -125,9 +125,8 @@ export default class ProfileEditPage extends Block {
                 },
                 events: {
                     change: (ev: Event) => {
-                        console.info('change', ev);
                         const target: EventTarget | null = ev.target;
-                        if (target != null) {
+                        if (target !== null) {
                             // выбор был
                             document.getElementById('avatarFormSubmitButton')?.click();
                         }
@@ -154,7 +153,7 @@ export default class ProfileEditPage extends Block {
                     (response: any) => {
                         this.p_updateUserData(JSON.parse(response.response) as TUser);
                     },
-                    (err) => console.error(err)
+                    (err) => Helpers.Log('ERROR', err)
                 );
             },
         },
@@ -279,10 +278,8 @@ export default class ProfileEditPage extends Block {
     }
 
     async p_updateUserData(user: TUser): Promise<void> {
-        console.info('p_updateUserData', user);
-
         function setEmpty(value: unknown): string {
-            return value == null ? '' : '' + value;
+            return value == null ? '' : (value as string);
         }
 
         this.inputEmail.setProps({ attrib: { value: setEmpty(user.email) } });
@@ -292,8 +289,8 @@ export default class ProfileEditPage extends Block {
         this.inputDisplayName.setProps({ attrib: { value: setEmpty(user.display_name) } });
         this.inputPhone.setProps({ attrib: { value: setEmpty(user.phone) } });
 
-        if (setEmpty(user.avatar) != '') {
-            const src = 'https://ya-praktikum.tech/api/v2/resources' + setEmpty(user.avatar);
+        if (setEmpty(user.avatar) !== '') {
+            const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
             console.info(src);
             this.avaPhoto.setProps({ attrib: { src } });
         }
@@ -306,6 +303,6 @@ export default class ProfileEditPage extends Block {
         const user: TUser = await authApi.getuser();
         this.p_updateUserData(user);
 
-        return;
+        return false;
     }
 }

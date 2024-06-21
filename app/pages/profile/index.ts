@@ -92,7 +92,7 @@ export default class ProfilePage extends Block {
 
     async afterInit(): Promise<unknown> {
         function setEmpty(value: unknown): string {
-            return value == null ? '' : '' + value;
+            return value == null ? '' : (value as string);
         }
 
         const user: TUser = await authApi.getuser();
@@ -112,12 +112,12 @@ export default class ProfilePage extends Block {
 
         this.profItem.setProps({ children: profileItems });
 
-        if (setEmpty(user.avatar) != '') {
-            const src = 'https://ya-praktikum.tech/api/v2/resources' + setEmpty(user.avatar);
+        if (setEmpty(user.avatar) !== '') {
+            const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
             console.info(src);
             this.profilePhoto.setProps({ attrib: { src } });
         }
 
-        return;
+        return false;
     }
 }

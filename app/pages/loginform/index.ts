@@ -110,10 +110,8 @@ export default class LoginFormPage extends Block {
                             this.waiter.show();
                             this.errorMessage.hide();
 
-                            console.info(data);
                             authApi.signin(data).then(
-                                (response: any) => {
-                                    console.info(response);
+                                () => {
                                     Router.instance.go('/messenger');
                                 },
                                 (error: any) => {
