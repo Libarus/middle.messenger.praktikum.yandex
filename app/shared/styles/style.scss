@@ -161,3 +161,10 @@
         }
     }
 }
+
+.muted {
+    font-family: global.$font-family;
+    text-align: center;
+    color: global.$silver-text;
+    font-size: 12px;
+}

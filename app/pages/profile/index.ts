@@ -23,6 +23,8 @@ export default class ProfilePage extends Block {
         },
     });
 
+    showUserId = new Universal('div', { children: '', attrib: { class: 'muted' } });
+
     profileActionChildren = [
         new Universal('a', {
             children: 'Изменить данные',
@@ -42,6 +44,8 @@ export default class ProfilePage extends Block {
                 },
             },
         }),
+        new Universal('hr'),
+        this.showUserId,
     ];
 
     profItem = new Universal('div', {
@@ -99,6 +103,8 @@ export default class ProfilePage extends Block {
             new ProfileItem({ title: 'Имя в чате', children: setEmpty(user.display_name) }),
             new ProfileItem({ title: 'Телефон', children: setEmpty(user.phone) }),
         ];
+
+        this.showUserId.setProps({ children: `User ID: ${user.id}` });
 
         this.profItem.setProps({ children: profileItems });
 
