@@ -90,7 +90,7 @@ export default class Form extends Universal {
         return this.isValidate;
     }
 
-    private p_xss(str: string) {
+    private p_xss(str: string): string {
         return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 }

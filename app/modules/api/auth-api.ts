@@ -1,7 +1,7 @@
-import { TSignInRequest, TSignUpRequest, TUser } from '../../shared/types/user';
-import HTTP from '../http';
-import Router from '../router';
-import BaseAPI from './base-api';
+import { TSignInRequest, TSignUpRequest, TUser } from '../../shared/types/user.ts';
+import HTTP from '../http.ts';
+import Router from '../router.ts';
+import BaseAPI from './base-api.ts';
 
 const authApiInstance = new HTTP(`${BaseAPI.host}/api/v2/auth`);
 

@@ -11,6 +11,7 @@ const chatApi = new ChatAPI();
 export default class ChatHeader extends Block {
     /* MODAL WINDOW */
     divChatName = new Universal('div', { attrib: { class: 'form-input-error' } });
+
     inputChatName = new Universal('input', {
         attrib: {
             type: 'text',
@@ -21,6 +22,7 @@ export default class ChatHeader extends Block {
         },
         validate: ['required'],
     });
+
     сhatName = new Universal('label', {
         children: ['Введите ID пользователя', this.inputChatName, this.divChatName],
         attrib: { class: 'form__label' },
@@ -46,13 +48,11 @@ export default class ChatHeader extends Block {
                     };
 
                     chatApi.addusers(data).then(
-                        (response: any) => {
-                            console.log(response.response);
+                        () => {
                             this.Props.updateCallback();
                             this.modal.hide();
                         },
-                        (error: any) => {
-                            console.log(error);
+                        () => {
                             this.divChatName.setProps({
                                 children:
                                     'Ошибка добавления пользователя. Возможно ID введён неверно.',
@@ -62,7 +62,6 @@ export default class ChatHeader extends Block {
                 } catch (error) {
                     // Логика обработки ошибок
                     // TODO: Логирование ошибок
-                    console.error(error);
                     this.divChatName.setProps({
                         children: `${error}`,
                     });

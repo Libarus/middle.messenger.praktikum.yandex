@@ -38,9 +38,7 @@ export default class Chat extends Block {
         });
 
         const children: any = [];
-        for (let dt in data) {
-            console.info(dt);
-
+        Object.keys(data).forEach((dt) => {
             const datetime = new Universal('div', {
                 children: dt,
                 attrib: { class: 'content-chat-content-date' },
@@ -51,7 +49,7 @@ export default class Chat extends Block {
                 const time: Date = new Date(message.time);
 
                 let msg: any = {};
-                const type = message.user_id == userId ? 'question' : 'answer';
+                const type = message.user_id === userId ? 'question' : 'answer';
                 const statusImage = '/images/galki.svg';
                 const statusAlt = 'Сообщение доставлено и прочитано';
                 switch (message.type) {
@@ -75,7 +73,7 @@ export default class Chat extends Block {
                 }
                 children.push(msg);
             });
-        }
+        });
 
         this.setProps({ children });
 
