@@ -5,7 +5,6 @@
     "rules": {
         "max-len": [2, 100],
         "class-methods-use-this": "off",
-        "@typescript-eslint/class-methods-use-this": "error",
         "@typescript-eslint/no-unused-vars": 2,
         "indent": 0,
         "no-new": 0,
