@@ -313,17 +313,20 @@ export default class MessengerPage extends Block {
         authApi.getuser().then(
             (user: TUser) => {
                 this.userName.setProps({ children: user.display_name ?? user.first_name });
-                if (user.avatar !== '' && user.avatar !== null)
+                if (user.avatar !== '' && user.avatar !== null) {
+                    const src: string = `https://ya-praktikum.tech/api/v2/resources${user.avatar}`;
                     this.userAvatarImage.setProps({
-                        attrib: { src: `https://ya-praktikum.tech/api/v2/resources${user.avatar}` },
+                        attrib: { src },
                     });
+                }
                 this.p_updateChats();
             },
             () => Router.instance.go('/')
         );
     }
 
-    p_updateChats(isUpdMessages = true) {
+    p_updateChats(isUpdMessages: boolean = true) {
+        const paramId: number = this.Params.id != null ? Number(this.Params.id) : -1;
         this.chatListContent.setProps({ children: 'Loading chat list ...' });
 
         chatApi.getchats().then((value: any) => {
@@ -344,10 +347,10 @@ export default class MessengerPage extends Block {
                         datetime: '***',
                         unread: chat.unread_count,
                         avatar: '/images/defphoto.svg',
-                        selected: this.Params.id == chat.id,
+                        selected: paramId === chat.id,
                     };
 
-                    if (this.Params.id === chat.id) {
+                    if (paramId === chat.id) {
                         this.selectedChat = item;
                     }
 
@@ -378,8 +381,8 @@ export default class MessengerPage extends Block {
                     props.push(prop);
                 });
 
-                if (this.Params.id && isUpdMessages) {
-                    this.p_updateChatMessages(+this.Params.id);
+                if (paramId > 0 && isUpdMessages) {
+                    this.p_updateChatMessages(paramId);
                 }
 
                 this.chatListContent.setProps({ children: props });
@@ -396,6 +399,8 @@ export default class MessengerPage extends Block {
             children: [this.chatHeader, this.chat, this.sendMessageForm],
             attrib: { class: 'content-chat' },
         });
+
+        console.info(this.selectedChat);
 
         this.chatHeader.setProps({
             name: this.selectedChat?.name,
@@ -419,7 +424,7 @@ export default class MessengerPage extends Block {
     onOpen() {
         // запрос последних 20 сообщений
         const data: any = { type: 'get old', content: '0' };
-        if (this.ws != null) this.ws.send(JSON.stringify(data));
+        if (this.ws !== null) this.ws.send(JSON.stringify(data));
     }
 
     onMessage(event: MessageEvent) {

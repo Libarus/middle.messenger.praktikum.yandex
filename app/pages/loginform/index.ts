@@ -5,6 +5,7 @@ import Block from '../../modules/block.ts';
 import Modal from '../../components/modal/index.ts';
 import AuthAPI from '../../modules/api/auth-api.ts';
 import Router from '../../modules/router.ts';
+import { TError } from '../../shared/types/error.ts';
 
 const authApi = new AuthAPI();
 

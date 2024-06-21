@@ -64,7 +64,6 @@ export default class WS {
     private p_onMessage(event: MessageEvent) {
         const data = JSON.parse(event.data);
         if (data.type === 'pong') {
-            // eslint-disable-next-line no-console
             Helpers.Log('INFO', 'pong');
             setTimeout(this.p_pingpong.bind(this), this.p_pingpongInterval);
         } else {
@@ -83,7 +82,7 @@ export default class WS {
                 `[close] Соединение закрыто чисто, код: ${event.code}; причина: "${event.reason}"`
             );
         } else {
-            console.log('[close] Соединение прервано');
+            Helpers.Log('INFO', '[close] Соединение прервано');
 
             if (this.p_reconnectCurrentAttempt <= this.p_reconnectAttempts) {
                 Helpers.Log(
@@ -94,8 +93,7 @@ export default class WS {
                 this.p_reconnectCurrentAttempt++;
                 setTimeout(this.p_reconnect.bind(this), this.p_reconnectTimeout);
             } else {
-                // eslint-disable-next-line no-console
-                console.log('Подключение не возможно');
+                Helpers.Log('ERROR', 'Подключение не возможно');
             }
         }
 
@@ -104,7 +102,6 @@ export default class WS {
 
     private p_pingpong() {
         const ping: any = { type: 'ping' };
-        // eslint-disable-next-line no-console
         Helpers.Log('INFO', 'ping');
         if (this.p_socket && this.p_socket.readyState === 1) {
             this.p_socket.send(JSON.stringify(ping));

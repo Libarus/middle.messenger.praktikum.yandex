@@ -6,6 +6,7 @@ import { TSignUpRequest, TUser } from '../../shared/types/user.ts';
 import AuthAPI from '../../modules/api/auth-api.ts';
 import Router from '../../modules/router.ts';
 import Modal from '../../components/modal/index.ts';
+import { TError } from '../../shared/types/error.ts';
 
 const authApi = new AuthAPI();
 
@@ -214,13 +215,13 @@ export default class RegPage extends Block {
 
                             authApi.signup(data).then(
                                 (response: any) => {
-                                    const data: TUser = JSON.parse(response.response);
+                                    const personData: TUser = JSON.parse(response.response);
 
                                     this.modal.setProps({
                                         children: [
                                             new Universal('div', {
                                                 children: `Спасибо за регистрацию!
-                                                           Ваш ID: ${data.id}`,
+                                                           Ваш ID: ${personData.id}`,
                                             }),
                                             new Universal('a', {
                                                 children: 'Войти всистему',
