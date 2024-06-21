@@ -6,7 +6,7 @@ export default class Route<TProps extends Record<string, any> = any> {
     //
     private pathname: string;
 
-    private blockClass: typeof Block;
+    private BlockClass: typeof Block;
 
     private block: Block | null;
 
@@ -14,7 +14,7 @@ export default class Route<TProps extends Record<string, any> = any> {
 
     constructor(pathname: string, view: typeof Block, props: TProps = {} as TProps) {
         this.pathname = pathname;
-        this.blockClass = view;
+        this.BlockClass = view;
         this.block = null;
         this.props = props;
     }
@@ -34,7 +34,7 @@ export default class Route<TProps extends Record<string, any> = any> {
     render(values: string[]) {
         const keys: string[] = this.pathname.split('/:').splice(1);
 
-        let params: Record<string, unknown> = {};
+        const params: Record<string, unknown> = {};
 
         // Копируем свойства из массива ключей в объект
         keys.forEach((key, index) => {
@@ -43,7 +43,7 @@ export default class Route<TProps extends Record<string, any> = any> {
         });
 
         if (!this.block) {
-            this.block = new this.blockClass();
+            this.block = new this.BlockClass();
             renderDom(this.props.selector, this.block);
             this.block.setParams(params);
             this.block.afterInit();

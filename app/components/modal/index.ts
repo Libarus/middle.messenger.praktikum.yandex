@@ -6,10 +6,10 @@ export default class Modal extends Block {
         const attrib = {
             attrib: { id: 'modal', class: 'modal' },
             events: {
-                click: (ev: PointerEvent) => {
-                    const elem: EventTarget | null = ev.target;
+                click: (ev: Event) => {
+                    const elem: any = ev.target;
                     if (elem != null) {
-                        if ((<HTMLElement>elem).getAttribute('class') == 'modal-content__close') {
+                        if (elem.getAttribute('class') === 'modal-content__close') {
                             this.hide();
                         }
                     }

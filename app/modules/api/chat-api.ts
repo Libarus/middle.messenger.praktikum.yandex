@@ -1,5 +1,5 @@
-import HTTP from '../http';
-import BaseAPI from './base-api';
+import HTTP from '../http.ts';
+import BaseAPI from './base-api.ts';
 
 const authApiInstance = new HTTP(`${BaseAPI.host}/api/v2/chats`);
 
@@ -17,8 +17,8 @@ export default class ChatAPI extends BaseAPI {
     }
 
     gettoken(chatId: number): Promise<string> {
-        return authApiInstance.post(`/token/${chatId}`, { data: {} }).then((response: any) => {
-            return JSON.parse(response.response).token;
-        });
+        return authApiInstance
+            .post(`/token/${chatId}`, { data: {} })
+            .then((response: any) => JSON.parse(response.response).token);
     }
 }

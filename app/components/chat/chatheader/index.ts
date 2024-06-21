@@ -42,12 +42,7 @@ export default class ChatHeader extends Block {
                 const chatId = +this.Props.chatId;
                 const userId = +data.userId;
                 try {
-                    const data = {
-                        users: [userId],
-                        chatId: chatId,
-                    };
-
-                    chatApi.addusers(data).then(
+                    chatApi.addusers({ users: [userId], chatId }).then(
                         () => {
                             this.Props.updateCallback();
                             this.modal.hide();

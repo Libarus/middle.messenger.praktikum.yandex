@@ -103,7 +103,7 @@ class Block<TProps extends Record<string, any> = any> {
     }
 
     toggle() {
-        if (this.getContent.style.display == 'block') this.getContent.style.display = 'none';
+        if (this.getContent.style.display === 'block') this.getContent.style.display = 'none';
         else this.getContent.style.display = 'block';
     }
 

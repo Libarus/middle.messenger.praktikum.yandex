@@ -1,6 +1,6 @@
-import { TUser } from '../../shared/types/user';
-import HTTP from '../http';
-import BaseAPI from './base-api';
+import { TUser } from '../../shared/types/user.ts';
+import HTTP from '../http.ts';
+import BaseAPI from './base-api.ts';
 
 const apiInstance = new HTTP(`${BaseAPI.host}/api/v2/user`);
 

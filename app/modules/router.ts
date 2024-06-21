@@ -1,6 +1,6 @@
-import Helpers from '../utils/helpers';
-import Block from './block';
-import Route from './route';
+import Helpers from '../utils/helpers.ts';
+import Block from './block.ts';
+import Route from './route.ts';
 
 export default class Router {
     public static instance: any = null;
@@ -14,16 +14,14 @@ export default class Router {
     private selector: string = '';
 
     constructor(selector: string) {
-        if (Router.instance) {
-            return Router.instance;
+        if (!Router.instance) {
+            this.routes = [];
+            this.history = window.history;
+            this.currentRoute = null;
+            this.selector = selector;
+
+            Router.instance = this;
         }
-
-        this.routes = [];
-        this.history = window.history;
-        this.currentRoute = null;
-        this.selector = selector;
-
-        Router.instance = this;
     }
 
     use(pathName: string, block: typeof Block) {
@@ -47,7 +45,7 @@ export default class Router {
 
     start() {
         // Реагируем на изменения в адресной строке и вызываем перерисовку
-        window.onpopstate = (event: PopStateEvent) => {
+        window.onpopstate = (event: Event) => {
             const eventTarget: EventTarget | null = event.currentTarget;
             // @ts-ignore
             const pathName = eventTarget != null ? eventTarget.location.pathname : '';

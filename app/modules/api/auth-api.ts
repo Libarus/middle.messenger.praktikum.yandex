@@ -15,9 +15,7 @@ export default class AuthAPI extends BaseAPI {
     }
 
     getuser(): Promise<TUser> {
-        return authApiInstance.get('/user').then((response: any) => {
-            return JSON.parse(response.response);
-        });
+        return authApiInstance.get('/user').then((response: any) => JSON.parse(response.response));
     }
 
     logout() {
