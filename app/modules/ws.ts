@@ -1,4 +1,4 @@
-import Helpers from '../utils/helpers';
+import Helpers from '../utils/helpers.ts';
 
 export default class WS {
     //
@@ -51,10 +51,10 @@ export default class WS {
     }
 
     private p_initEvents() {
-        this.p_socket.addEventListener('open', this.p_onOpen.bind(this)); // соединение установлено
-        this.p_socket.addEventListener('message', this.p_onMessage.bind(this)); // пришло новое сообщение
-        this.p_socket.addEventListener('error', this.p_onError.bind(this)); // ошибка
-        this.p_socket.addEventListener('close', this.p_onClose.bind(this)); // сокет закрылся
+        this.p_socket.addEventListener('open', this.p_onOpen.bind(this));
+        this.p_socket.addEventListener('message', this.p_onMessage.bind(this));
+        this.p_socket.addEventListener('error', this.p_onError.bind(this));
+        this.p_socket.addEventListener('close', this.p_onClose.bind(this));
     }
 
     private p_onOpen(event: Event) {
@@ -65,7 +65,7 @@ export default class WS {
         const data = JSON.parse(event.data);
         if (data.type === 'pong') {
             // eslint-disable-next-line no-console
-            console.info('pong');
+            Helpers.Log('INFO', 'pong');
             setTimeout(this.p_pingpong.bind(this), this.p_pingpongInterval);
         } else {
             this.p_onMessageEvent(event);

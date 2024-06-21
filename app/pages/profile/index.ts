@@ -114,7 +114,6 @@ export default class ProfilePage extends Block {
 
         if (setEmpty(user.avatar) !== '') {
             const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
-            console.info(src);
             this.profilePhoto.setProps({ attrib: { src } });
         }
 

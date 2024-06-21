@@ -25,7 +25,7 @@ export default class Form extends Universal {
     }
 
     private prepareElements() {
-        function p_xss(str: string): string {
+        function xss(str: string): string {
             return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
@@ -49,7 +49,7 @@ export default class Form extends Universal {
                 const valid = this.validateAll();
                 if (valid) {
                     this.formElements.forEach((formEl) => {
-                        data[formEl.element.name] = p_xss(formEl.element.value);
+                        data[formEl.element.name] = xss(formEl.element.value);
                     });
                 }
 

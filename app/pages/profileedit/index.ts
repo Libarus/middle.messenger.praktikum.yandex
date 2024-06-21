@@ -7,6 +7,7 @@ import AuthAPI from '../../modules/api/auth-api.ts';
 import { TUser } from '../../shared/types/user.ts';
 import Router from '../../modules/router.ts';
 import UserAPI from '../../modules/api/user-api.ts';
+import { TError } from '../../shared/types/error.ts';
 
 const authApi = new AuthAPI();
 const userApi = new UserAPI();
@@ -125,8 +126,7 @@ export default class ProfileEditPage extends Block {
                 },
                 events: {
                     change: (ev: Event) => {
-                        const target: EventTarget | null = ev.target;
-                        if (target !== null) {
+                        if (ev.target !== null) {
                             // выбор был
                             document.getElementById('avatarFormSubmitButton')?.click();
                         }
@@ -291,7 +291,6 @@ export default class ProfileEditPage extends Block {
 
         if (setEmpty(user.avatar) !== '') {
             const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
-            console.info(src);
             this.avaPhoto.setProps({ attrib: { src } });
         }
     }

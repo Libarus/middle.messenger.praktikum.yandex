@@ -12,6 +12,7 @@ import Chat from '../../components/chat/chat/index.ts';
 import ChatHeader from '../../components/chat/chatheader/index.ts';
 import WS from '../../modules/ws.ts';
 import { TUser } from '../../shared/types/user.ts';
+import { TError } from '../../shared/types/error.ts';
 
 const authApi = new AuthAPI();
 const chatApi = new ChatAPI();
@@ -74,7 +75,7 @@ export default class MessengerPage extends Block {
                 } catch (error) {
                     // Логика обработки ошибок
                     // TODO: Логирование ошибок
-                    console.error(error);
+                    Helpers.Log('ERROR', error);
                     this.divChatName.setProps({
                         children: `${error}`,
                     });
@@ -302,8 +303,6 @@ export default class MessengerPage extends Block {
     }
 
     afterInit(): void {
-        console.info('afterInit', this.Params);
-
         if (this.Params.id) {
             this.chatHeader.setProps({ chatId: this.Params.id });
         }
@@ -313,11 +312,10 @@ export default class MessengerPage extends Block {
 
         authApi.getuser().then(
             (user: TUser) => {
-                console.info('user', user);
                 this.userName.setProps({ children: user.display_name ?? user.first_name });
                 if (user.avatar !== '' && user.avatar !== null)
                     this.userAvatarImage.setProps({
-                        attrib: { src: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar },
+                        attrib: { src: `https://ya-praktikum.tech/api/v2/resources${user.avatar}` },
                     });
                 this.p_updateChats();
             },
@@ -361,7 +359,7 @@ export default class MessengerPage extends Block {
 
                         const u = chat.last_message.user;
                         if (u.avatar !== null && u.avatar !== '') {
-                            item.avatar = 'https://ya-praktikum.tech/api/v2/resources' + u.avatar;
+                            item.avatar = `https://ya-praktikum.tech/api/v2/resources${u.avatar}`;
                         }
                     }
 
