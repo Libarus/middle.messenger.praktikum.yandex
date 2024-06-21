@@ -49,6 +49,7 @@ export default class ChatHeader extends Block {
                         (response: any) => {
                             console.log(response.response);
                             this.Props.updateCallback();
+                            this.modal.hide();
                         },
                         (error: any) => {
                             console.log(error);

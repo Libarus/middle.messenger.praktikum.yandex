@@ -314,7 +314,7 @@ export default class MessengerPage extends Block {
         authApi.getuser().then(
             (user: TUser) => {
                 console.info('user', user);
-                this.userName.setProps({ children: user.display_name });
+                this.userName.setProps({ children: user.display_name ?? user.first_name });
                 if (user.avatar != '' && user.avatar != null)
                     this.userAvatarImage.setProps({
                         attrib: { src: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar },
@@ -325,7 +325,7 @@ export default class MessengerPage extends Block {
         );
     }
 
-    p_updateChats() {
+    p_updateChats(isUpdMessages = true) {
         this.chatListContent.setProps({ children: 'Loading chat list ...' });
 
         chatApi.getchats().then((value: any) => {
@@ -356,7 +356,9 @@ export default class MessengerPage extends Block {
                     }
 
                     if (chat.last_message != null) {
-                        item.name = chat.last_message.user.display_name;
+                        item.name =
+                            chat.last_message.user.display_name ??
+                            chat.last_message.user.first_name;
                         item.message = chat.last_message.content;
 
                         const u = chat.last_message.user;
@@ -385,7 +387,7 @@ export default class MessengerPage extends Block {
                     props.push(prop);
                 });
 
-                if (this.Params.id) {
+                if (this.Params.id && isUpdMessages) {
                     this.p_updateChatMessages(+this.Params.id);
                 }
 
@@ -442,6 +444,7 @@ export default class MessengerPage extends Block {
             const message: TChatMessage = parseData;
             console.info('MESSAGE: ', message);
             this.chat.addmessage(message, this.p_userId);
+            this.p_updateChats(false);
         }
     }
 

@@ -53,6 +53,8 @@ export default class ProfilePage extends Block {
         attrib: { class: 'profile-items' },
     });
 
+    userName = new Universal('div', { children: 'Иван', attrib: { class: 'profile-title' } });
+
     props = {
         children: new Universal('div', {
             children: [
@@ -64,7 +66,7 @@ export default class ProfilePage extends Block {
                     children: this.profilePhoto,
                     attrib: { class: 'profile-photo' },
                 }),
-                new Universal('div', { children: 'Иван', attrib: { class: 'profile-title' } }),
+                this.userName,
                 this.profItem,
                 new Universal('div', {
                     children: this.profileActionChildren,
@@ -103,6 +105,8 @@ export default class ProfilePage extends Block {
             new ProfileItem({ title: 'Имя в чате', children: setEmpty(user.display_name) }),
             new ProfileItem({ title: 'Телефон', children: setEmpty(user.phone) }),
         ];
+
+        this.userName.setProps({ children: setEmpty(user.first_name) });
 
         this.showUserId.setProps({ children: `User ID: ${user.id}` });
 

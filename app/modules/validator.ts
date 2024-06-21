@@ -26,7 +26,7 @@ const regexPhone = /^[+]?\d{10,15}$/;
 // login - от 3 до 20 символов, только латиница, может содержать цифры,
 // обязательно первый символ не цифра без пробелов, без спецсимволов,
 // допустимы дефис и нижнее подчёркивание
-const regexLogin = /^[a-zA-Z][a-zA-Z0-9-_]{2,18}[a-zA-Z0-9]$/;
+const regexLogin = /^[a-zA-Z][a-zA-Z0-9-_]{1,18}[a-zA-Z0-9]$/;
 
 export default class Validator {
     static message: string[] = [];
@@ -100,10 +100,10 @@ export default class Validator {
                         result = false;
                         this.message.push('Некорректные данные:');
                         this.message.push('- длина от 3 до 20 символов');
-                        this.message.push('- только линица');
+                        this.message.push('- только литница');
                         this.message.push('- может содержать цифры, но не первым символом');
                         this.message.push('- без пробелов');
-                        this.message.push('- без без спецсимволов');
+                        this.message.push('- без спецсимволов');
                         this.message.push('- допустимо "_" и "-"');
                     }
                     break;
