@@ -94,14 +94,6 @@ class Block<TProps extends Record<string, any> = any> {
         }
     };
 
-    setAttrib = (attribs: any) => {
-        if (!attribs) {
-            return;
-        }
-
-        console.info(this.p_attrib);
-    };
-
     show() {
         this.getContent.style.display = 'block';
     }

@@ -137,11 +137,12 @@ export default class MessengerPage extends Block {
         attrib: { class: 'content' },
     });
 
+    userAvatarImage = new Universal('img', {
+        attrib: { src: '/images/defphoto.svg', class: 'header-photo__avatar' },
+    });
+
     userAvatar = new Universal('div', {
-        children: new Universal('div', {
-            children: '&nbsp;',
-            attrib: { class: 'header-photo__avatar' },
-        }),
+        children: this.userAvatarImage,
         attrib: { class: 'header-photo' },
     });
 
@@ -213,12 +214,20 @@ export default class MessengerPage extends Block {
     message = new Universal('input', {
         attrib: {
             type: 'text',
-            name: 'message',
+            name: 'content',
             class: 'content-chat-action-message__input',
             value: '',
             placeholder: 'Сообщение',
         },
         validate: ['required'],
+    });
+
+    typemessage = new Universal('input', {
+        attrib: {
+            type: 'hidden',
+            name: 'type',
+            value: 'message',
+        },
     });
 
     sendMessageForm = new Form({
@@ -234,7 +243,7 @@ export default class MessengerPage extends Block {
                     attrib: { class: 'content-chat-action-upload' },
                 }),
                 new Universal('div', {
-                    children: this.message,
+                    children: [this.message, this.typemessage],
                     attrib: { class: 'content-chat-action-message' },
                 }),
                 new Universal('div', {
@@ -253,9 +262,11 @@ export default class MessengerPage extends Block {
             ],
             attrib: { class: 'content-chat-action' },
         }),
-        formElements: [this.message],
-        submit: (ev: any, valid: boolean, data: any = {}) => {
+        formElements: [this.message, this.typemessage],
+        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+            this.ws?.send(JSON.stringify(data));
+            this.sendMessageForm.reset();
             ev.preventDefault();
         },
         attrib: { id: 'message_form_send' },
@@ -304,6 +315,10 @@ export default class MessengerPage extends Block {
             (user: TUser) => {
                 console.info('user', user);
                 this.userName.setProps({ children: user.display_name });
+                if (user.avatar != '' && user.avatar != null)
+                    this.userAvatarImage.setProps({
+                        attrib: { src: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar },
+                    });
                 this.p_updateChats();
             },
             () => Router.instance.go('/')
@@ -324,6 +339,7 @@ export default class MessengerPage extends Block {
 
                 this.selectedChat = null;
                 chatList.forEach((chat: TChat) => {
+                    console.info(chat);
                     const item: TChatItem = {
                         id: chat.id,
                         name: `Чат "${chat.title}"`,
@@ -331,7 +347,7 @@ export default class MessengerPage extends Block {
                         self: false,
                         datetime: '***',
                         unread: chat.unread_count,
-                        avatar: '',
+                        avatar: '/images/defphoto.svg',
                         selected: this.Params.id == chat.id,
                     };
 
@@ -342,6 +358,11 @@ export default class MessengerPage extends Block {
                     if (chat.last_message != null) {
                         item.name = chat.last_message.user.display_name;
                         item.message = chat.last_message.content;
+
+                        const u = chat.last_message.user;
+                        if (u.avatar != null && u.avatar != '') {
+                            item.avatar = 'https://ya-praktikum.tech/api/v2/resources' + u.avatar;
+                        }
                     }
 
                     const events = {
@@ -352,7 +373,7 @@ export default class MessengerPage extends Block {
                         },
                     };
 
-                    console.info({
+                    console.info('###', {
                         ...item,
                         ...events,
                     });
@@ -383,7 +404,10 @@ export default class MessengerPage extends Block {
             attrib: { class: 'content-chat' },
         });
 
-        this.chatHeader.setProps({ name: this.selectedChat?.name });
+        this.chatHeader.setProps({
+            name: this.selectedChat?.name,
+            avatar: this.selectedChat?.avatar,
+        });
 
         let user = await authApi.getuser();
         this.p_userId = user.id;
@@ -394,12 +418,12 @@ export default class MessengerPage extends Block {
             `wss://ya-praktikum.tech/ws/chats/${this.p_userId}/${chatId}/${token}`,
             this.onOpen.bind(this),
             this.onMessage.bind(this),
-            this.onError,
-            this.onClose
+            this.onError.bind(this),
+            this.onClose.bind(this)
         );
     }
 
-    onOpen(event: Event) {
+    onOpen() {
         // запрос последних 20 сообщений
         const data: any = { type: 'get old', content: '0' };
         if (this.ws != null) this.ws.send(JSON.stringify(data));
@@ -407,12 +431,21 @@ export default class MessengerPage extends Block {
     }
 
     onMessage(event: MessageEvent) {
-        const messages: TChatMessage[] = JSON.parse(event.data);
-        console.info(messages);
-        this.chat.update(messages, this.p_userId);
+        console.info('#### onMessage ', event);
+        const parseData: any = JSON.parse(event.data);
+        if (Array.isArray(parseData)) {
+            const messages: TChatMessage[] = JSON.parse(event.data);
+            console.info(messages);
+            this.chat.addmessages(messages.reverse(), this.p_userId);
+        } else {
+            console.info();
+            const message: TChatMessage = parseData;
+            console.info('MESSAGE: ', message);
+            this.chat.addmessage(message, this.p_userId);
+        }
     }
 
-    onError(event: Event) {}
+    onError() {}
 
-    onClose(event: CloseEvent) {}
+    onClose() {}
 }

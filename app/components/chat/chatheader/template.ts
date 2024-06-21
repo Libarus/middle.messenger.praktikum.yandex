@@ -1,6 +1,6 @@
 export default `
     <div class="content-chat-header-userinfo">
-        <div class="content-chat-header-userinfo__avatar">&nbsp;</div>
+        <img src="{{avatar}}" class="content-chat-header-userinfo__avatar">
         <div class="content-chat-header-userinfo__name">{{name}}</div>
     </div>
     

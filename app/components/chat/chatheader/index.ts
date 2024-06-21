@@ -9,8 +9,6 @@ import template from './template.ts';
 const chatApi = new ChatAPI();
 
 export default class ChatHeader extends Block {
-    private p_chatId: number = 0;
-
     /* MODAL WINDOW */
     divChatName = new Universal('div', { attrib: { class: 'form-input-error' } });
     inputChatName = new Universal('input', {
@@ -133,7 +131,10 @@ export default class ChatHeader extends Block {
     });
 
     constructor(props: any = {}) {
-        const initObj = { attrib: { class: 'content-chat-header' } };
+        const initObj = {
+            attrib: { class: 'content-chat-header' },
+            avatar: '/images/defphoto.svg',
+        };
         super('div', { ...initObj, ...props });
 
         this.setProps({ modal: this.modal, imgmenu: this.imgmenu, popup: this.menu });

@@ -3,6 +3,12 @@ import ProfileItem from '../../components/profileitem/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
 import Block from '../../modules/block.ts';
+import AuthAPI from '../../modules/api/auth-api.ts';
+import { TUser } from '../../shared/types/user.ts';
+
+// TODO: Сохранение в разработке!
+
+const authApi = new AuthAPI();
 
 export default class PasswordPage extends Block {
     divOldPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -12,7 +18,7 @@ export default class PasswordPage extends Block {
             type: 'password',
             name: 'oldPassword',
             class: 'profile-item__input',
-            value: 'pochta@yandex.ru',
+            value: '',
         },
         validate: ['required', 'password'],
     });
@@ -24,7 +30,7 @@ export default class PasswordPage extends Block {
             type: 'password',
             name: 'newPassword',
             class: 'profile-item__input',
-            value: 'ivanivanov',
+            value: '',
         },
         validate: ['required', 'passwordmatch:newPassword_again', 'password'],
     });
@@ -36,7 +42,7 @@ export default class PasswordPage extends Block {
             type: 'password',
             name: 'newPassword_again',
             class: 'profile-item__input',
-            value: 'Иван',
+            value: '',
         },
         validate: ['required', 'passwordmatch:newPassword', 'password'],
     });
@@ -63,16 +69,13 @@ export default class PasswordPage extends Block {
         attrib: { href: '/messenger', class: 'profile-close__button' },
     });
 
-    profilePhoto = [
-        new Universal('img', {
-            attrib: {
-                src: '/images/defphoto.svg',
-                class: 'profile-photo__image',
-                alt: 'Аватар пользователя',
-            },
-        }),
-        new Universal('input', { attrib: { type: 'hidden', name: 'avatar', value: '' } }),
-    ];
+    profilePhoto = new Universal('img', {
+        attrib: {
+            src: '/images/defphoto.svg',
+            class: 'profile-photo__image',
+            alt: 'Аватар пользователя',
+        },
+    });
 
     profileActionChildren = new Universal('button', {
         children: 'Сохранить',
@@ -91,8 +94,9 @@ export default class PasswordPage extends Block {
             }),
         ],
         formElements: [this.inputOldPassword, this.inputNewPassword, this.inputNewPasswordAgain],
-        submit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+            alert('Сохранение в разработке');
             ev.preventDefault();
         },
     });
@@ -125,5 +129,21 @@ export default class PasswordPage extends Block {
     render(): any {
         super.render();
         return this.compile('{{{children}}}', this.Props);
+    }
+
+    async afterInit(): Promise<unknown> {
+        function setEmpty(value: unknown): string {
+            return value == null ? '' : '' + value;
+        }
+
+        const user: TUser = await authApi.getuser();
+
+        if (setEmpty(user.avatar) != '') {
+            const src = 'https://ya-praktikum.tech/api/v2/resources' + setEmpty(user.avatar);
+            console.info(src);
+            this.profilePhoto.setProps({ attrib: { src } });
+        }
+
+        return;
     }
 }

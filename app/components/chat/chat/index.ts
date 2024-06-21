@@ -6,14 +6,26 @@ import ChatImage from '../chatimage/index.ts';
 import { TChatMessage } from '../../../shared/types/chat.ts';
 
 export default class Chat extends Block {
+    private p_messages: TChatMessage[] = [];
+
     constructor(props: any = {}) {
         super('div', props);
     }
 
-    update(messages: TChatMessage[], userId: number) {
+    addmessages(messages: TChatMessage[], userId: number) {
+        this.p_messages = messages;
+        this.p_update(userId);
+    }
+
+    addmessage(message: TChatMessage, userId: number): void {
+        this.p_messages.push(message);
+        this.p_update(userId);
+    }
+
+    private p_update(userId: number): void {
         const data: Record<string, TChatMessage[]> = {};
 
-        messages.forEach((chatMsg: TChatMessage) => {
+        this.p_messages.forEach((chatMsg: TChatMessage) => {
             const dt: Date = new Date(chatMsg.time);
             const dateTitle: string = dt.toLocaleString('ru', {
                 month: 'long', // Используем полное название месяца
@@ -34,8 +46,6 @@ export default class Chat extends Block {
                 attrib: { class: 'content-chat-content-date' },
             });
             children.push(datetime);
-
-            data[dt];
 
             data[dt].forEach((message: TChatMessage) => {
                 const time: Date = new Date(message.time);
@@ -68,6 +78,8 @@ export default class Chat extends Block {
         }
 
         this.setProps({ children });
+
+        this.element.scrollTop = this.element.scrollHeight;
     }
 
     render(): any {

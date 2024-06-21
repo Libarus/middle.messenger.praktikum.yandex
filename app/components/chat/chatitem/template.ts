@@ -7,9 +7,7 @@ export default `
         <div class="chats-item-block">
 
             <div class="chats-item-block-photo">
-                <div class="chats-item-block-photo__avatar">
-                    &nbsp;
-                </div>
+                <img src="{{avatar}}" class="chats-item-block-photo__avatar">
             </div>
 
             <div class="chats-item-block-data">

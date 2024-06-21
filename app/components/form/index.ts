@@ -20,6 +20,10 @@ export default class Form extends Universal {
         return !this.isValidate;
     }
 
+    public reset() {
+        this.element.reset();
+    }
+
     private prepareElements() {
         this.formElements.forEach((formEl) => {
             const blurEvent = {
@@ -41,7 +45,7 @@ export default class Form extends Universal {
                 const valid = this.validateAll();
                 if (valid) {
                     this.formElements.forEach((formEl) => {
-                        data[formEl.element.name] = formEl.element.value;
+                        data[formEl.element.name] = this.p_xss(formEl.element.value);
                     });
                 }
 
@@ -84,5 +88,9 @@ export default class Form extends Universal {
             }
         });
         return this.isValidate;
+    }
+
+    private p_xss(str: string) {
+        return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 }

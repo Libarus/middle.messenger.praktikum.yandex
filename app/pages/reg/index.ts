@@ -9,9 +9,6 @@ import Modal from '../../components/modal/index.ts';
 
 const authApi = new AuthAPI();
 
-const rnd = Math.round(Math.random() * 1000) + 1000;
-console.info(rnd);
-
 export default class RegPage extends Block {
     // LOGIN
     divEmail = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
@@ -21,7 +18,7 @@ export default class RegPage extends Block {
             type: 'text',
             name: 'email',
             class: 'form-text__input',
-            value: `aaa${rnd}@sss.dd`,
+            value: '',
         },
         validate: ['required', 'email'],
     });
@@ -39,7 +36,7 @@ export default class RegPage extends Block {
             type: 'text',
             name: 'login',
             class: 'form-text__input',
-            value: `usr${rnd}`,
+            value: '',
         },
         validate: ['required', 'login'],
     });
@@ -57,7 +54,7 @@ export default class RegPage extends Block {
             type: 'text',
             name: 'first_name',
             class: 'form-text__input',
-            value: 'Антон',
+            value: '',
         },
         validate: ['required', 'capitalize', 'username'],
     });
@@ -75,7 +72,7 @@ export default class RegPage extends Block {
             type: 'text',
             name: 'second_name',
             class: 'form-text__input',
-            value: 'Парарара',
+            value: '',
         },
         validate: ['required', 'capitalize', 'username'],
     });
@@ -93,7 +90,7 @@ export default class RegPage extends Block {
             type: 'text',
             name: 'phone',
             class: 'form-text__input',
-            value: `+7888555${rnd}`,
+            value: ``,
         },
         validate: ['required', 'phone'],
     });
@@ -111,7 +108,7 @@ export default class RegPage extends Block {
             type: 'password',
             name: 'password',
             class: 'form-password__input',
-            value: '123QWEasd!@#',
+            value: '',
         },
         validate: ['required', 'passwordmatch:password_again', 'password'],
     });
@@ -129,7 +126,7 @@ export default class RegPage extends Block {
             type: 'password',
             name: 'password_again',
             class: 'form-password__input',
-            value: '123QWEasd!@#',
+            value: '',
         },
         validate: ['required', 'passwordmatch:password', 'password'],
     });

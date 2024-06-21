@@ -122,27 +122,23 @@
     color: global.$success-color;
 }
 
-//  Стили для модального окна
 .modal {
-    // display: none; //  Скрыть модальное окно по умолчанию
-    position: fixed; //  Оставаться на месте при прокрутке
-    z-index: 1000; //  Сидеть над всеми другими элементами
+    position: fixed;
+    z-index: 1000;
     inset: 0;
-    overflow: auto; //  Включить прокрутку, если нужно
-    background-color: global.$bg-modal; //  Затемнение фона
+    overflow: auto;
+    background-color: global.$bg-modal;
 
-    //  Стили для содержимого модального окна
     &-content {
         position: relative;
         background-color: global.$bg-white;
-        margin: 15% auto; //  15% от верхней части окна, автоматически центрировано
+        margin: 15% auto;
         padding: 20px;
         border: 0;
         border-radius: 12px;
-        width: 400px; //  Можно изменить на любую ширину
+        width: 400px;
         box-shadow: global.$modal-shadow;
 
-        // Стили для кнопки закрытия
         &__close {
             color: global.$silver-text-bg;
             float: right;

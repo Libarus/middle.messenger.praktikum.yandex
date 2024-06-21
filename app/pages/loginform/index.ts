@@ -17,7 +17,7 @@ export default class LoginFormPage extends Block {
             type: 'text',
             name: 'login',
             class: 'form-text__input',
-            value: 'usr1103',
+            value: '',
         },
         validate: ['required', 'login'],
     });
@@ -35,7 +35,7 @@ export default class LoginFormPage extends Block {
             type: 'password',
             name: 'password',
             class: 'form-password__input',
-            value: '123QWEasd!@#',
+            value: '',
         },
         validate: ['required'],
     });
@@ -68,28 +68,6 @@ export default class LoginFormPage extends Block {
         },
     });
 
-    /* Debug! TODO: Delete
-    logoutButton = new Universal('button', {
-        children: 'Выйти',
-        attrib: { class: 'form-button', type: 'button' },
-        events: {
-            click: () => {
-                authApi.logout();
-            },
-        },
-    });
-
-    checkButton = new Universal('button', {
-        children: 'check',
-        attrib: { class: 'form-button', type: 'button' },
-        events: {
-            click: () => {
-                authApi.isAuth().then((x) => console.info(x));
-            },
-        },
-    });
-    */
-
     loginBox = new Universal('div', {
         children: [
             new Universal('div', {
@@ -105,14 +83,7 @@ export default class LoginFormPage extends Block {
                 ],
             }),
             new Universal('div', {
-                children: [
-                    this.errorMessage,
-                    this.button,
-                    this.waiter,
-                    this.link,
-                    //this.logoutButton,
-                    //this.checkButton,
-                ],
+                children: [this.errorMessage, this.button, this.waiter, this.link],
             }),
         ],
         attrib: {

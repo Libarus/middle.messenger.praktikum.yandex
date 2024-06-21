@@ -4,10 +4,10 @@ export default class BaseAPI {
     static host = 'https://ya-praktikum.tech';
 
     create(data: any): Promise<unknown> {
-        throw new Error('Not implemented');
+        throw new Error('Not implemented', data);
     }
 
-    request(data: any): Promise<unknown> {
+    request(): Promise<unknown> {
         throw new Error('Not implemented');
     }
 
