@@ -9,7 +9,7 @@
     "scripts": {
         "dev": "vite",
         "start": "vite",
-        "build": "tsc --noEmit && npm run eslint && npm run stylelint && vite build --emptyOutDir",
+        "build": "tsc --noEmit && npm run eslint && npm run stylelint && vite build --base=/ --emptyOutDir",
         "preview": "vite preview",
         "serve": "npm run build && node server.js",
         "eslint": "eslint .",
