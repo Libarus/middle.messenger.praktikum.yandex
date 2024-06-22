@@ -74,7 +74,8 @@ export default class MessengerPage extends Block {
                             } catch (err) {
                                 Helpers.Log(
                                     'ERROR',
-                                    `[messenger.modalAddChat] Ошибка преобразования в JSON строки: ${error.response}`
+                                    `[messenger.modalAddChat] Ошибка преобразования
+                                    в JSON строки: ${error.response}`
                                 );
                             }
                         }
@@ -345,7 +346,8 @@ export default class MessengerPage extends Block {
             } catch (err) {
                 Helpers.Log(
                     'ERROR',
-                    `[messenger.p_updateChats] Ошибка преобразования в JSON строки: ${value.response}`
+                    `[messenger.p_updateChats] Ошибка преобразования
+                    в JSON строки: ${value.response}`
                 );
             }
 

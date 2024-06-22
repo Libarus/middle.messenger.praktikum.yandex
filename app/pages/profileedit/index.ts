@@ -225,7 +225,8 @@ export default class ProfileEditPage extends Block {
                             } catch (err) {
                                 Helpers.Log(
                                     'ERROR',
-                                    `[profileedit.afterSubmit] Ошибка преобразования в JSON строки: ${error.response}`
+                                    `[profileedit.afterSubmit] Ошибка преобразования
+                                    в JSON строки: ${error.response}`
                                 );
                             }
                         }

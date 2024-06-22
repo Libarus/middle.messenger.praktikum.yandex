@@ -166,23 +166,24 @@ export default class ChatHeader extends Block {
                             (resp: XMLHttpRequest) => {
                                 try {
                                     const users: TUser[] = JSON.parse(resp.response) as TUser[];
-                                    const userList = users.map((u: TUser): Universal => {
-                                        return new Universal('li', {
-                                            children: new Universal('a', {
-                                                children: `${u.first_name} (ID:${u.id})`,
-                                                attrib: {
-                                                    href: '#',
-                                                    class: 'remove-user-list-li__link',
-                                                },
-                                                events: {
-                                                    click: (ev: Event) => {
-                                                        ev.preventDefault();
-                                                        this.p_removeuser(u, chatId);
+                                    const userList = users.map(
+                                        (u: TUser): Universal =>
+                                            new Universal('li', {
+                                                children: new Universal('a', {
+                                                    children: `${u.first_name} (ID:${u.id})`,
+                                                    attrib: {
+                                                        href: '#',
+                                                        class: 'remove-user-list-li__link',
                                                     },
-                                                },
-                                            }),
-                                        });
-                                    });
+                                                    events: {
+                                                        click: (evnt: Event) => {
+                                                            evnt.preventDefault();
+                                                            this.p_removeuser(u, chatId);
+                                                        },
+                                                    },
+                                                }),
+                                            })
+                                    );
 
                                     this.modalRemoveUserUl.setProps({ children: userList });
                                 } catch (err) {

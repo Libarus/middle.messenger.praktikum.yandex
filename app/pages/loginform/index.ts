@@ -128,7 +128,8 @@ export default class LoginFormPage extends Block {
                                     } catch (err) {
                                         Helpers.Log(
                                             'ERROR',
-                                            `[loginform.props] Ошибка преобразования в JSON строки: ${error.response}`
+                                            `[loginform.props] Ошибка преобразования
+                                            в JSON строки: ${error.response}`
                                         );
                                     }
                                 }

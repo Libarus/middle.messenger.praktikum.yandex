@@ -36,7 +36,7 @@ export default class Helpers {
     }
 
     public static Alert(message: string): void {
-        // eslint-disable-next-line no-undef
+        // eslint-disable-next-line no-alert
         alert(message);
     }
 }

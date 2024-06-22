@@ -223,7 +223,8 @@ export default class RegPage extends Block {
                                     } catch (err) {
                                         Helpers.Log(
                                             'ERROR',
-                                            `[reg.afterSubmit] Ошибка преобразования в JSON строки: ${strUserData}`
+                                            `[reg.afterSubmit] Ошибка преобразования
+                                            в JSON строки: ${strUserData}`
                                         );
                                     }
 
@@ -254,7 +255,8 @@ export default class RegPage extends Block {
                                     } catch (err) {
                                         Helpers.Log(
                                             'ERROR',
-                                            `[reg.afterSubmit] Ошибка преобразования в JSON строки: ${error.response}`
+                                            `[reg.afterSubmit] Ошибка преобразования
+                                            в JSON строки: ${error.response}`
                                         );
                                     }
                                 }
