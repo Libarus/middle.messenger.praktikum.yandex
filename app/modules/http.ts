@@ -1,7 +1,7 @@
 type TOptions = {
     data?: any;
     headers?: Record<string, number>;
-    timeout: number;
+    timeout?: number;
 };
 
 type TRequest = {
@@ -10,12 +10,21 @@ type TRequest = {
     headers?: Record<string, number>;
 };
 
-type HTTPMethod = (url: string, options?: TOptions) => Promise<unknown>;
+type HTTPMethod = (url: string, options?: TOptions) => Promise<XMLHttpRequest>;
 
 export default class HTTP {
-    private static defTimeout: number = 5000;
+    //
 
-    static METHODS = {
+    private baseUrl: string = '';
+
+    constructor(baseUrl: string) {
+        this.baseUrl = baseUrl;
+        this.baseUrl = this.baseUrl.endsWith('/') ? this.baseUrl.slice(0, -1) : this.baseUrl;
+    }
+
+    private defTimeout: number = 5000;
+
+    METHODS = {
         GET: 'GET',
         POST: 'POST',
         PUT: 'PUT',
@@ -23,22 +32,22 @@ export default class HTTP {
         UNKNOWN: 'UNKNOWN', // задел на будущие доработки
     };
 
-    static get: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    get: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
 
-    static post: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    post: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.POST }, options.timeout);
 
-    static put: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    put: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.PUT }, options.timeout);
 
-    static delete: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    delete: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.DELETE }, options.timeout);
 
-    static p_request(purl: string, options: TRequest = {}, timeout = 5000) {
+    p_request(purl: string, options: TRequest = {}, timeout = 5000): Promise<XMLHttpRequest> {
         const { method = '', data, headers } = options;
 
-        let url = purl;
+        let url = this.baseUrl + purl;
         if (method === this.METHODS.GET && !!data) {
             url += typeof data === 'string' ? data : this.p_queryStringify(data);
         }
@@ -48,6 +57,7 @@ export default class HTTP {
             const xhr = new XMLHttpRequest();
             xhr.open(method, url);
             xhr.timeout = timeout;
+            xhr.withCredentials = true;
 
             if (!headers && headers !== undefined) {
                 Object.keys(headers).forEach((key: string) => {
@@ -56,15 +66,21 @@ export default class HTTP {
             }
 
             xhr.onload = () => {
-                resolve(xhr);
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(xhr);
+                } else {
+                    reject(xhr);
+                }
             };
 
             xhr.onabort = reject;
-            xhr.onerror = reject;
+            xhr.onerror = () => reject(new Error('Network error'));
             xhr.ontimeout = reject;
 
             if (method === this.METHODS.GET || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
                 xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
                 xhr.send(JSON.stringify(data));
@@ -72,7 +88,7 @@ export default class HTTP {
         });
     }
 
-    static p_queryStringify(data: any) {
+    private p_queryStringify(data: any) {
         if (typeof data !== 'object') {
             throw new Error('Data должна быть объектом');
         }

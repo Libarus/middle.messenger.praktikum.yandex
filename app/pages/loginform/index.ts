@@ -1,10 +1,15 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
+import Modal from '../../components/modal/index.ts';
+import AuthAPI from '../../modules/api/auth-api.ts';
+import Router from '../../modules/router.ts';
+import { TError } from '../../shared/types/error.ts';
 
-export default class LoginFormPage {
+const authApi = new AuthAPI();
+
+export default class LoginFormPage extends Block {
     // LOGIN
     divLogin = new Universal('div', { attrib: { class: 'form-input-error' } });
 
@@ -46,10 +51,20 @@ export default class LoginFormPage {
         attrib: { class: 'form-button' },
     });
 
+    waiter = new Universal('div', {
+        children: 'Ждите ...',
+        attrib: { class: 'waiter' },
+    });
+
+    errorMessage = new Universal('div', {
+        children: 'Error message',
+        attrib: { class: 'error-message' },
+    });
+
     link = new Universal('a', {
         children: 'Нет аккаунта?',
         attrib: {
-            href: '/reg.html',
+            href: '/sign-up',
             class: 'form__link link text-center mt14',
         },
     });
@@ -69,7 +84,7 @@ export default class LoginFormPage {
                 ],
             }),
             new Universal('div', {
-                children: [this.button, this.link],
+                children: [this.errorMessage, this.button, this.waiter, this.link],
             }),
         ],
         attrib: {
@@ -77,30 +92,80 @@ export default class LoginFormPage {
         },
     });
 
-    main = new Universal('main', {
-        children: new Form({
-            children: this.loginBox,
-            formElements: [this.inputLogin, this.inputPassword],
-            submit: (ev: any, valid: boolean, data: any = {}) => {
-                Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
-                ev.preventDefault();
-            },
-        }),
+    modal = new Modal({
+        children: '',
     });
 
-    constructor(selector: string) {
+    props = {
+        children: [
+            this.modal,
+            new Form({
+                children: this.loginBox,
+                formElements: [this.inputLogin, this.inputPassword],
+                afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
+                    Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT '}valid. Form data:`, data);
+
+                    if (valid) {
+                        try {
+                            this.button.hide();
+                            this.waiter.show();
+                            this.errorMessage.hide();
+
+                            authApi.signin(data).then(
+                                () => {
+                                    Router.instance.go('/messenger');
+                                },
+                                (error: any) => {
+                                    this.button.show();
+                                    this.errorMessage.show();
+                                    this.waiter.hide();
+
+                                    try {
+                                        const reason: TError = JSON.parse(error.response) as TError;
+                                        this.errorMessage.setProps({
+                                            children: reason.reason,
+                                        });
+                                    } catch (err) {
+                                        Helpers.Log(
+                                            'ERROR',
+                                            `[loginform.props] Ошибка преобразования
+                                            в JSON строки: ${error.response}`
+                                        );
+                                    }
+                                }
+                            );
+                        } catch (error) {
+                            // Логика обработки ошибок
+                            // TODO: Логирование ошибок
+                            Router.instance.go('/error500');
+                        }
+                    }
+
+                    ev.preventDefault();
+                },
+            }),
+        ],
+    };
+
+    constructor(props = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('Авторизация');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
+    }
+
+    afterInit(): void {
+        this.button.show();
+        this.waiter.hide();
+        this.errorMessage.hide();
+        this.modal.hide();
+
+        authApi.isAuth().then((auth: boolean) => {
+            if (auth) Router.instance.go('/messenger');
+        });
     }
 }
-
-/*
-// Через секунду контент изменится сам, достаточно обновить пропсы
-setTimeout(() => {
-    lili.setProps({
-        children: '999000999',
-        aaa: 111,
-        bbb: 222,
-    });
-}, 3000);
-*/

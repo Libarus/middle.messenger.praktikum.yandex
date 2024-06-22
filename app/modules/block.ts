@@ -33,6 +33,8 @@ class Block<TProps extends Record<string, any> = any> {
 
     private p_setRender: boolean = false;
 
+    private p_params: Record<string, unknown> = {};
+
     /** JSDoc
      * @param {string} tagName
      * @param {Object} propsAndChildren
@@ -54,6 +56,7 @@ class Block<TProps extends Record<string, any> = any> {
         this.setProps(propsAndChildren);
         this.p_children = this.p_makePropsProxy(this.p_children);
         this.p_list = this.p_makePropsProxy(this.p_list);
+        this.p_attrib = this.p_makePropsProxy(this.p_attrib);
         this.p_props = this.p_makePropsProxy({ ...this.p_props, p__id: this.p_id });
 
         this.eventBus = () => eventBus;
@@ -97,6 +100,11 @@ class Block<TProps extends Record<string, any> = any> {
 
     hide() {
         this.getContent.style.display = 'none';
+    }
+
+    toggle() {
+        if (this.getContent.style.display === 'block') this.getContent.style.display = 'none';
+        else this.getContent.style.display = 'block';
     }
 
     compile(template: string, props: any): any {
@@ -161,6 +169,10 @@ class Block<TProps extends Record<string, any> = any> {
     get getEvents(): TProps {
         const { events = {} } = this.p_props;
         return events;
+    }
+
+    get Params(): Record<string, unknown> {
+        return this.p_params;
     }
 
     /* PRIVATE */
@@ -302,6 +314,14 @@ class Block<TProps extends Record<string, any> = any> {
     render(): any {
         return Helpers.GetDocument().createElement('template');
     } // Необходимо вернуть разметку
+
+    beforeInit(): void {}
+
+    setParams(params: Record<string, unknown>): void {
+        this.p_params = params;
+    }
+
+    afterInit(): void {}
 }
 
 export default Block;

@@ -31,6 +31,10 @@
     }
 }
 
+.invisible-link {
+    text-decoration: none;
+}
+
 .mt14 {
     margin-top: 14px;
 }
@@ -96,4 +100,71 @@
     &__link {
         font-size: 11px;
     }
+}
+
+.waiter {
+    text-align: center;
+    font-size: 12px;
+    font-family: global.$font-family;
+}
+
+.error-message,
+.success-message {
+    text-align: center;
+    font-size: 12px;
+    font-family: global.$font-family;
+    color: global.$error-color;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.success-message {
+    color: global.$success-color;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    overflow: auto;
+    background-color: global.$bg-modal;
+
+    &-content {
+        position: relative;
+        background-color: global.$bg-white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 0;
+        border-radius: 12px;
+        width: 400px;
+        box-shadow: global.$modal-shadow;
+
+        &__close {
+            color: global.$silver-text-bg;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        &__close:hover,
+        &__close:focus {
+            color: global.$link-color;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        &__content {
+            font-size: 14px;
+            padding-top: 30px;
+            font-family: global.$font-family;
+            text-align: center;
+        }
+    }
+}
+
+.muted {
+    font-family: global.$font-family;
+    text-align: center;
+    color: global.$silver-text;
+    font-size: 12px;
 }

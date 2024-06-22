@@ -1,11 +1,17 @@
-import renderDom from '../../utils/render-dom.ts';
-
 import Universal from '../../components/universal/index.ts';
 import ProfileItem from '../../components/profileitem/index.ts';
 import Form from '../../components/form/index.ts';
 import Helpers from '../../utils/helpers.ts';
+import Block from '../../modules/block.ts';
+import AuthAPI from '../../modules/api/auth-api.ts';
+import { TUser } from '../../shared/types/user.ts';
+import Router from '../../modules/router.ts';
 
-export default class PasswordPage {
+// TODO: Сохранение в разработке!
+
+const authApi = new AuthAPI();
+
+export default class PasswordPage extends Block {
     divOldPassword = new Universal('div', { attrib: { class: 'form-input-error hidden' } });
 
     inputOldPassword = new Universal('input', {
@@ -13,7 +19,7 @@ export default class PasswordPage {
             type: 'password',
             name: 'oldPassword',
             class: 'profile-item__input',
-            value: 'pochta@yandex.ru',
+            value: '',
         },
         validate: ['required', 'password'],
     });
@@ -25,7 +31,7 @@ export default class PasswordPage {
             type: 'password',
             name: 'newPassword',
             class: 'profile-item__input',
-            value: 'ivanivanov',
+            value: '',
         },
         validate: ['required', 'passwordmatch:newPassword_again', 'password'],
     });
@@ -37,7 +43,7 @@ export default class PasswordPage {
             type: 'password',
             name: 'newPassword_again',
             class: 'profile-item__input',
-            value: 'Иван',
+            value: '',
         },
         validate: ['required', 'passwordmatch:newPassword', 'password'],
     });
@@ -61,19 +67,16 @@ export default class PasswordPage {
         children: new Universal('img', {
             attrib: { src: '/images/close.svg', alt: 'Закрыть редактирование данных пользователя' },
         }),
-        attrib: { href: '/', class: 'profile-close__button' },
+        attrib: { href: '/messenger', class: 'profile-close__button' },
     });
 
-    profilePhoto = [
-        new Universal('img', {
-            attrib: {
-                src: '/images/defphoto.svg',
-                class: 'profile-photo__image',
-                alt: 'Аватар пользователя',
-            },
-        }),
-        new Universal('input', { attrib: { type: 'hidden', name: 'avatar', value: '' } }),
-    ];
+    profilePhoto = new Universal('img', {
+        attrib: {
+            src: '/images/defphoto.svg',
+            class: 'profile-photo__image',
+            alt: 'Аватар пользователя',
+        },
+    });
 
     profileActionChildren = new Universal('button', {
         children: 'Сохранить',
@@ -92,13 +95,14 @@ export default class PasswordPage {
             }),
         ],
         formElements: [this.inputOldPassword, this.inputNewPassword, this.inputNewPasswordAgain],
-        submit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
+            Helpers.Log('INFO', 'Сохранение в разработке');
             ev.preventDefault();
         },
     });
 
-    main = new Universal('main', {
+    props = {
         children: new Universal('div', {
             children: [
                 new Universal('div', {
@@ -115,10 +119,36 @@ export default class PasswordPage {
                 class: 'profile-box',
             },
         }),
-    });
+    };
 
-    constructor(selector: string) {
+    constructor(props = {}) {
+        super('main', props);
         Helpers.SetDocumentTitle('Изменение пароля');
-        renderDom(selector, this.main);
+        this.setProps(this.props);
+    }
+
+    render(): any {
+        super.render();
+        return this.compile('{{{children}}}', this.Props);
+    }
+
+    async afterInit(): Promise<unknown> {
+        function setEmpty(value: unknown): string {
+            return value == null ? '' : (value as string);
+        }
+
+        authApi.getuser().then(
+            (user: TUser) => {
+                if (setEmpty(user.avatar) !== '') {
+                    const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(
+                        user.avatar
+                    )}`;
+                    this.profilePhoto.setProps({ attrib: { src } });
+                }
+            },
+            () => Router.instance.go('/')
+        );
+
+        return false;
     }
 }

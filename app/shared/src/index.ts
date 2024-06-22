@@ -1,51 +1,26 @@
-import IndexPage from '../../pages/index/index.ts';
 import LoginFormPage from '../../pages/loginform/index.ts';
 import RegPage from '../../pages/reg/index.ts';
 import ProfilePage from '../../pages/profile/index.ts';
 import ProfileEditPage from '../../pages/profileedit/index.ts';
 import PasswordPage from '../../pages/password/index.ts';
-import ChatListPage from '../../pages/chatlist/index.ts';
-import ChatChatPage from '../../pages/chatchat/index.ts';
 import Error500Page from '../../pages/error500/index.ts';
 import Error404Page from '../../pages/error404/index.ts';
-import Helpers from '../../utils/helpers.ts';
+import Router from '../../modules/router.ts';
+import MessengerPage from '../../pages/messenger/index.ts';
 
-function getLocation(href: string): any {
-    const l = Helpers.GetDocument().createElement('a');
-    l.href = href;
-    return l;
-}
-const l = getLocation(Helpers.GetWindow().location.href);
-const moduleName = l.pathname.toLowerCase().replace('/', '').replace('.html', '').trim();
+const router = new Router('#app');
 
-switch (moduleName) {
-    case '':
-        new IndexPage('#app'); // Начальная страница
-        break;
-    case 'loginform':
-        new LoginFormPage('#app'); // Форма авторизации
-        break;
-    case 'reg':
-        new RegPage('#app'); // Форма регистрации
-        break;
-    case 'profile':
-        new ProfilePage('#app'); // Профиль пользователя
-        break;
-    case 'profileedit':
-        new ProfileEditPage('#app'); // Редактирование профиля
-        break;
-    case 'password':
-        new PasswordPage('#app'); // Изменение пароля
-        break;
-    case 'error500':
-        new Error500Page('#app'); // Страница 500й ошибки
-        break;
-    case 'chatlist':
-        new ChatListPage('#app'); // Страница со списком чатов
-        break;
-    case 'chatchat':
-        new ChatChatPage('#app'); // Страница с чатом
-        break;
-    default:
-        new Error404Page('#app'); // Страница 404й ошибки
-}
+// Можно обновиться на /user и получить сразу пользователя
+router
+    .use('/', LoginFormPage)
+    .use('/sign-up', RegPage)
+    .use('/profile', ProfilePage)
+    .use('/settings', ProfileEditPage)
+    .use('/password', PasswordPage)
+    .use('/messenger/:id', MessengerPage)
+
+    .use('/error500', Error500Page)
+    .use('/error404', Error404Page)
+
+    .start()
+    .updateLinks();

@@ -34,18 +34,38 @@
         background-color: global.$bg-input;
         margin: 0 auto;
         box-sizing: border-box;
-        padding-top: 48px;
         border-radius: 50%;
 
         &__image {
-            width: 32px;
-            height: 32px;
+            width: 130px;
+            height: 130px;
             display: block;
             margin: auto;
+            border-radius: 50%;
         }
 
         &__offset {
             margin-bottom: 98px;
+        }
+
+        &-link {
+            text-decoration: none;
+
+            &__label {
+                color: global.$color-name;
+                font-weight: bold;
+                font-size: 12px;
+                font-family: global.$font-family;
+                text-align: center;
+                padding-top: 10px;
+                display: none;
+            }
+
+            :hover > & {
+                &__label {
+                    display: block;
+                }
+            }
         }
     }
 
