@@ -2,7 +2,7 @@ import Block from '../../../modules/block.ts';
 import template from './template.ts';
 
 export default class ChatImage extends Block {
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('div', props);
     }
 

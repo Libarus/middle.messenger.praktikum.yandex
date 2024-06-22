@@ -8,7 +8,7 @@ import { TChatMessage } from '../../../shared/types/chat.ts';
 export default class Chat extends Block {
     private p_messages: TChatMessage[] = [];
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('div', props);
     }
 

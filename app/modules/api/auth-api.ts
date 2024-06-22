@@ -1,4 +1,5 @@
 import { TSignInRequest, TSignUpRequest, TUser } from '../../shared/types/user.ts';
+import Helpers from '../../utils/helpers.ts';
 import HTTP from '../http.ts';
 import Router from '../router.ts';
 import BaseAPI from './base-api.ts';
@@ -15,7 +16,20 @@ export default class AuthAPI extends BaseAPI {
     }
 
     getuser(): Promise<TUser> {
-        return authApiInstance.get('/user').then((response: any) => JSON.parse(response.response));
+        return authApiInstance.get('/user').then((response: any) => {
+            let data;
+
+            try {
+                data = JSON.parse(response.response);
+            } catch (err) {
+                Helpers.Log(
+                    'ERROR',
+                    `[auth-api.getuser] Ошибка преобразования в JSON строки: ${response.response}`
+                );
+            }
+
+            return data;
+        });
     }
 
     logout() {

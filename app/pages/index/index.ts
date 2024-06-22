@@ -40,7 +40,7 @@ export default class IndexPage extends Block {
         }),
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         const attrib = {
             attrib: {
                 class: 'p20',

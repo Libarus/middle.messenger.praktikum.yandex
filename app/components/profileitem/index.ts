@@ -2,7 +2,7 @@ import Block from '../../modules/block.ts';
 import template from './template.ts';
 
 export default class ProfileItems extends Block {
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         const initObj = { attrib: { class: 'profile-item' } };
         super('div', { ...initObj, ...props });
     }

@@ -66,10 +66,17 @@ export default class MessengerPage extends Block {
                             this.p_updateChats();
                         },
                         (error: any) => {
-                            const reason: TError = JSON.parse(error.response) as TError;
-                            this.divChatName.setProps({
-                                children: `${reason.reason}: "${reason.error}"`,
-                            });
+                            try {
+                                const reason: TError = JSON.parse(error.response) as TError;
+                                this.divChatName.setProps({
+                                    children: `${reason.reason}: "${reason.error}"`,
+                                });
+                            } catch (err) {
+                                Helpers.Log(
+                                    'ERROR',
+                                    `[messenger.modalAddChat] Ошибка преобразования в JSON строки: ${error.response}`
+                                );
+                            }
                         }
                     );
                 } catch (error) {
@@ -291,7 +298,7 @@ export default class MessengerPage extends Block {
         attrib: { class: 'content-chat' },
     });
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('Чат');
         this.setProps(this.props);
@@ -307,7 +314,8 @@ export default class MessengerPage extends Block {
             this.chatHeader.setProps({ chatId: this.Params.id });
         }
 
-        this.chatContent.setProps({ children: this.selectChat });
+        this.chatContent.setProps({ children: this.selectChat, attrib: { class: 'content' } });
+
         this.modal.hide();
 
         authApi.getuser().then(
@@ -330,7 +338,16 @@ export default class MessengerPage extends Block {
         this.chatListContent.setProps({ children: 'Loading chat list ...' });
 
         chatApi.getchats().then((value: any) => {
-            const chatList: TChat[] = JSON.parse(value.response) as TChat[];
+            let chatList: TChat[] = [];
+
+            try {
+                chatList = JSON.parse(value.response) as TChat[];
+            } catch (err) {
+                Helpers.Log(
+                    'ERROR',
+                    `[messenger.p_updateChats] Ошибка преобразования в JSON строки: ${value.response}`
+                );
+            }
 
             if (chatList.length === 0) {
                 this.chatListContent.setProps({ children: 'Chat list is empty' });
@@ -339,14 +356,19 @@ export default class MessengerPage extends Block {
 
                 this.selectedChat = null;
                 chatList.forEach((chat: TChat) => {
+                    let chatAvatar = '/images/defphoto.svg';
+                    if (chat.avatar !== '' && chat.avatar !== null) {
+                        chatAvatar = `https://ya-praktikum.tech/api/v2/resources${chat.avatar}`;
+                    }
+
                     const item: TChatItem = {
                         id: chat.id,
-                        name: `Чат "${chat.title}"`,
+                        name: `${chat.title}`,
                         message: '---',
                         self: false,
                         datetime: '***',
                         unread: chat.unread_count,
-                        avatar: '/images/defphoto.svg',
+                        avatar: chatAvatar,
                         selected: paramId === chat.id,
                     };
 
@@ -355,15 +377,7 @@ export default class MessengerPage extends Block {
                     }
 
                     if (chat.last_message !== null) {
-                        item.name =
-                            chat.last_message.user.display_name ??
-                            chat.last_message.user.first_name;
                         item.message = chat.last_message.content;
-
-                        const u = chat.last_message.user;
-                        if (u.avatar !== null && u.avatar !== '') {
-                            item.avatar = `https://ya-praktikum.tech/api/v2/resources${u.avatar}`;
-                        }
                     }
 
                     const events = {
@@ -391,16 +405,12 @@ export default class MessengerPage extends Block {
     }
 
     async p_updateChatMessages(chatId: number) {
-        this.chatContent.setProps({ children: this.chat });
-
         this.chat.setProps({ children: '', attrib: { class: 'content-chat-content' } });
 
         this.chatContent.setProps({
             children: [this.chatHeader, this.chat, this.sendMessageForm],
             attrib: { class: 'content-chat' },
         });
-
-        console.info(this.selectedChat);
 
         this.chatHeader.setProps({
             name: this.selectedChat?.name,
@@ -428,9 +438,19 @@ export default class MessengerPage extends Block {
     }
 
     onMessage(event: MessageEvent) {
-        const parseData: any = JSON.parse(event.data);
+        let parseData;
+
+        try {
+            parseData = JSON.parse(event.data);
+        } catch (err) {
+            Helpers.Log(
+                'ERROR',
+                `[messenger.onMessage] Ошибка преобразования в JSON строки: ${event.data}`
+            );
+        }
+
         if (Array.isArray(parseData)) {
-            const messages: TChatMessage[] = JSON.parse(event.data);
+            const messages: TChatMessage[] = parseData;
             this.chat.addmessages(messages.reverse(), this.p_userId);
         } else {
             const message: TChatMessage = parseData;

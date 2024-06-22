@@ -119,8 +119,18 @@ export default class LoginFormPage extends Block {
                                     this.button.show();
                                     this.errorMessage.show();
                                     this.waiter.hide();
-                                    const reason: TError = JSON.parse(error.response) as TError;
-                                    this.errorMessage.setProps({ children: reason.reason });
+
+                                    try {
+                                        const reason: TError = JSON.parse(error.response) as TError;
+                                        this.errorMessage.setProps({
+                                            children: reason.reason,
+                                        });
+                                    } catch (err) {
+                                        Helpers.Log(
+                                            'ERROR',
+                                            `[loginform.props] Ошибка преобразования в JSON строки: ${error.response}`
+                                        );
+                                    }
                                 }
                             );
                         } catch (error) {
@@ -136,7 +146,7 @@ export default class LoginFormPage extends Block {
         ],
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('Авторизация');
         this.setProps(this.props);

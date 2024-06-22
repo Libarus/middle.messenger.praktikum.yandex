@@ -2,7 +2,7 @@ import Block from '../../../modules/block.ts';
 import template from './template.ts';
 
 export default class ChatText extends Block {
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('div', props);
     }
 

@@ -215,13 +215,23 @@ export default class RegPage extends Block {
 
                             authApi.signup(data).then(
                                 (response: any) => {
-                                    const personData: TUser = JSON.parse(response.response);
+                                    const strUserData = response.response;
+                                    let personData: TUser | null = null;
+
+                                    try {
+                                        personData = JSON.parse(strUserData) as TUser;
+                                    } catch (err) {
+                                        Helpers.Log(
+                                            'ERROR',
+                                            `[reg.afterSubmit] Ошибка преобразования в JSON строки: ${strUserData}`
+                                        );
+                                    }
 
                                     this.modal.setProps({
                                         children: [
                                             new Universal('div', {
                                                 children: `Спасибо за регистрацию!
-                                                           Ваш ID: ${personData.id}`,
+                                                           Ваш ID: ${personData?.id}`,
                                             }),
                                             new Universal('a', {
                                                 children: 'Войти всистему',
@@ -237,8 +247,16 @@ export default class RegPage extends Block {
                                     this.button.show();
                                     this.errorMessage.show();
                                     this.waiter.hide();
-                                    const reason: TError = JSON.parse(error.response) as TError;
-                                    this.errorMessage.setProps({ children: reason.reason });
+
+                                    try {
+                                        const reason: TError = JSON.parse(error.response) as TError;
+                                        this.errorMessage.setProps({ children: reason.reason });
+                                    } catch (err) {
+                                        Helpers.Log(
+                                            'ERROR',
+                                            `[reg.afterSubmit] Ошибка преобразования в JSON строки: ${error.response}`
+                                        );
+                                    }
                                 }
                             );
                         } catch (error) {
@@ -253,7 +271,7 @@ export default class RegPage extends Block {
         ],
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('Регистрация');
         this.setProps(this.props);

@@ -10,7 +10,7 @@ type TRequest = {
     headers?: Record<string, number>;
 };
 
-type HTTPMethod = (url: string, options?: TOptions) => Promise<unknown>;
+type HTTPMethod = (url: string, options?: TOptions) => Promise<XMLHttpRequest>;
 
 export default class HTTP {
     //
@@ -32,19 +32,19 @@ export default class HTTP {
         UNKNOWN: 'UNKNOWN', // задел на будущие доработки
     };
 
-    get: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    get: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
 
-    post: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    post: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.POST }, options.timeout);
 
-    put: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    put: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.PUT }, options.timeout);
 
-    delete: HTTPMethod = (url: string, options: TOptions = { timeout: this.defTimeout }) =>
+    delete: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.DELETE }, options.timeout);
 
-    p_request(purl: string, options: TRequest = {}, timeout = 5000) {
+    p_request(purl: string, options: TRequest = {}, timeout = 5000): Promise<XMLHttpRequest> {
         const { method = '', data, headers } = options;
 
         let url = this.baseUrl + purl;

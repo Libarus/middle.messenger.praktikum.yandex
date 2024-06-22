@@ -5,6 +5,7 @@ import Helpers from '../../utils/helpers.ts';
 import Block from '../../modules/block.ts';
 import AuthAPI from '../../modules/api/auth-api.ts';
 import { TUser } from '../../shared/types/user.ts';
+import Router from '../../modules/router.ts';
 
 // TODO: Сохранение в разработке!
 
@@ -120,7 +121,7 @@ export default class PasswordPage extends Block {
         }),
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('Изменение пароля');
         this.setProps(this.props);
@@ -136,12 +137,17 @@ export default class PasswordPage extends Block {
             return value == null ? '' : (value as string);
         }
 
-        const user: TUser = await authApi.getuser();
-
-        if (setEmpty(user.avatar) !== '') {
-            const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
-            this.profilePhoto.setProps({ attrib: { src } });
-        }
+        authApi.getuser().then(
+            (user: TUser) => {
+                if (setEmpty(user.avatar) !== '') {
+                    const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(
+                        user.avatar
+                    )}`;
+                    this.profilePhoto.setProps({ attrib: { src } });
+                }
+            },
+            () => Router.instance.go('/')
+        );
 
         return false;
     }

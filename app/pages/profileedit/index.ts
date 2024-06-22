@@ -151,7 +151,7 @@ export default class ProfileEditPage extends Block {
                 const formAva: any = document.getElementById('avatarForm');
                 userApi.updateavatar(new FormData(formAva)).then(
                     (response: any) => {
-                        this.p_updateUserData(JSON.parse(response.response) as TUser);
+                        this.p_updUserData(response.response);
                     },
                     (err) => Helpers.Log('ERROR', err)
                 );
@@ -207,7 +207,8 @@ export default class ProfileEditPage extends Block {
                     this.successMessage.hide();
                     userApi.updateuser(data).then(
                         (response: any) => {
-                            this.p_updateUserData(JSON.parse(response.response) as TUser);
+                            this.p_updUserData(response.response);
+
                             this.successMessage.show();
                             this.successMessage.setProps({
                                 children: 'Данные сохранены',
@@ -215,10 +216,18 @@ export default class ProfileEditPage extends Block {
                         },
                         (error: any) => {
                             this.errorMessage.show();
-                            const reason: TError = JSON.parse(error.response) as TError;
-                            this.errorMessage.setProps({
-                                children: reason.reason,
-                            });
+
+                            try {
+                                const reason: TError = JSON.parse(error.response) as TError;
+                                this.errorMessage.setProps({
+                                    children: reason.reason,
+                                });
+                            } catch (err) {
+                                Helpers.Log(
+                                    'ERROR',
+                                    `[profileedit.afterSubmit] Ошибка преобразования в JSON строки: ${error.response}`
+                                );
+                            }
                         }
                     );
                 } catch (error) {
@@ -266,7 +275,7 @@ export default class ProfileEditPage extends Block {
         }),
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('Редактирование профиля');
         this.setProps(this.props);
@@ -299,9 +308,28 @@ export default class ProfileEditPage extends Block {
         this.errorMessage.hide();
         this.successMessage.hide();
 
-        const user: TUser = await authApi.getuser();
-        this.p_updateUserData(user);
+        authApi.getuser().then(
+            (user: TUser) => {
+                this.p_updateUserData(user);
+            },
+            () => Router.instance.go('/')
+        );
 
         return false;
+    }
+
+    private p_updUserData(strUserData: string): void {
+        let dataUser: TUser | null = null;
+
+        try {
+            dataUser = JSON.parse(strUserData) as TUser;
+        } catch (err) {
+            Helpers.Log(
+                'ERROR',
+                `[profileedit.p_updUserData] Ошибка преобразования в JSON строки: ${strUserData}`
+            );
+        }
+
+        if (dataUser != null) this.p_updateUserData(dataUser);
     }
 }

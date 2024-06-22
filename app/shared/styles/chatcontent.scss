@@ -247,6 +247,10 @@
         list-style: none;
     }
 
+    &-li {
+        padding: 5px 0;
+    }
+
     &__link {
         font-family: global.$font-family;
         font-size: 14px;
@@ -261,5 +265,22 @@
 
     &-item__label {
         font-family: global.$font-family;
+    }
+}
+
+.remove-user-list {
+    padding: 20px 0;
+    margin: 0;
+    list-style: none;
+
+    &-li {
+        &__link {
+            color: blue;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }

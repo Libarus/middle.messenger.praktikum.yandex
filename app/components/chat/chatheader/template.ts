@@ -4,7 +4,8 @@ export default `
         <div class="content-chat-header-userinfo__name">{{name}}</div>
     </div>
     
-    {{{modal}}}
+    {{{addmodal}}}
+    {{{removemodal}}}
 
     <div class="content-chat-header-menu">
         {{{imgmenu}}}

@@ -4,6 +4,7 @@ import Helpers from '../../utils/helpers.ts';
 import Block from '../../modules/block.ts';
 import AuthAPI from '../../modules/api/auth-api.ts';
 import { TUser } from '../../shared/types/user.ts';
+import Router from '../../modules/router.ts';
 
 const authApi = new AuthAPI();
 
@@ -79,7 +80,7 @@ export default class ProfilePage extends Block {
         }),
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('Профиль');
         this.setProps(this.props);
@@ -95,27 +96,32 @@ export default class ProfilePage extends Block {
             return value == null ? '' : (value as string);
         }
 
-        const user: TUser = await authApi.getuser();
+        authApi.getuser().then(
+            (user: TUser) => {
+                const profileItems = [
+                    new ProfileItem({ title: 'Почта', children: setEmpty(user.email) }),
+                    new ProfileItem({ title: 'Логин', children: setEmpty(user.login) }),
+                    new ProfileItem({ title: 'Имя', children: setEmpty(user.first_name) }),
+                    new ProfileItem({ title: 'Фамилия', children: setEmpty(user.second_name) }),
+                    new ProfileItem({ title: 'Имя в чате', children: setEmpty(user.display_name) }),
+                    new ProfileItem({ title: 'Телефон', children: setEmpty(user.phone) }),
+                ];
 
-        const profileItems = [
-            new ProfileItem({ title: 'Почта', children: setEmpty(user.email) }),
-            new ProfileItem({ title: 'Логин', children: setEmpty(user.login) }),
-            new ProfileItem({ title: 'Имя', children: setEmpty(user.first_name) }),
-            new ProfileItem({ title: 'Фамилия', children: setEmpty(user.second_name) }),
-            new ProfileItem({ title: 'Имя в чате', children: setEmpty(user.display_name) }),
-            new ProfileItem({ title: 'Телефон', children: setEmpty(user.phone) }),
-        ];
+                this.userName.setProps({ children: setEmpty(user.first_name) });
 
-        this.userName.setProps({ children: setEmpty(user.first_name) });
+                this.showUserId.setProps({ children: `User ID: ${user.id}` });
 
-        this.showUserId.setProps({ children: `User ID: ${user.id}` });
+                this.profItem.setProps({ children: profileItems });
 
-        this.profItem.setProps({ children: profileItems });
-
-        if (setEmpty(user.avatar) !== '') {
-            const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(user.avatar)}`;
-            this.profilePhoto.setProps({ attrib: { src } });
-        }
+                if (setEmpty(user.avatar) !== '') {
+                    const src = `https://ya-praktikum.tech/api/v2/resources${setEmpty(
+                        user.avatar
+                    )}`;
+                    this.profilePhoto.setProps({ attrib: { src } });
+                }
+            },
+            () => Router.instance.go('/')
+        );
 
         return false;
     }

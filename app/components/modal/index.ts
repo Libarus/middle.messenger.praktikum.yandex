@@ -2,7 +2,7 @@ import Block from '../../modules/block.ts';
 import template from './template.ts';
 
 export default class Modal extends Block {
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         const attrib = {
             attrib: { id: 'modal', class: 'modal' },
             events: {

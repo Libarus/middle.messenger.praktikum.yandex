@@ -34,4 +34,9 @@ export default class Helpers {
         // eslint-disable-next-line no-undef
         return window;
     }
+
+    public static Alert(message: string): void {
+        // eslint-disable-next-line no-undef
+        alert(message);
+    }
 }

@@ -62,7 +62,17 @@ export default class WS {
     }
 
     private p_onMessage(event: MessageEvent) {
-        const data = JSON.parse(event.data);
+        let data;
+
+        try {
+            data = JSON.parse(event.data);
+        } catch (err) {
+            Helpers.Log(
+                'ERROR',
+                `[ws.p_onMessage] Ошибка преобразования в JSON строки: ${event.data}`
+            );
+        }
+
         if (data.type === 'pong') {
             Helpers.Log('INFO', 'pong');
             setTimeout(this.p_pingpong.bind(this), this.p_pingpongInterval);

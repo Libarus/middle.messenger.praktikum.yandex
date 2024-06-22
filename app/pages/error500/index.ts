@@ -22,7 +22,7 @@ export default class Error500Page extends Block {
         }),
     };
 
-    constructor(props: any = {}) {
+    constructor(props = {}) {
         super('main', props);
         Helpers.SetDocumentTitle('500 ошибка');
         this.setProps(this.props);
