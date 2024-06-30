@@ -1,16 +1,15 @@
-import { expect } from "chai";
+import { expect } from 'chai';
 
-import LoginFormPage from "./loginform/index.ts";
-import MessengerPage from "./messenger/index.ts";
-import ProfilePage from "./profile/index.ts";
-import ProfileEditPage from "./profileedit/index.ts";
-import PasswordPage from "./password/index.ts";
-import Error404Page from "./error404/index.ts";
-import Error500Page from "./error500/index.ts";
-import RegPage from "./reg/index.ts";
+import LoginFormPage from './loginform/index.ts';
+import MessengerPage from './messenger/index.ts';
+import ProfilePage from './profile/index.ts';
+import ProfileEditPage from './profileedit/index.ts';
+import PasswordPage from './password/index.ts';
+import Error404Page from './error404/index.ts';
+import Error500Page from './error500/index.ts';
+import RegPage from './reg/index.ts';
 
-describe("Компоненты", () => {
-
+describe('Компоненты', () => {
     it("должен создать LoginFormPage с заголовком страницы 'Авторизация' ", () => {
         new LoginFormPage();
         expect(document.title).equal('Авторизация');
@@ -50,6 +49,4 @@ describe("Компоненты", () => {
         new Error500Page();
         expect(document.title).equal('500 ошибка');
     });
-
 });
-

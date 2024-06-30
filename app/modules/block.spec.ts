@@ -1,9 +1,8 @@
-import "mocha";
-import { expect } from "chai";
-import Block from "./block.ts";
+import 'mocha';
+import { expect } from 'chai';
+import Block from './block.ts';
 
-describe("Шаблонизатор - Block", () => {
-
+describe('Шаблонизатор - Block', () => {
     function createBlock() {
         return new Block('div');
     }
@@ -14,7 +13,8 @@ describe("Шаблонизатор - Block", () => {
 
     it("должен вернуть текст 'text content' переданный в компилятор шаблона", () => {
         const block = createBlock();
-        expect(block.compile('<div>{{children}}</div>', { children: 'text content' }).textContent).equal('text content');
+        expect(
+            block.compile('<div>{{children}}</div>', { children: 'text content' }).textContent
+        ).equal('text content');
     });
-
 });

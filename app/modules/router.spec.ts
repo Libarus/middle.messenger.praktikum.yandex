@@ -1,6 +1,6 @@
-import { expect } from "chai";
-import Block from "./block.ts";
-import Router from "./router.ts";
+import { expect } from 'chai';
+import Block from './block.ts';
+import Router from './router.ts';
 
 class TestPage extends Block {
     constructor() {
@@ -13,8 +13,7 @@ class TestPage extends Block {
     }
 }
 
-describe("Маршрутизатор - Router", () => {
-
+describe('Маршрутизатор - Router', () => {
     const router = new Router('#app');
     router
         .use('/', TestPage)
@@ -38,8 +37,10 @@ describe("Маршрутизатор - Router", () => {
         expect(window.history.length).equal(3);
     });
 
-    it('должен вернуть ошибку "The route for the 404 error is not set" при попытке перейти на несуществующий маршрут при отсутствии маршрута для 404 ошибки', () => {
-        expect(() => Router.instance.go('/nopage')).to.throw('The route for the 404 error is not set');
+    it(`должен вернуть ошибку "The route for the 404 error is not set" при попытке
+        перейти на несуществующий маршрут при отсутствии маршрута для 404 ошибки`, () => {
+        expect(() => Router.instance.go('/nopage')).to.throw(
+            'The route for the 404 error is not set'
+        );
     });
-
 });
