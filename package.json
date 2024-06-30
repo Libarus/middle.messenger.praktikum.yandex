@@ -30,6 +30,7 @@
         "eslint-config-prettier": "^9.1.0",
         "eslint-config-react-app": "^7.0.1",
         "eslint-plugin-react": "^7.34.1",
+        "husky": "^9.0.11",
         "jsdom": "^24.1.0",
         "mocha": "^10.5.2",
         "sass": "^1.75.0",
@@ -52,5 +53,10 @@
     "stylelint": {
         "extends": "stylelint-config-standard",
         "rules": {}
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm-run-all test lint:all"
+        }
     }
 }
