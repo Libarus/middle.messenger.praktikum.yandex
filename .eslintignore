@@ -4,3 +4,7 @@ node_modules
 .vscode
 vite.config.ts
 mochaSetup.js
+block.spec.ts
+http.spec.ts
+router.spec.ts
+components.spec.ts

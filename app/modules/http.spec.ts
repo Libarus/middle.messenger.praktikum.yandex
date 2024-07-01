@@ -5,7 +5,6 @@ import HTTP from './http.ts';
 describe('HTTP транспорт', () => {
     const sandbox = sinon.createSandbox();
     let http: HTTP;
-    //let request: any;
     let result: string = '';
 
     beforeEach(() => {
