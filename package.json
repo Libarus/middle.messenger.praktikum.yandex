@@ -14,7 +14,8 @@
         "serve": "npm run build && node server.js",
         "eslint": "eslint .",
         "stylelint": "npx stylelint \"**/*.scss\"",
-        "test": "mocha"
+        "test": "mocha",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@types/chai": "^4.3.16",
