@@ -1,4 +1,3 @@
-import Helpers from '../utils/helpers.ts';
 import Block from './block.ts';
 import Route from './route.ts';
 
@@ -32,7 +31,8 @@ export default class Router {
     }
 
     updateLinks() {
-        const doc: any = Helpers.GetDocument();
+        // eslint-disable-next-line no-undef
+        const doc: any = document;
         const elements = doc.querySelectorAll('a');
         for (let i = 0; i < elements.length; i++) {
             const element = elements[i];
@@ -56,11 +56,16 @@ export default class Router {
         return this;
     }
 
+    length(): number {
+        return this.routes.length;
+    }
+
     private onRoute(pathName: string) {
         const params: string[] = pathName.split('/').splice(2);
         const route: Route | undefined = this.getRoute(pathName);
 
         if (!route) {
+            if (pathName === '/error404') throw new Error('The route for the 404 error is not set');
             this.onRoute('/error404');
             return;
         }

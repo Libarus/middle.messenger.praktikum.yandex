@@ -32,8 +32,14 @@ export default class HTTP {
         UNKNOWN: 'UNKNOWN', // задел на будущие доработки
     };
 
-    get: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
-        this.p_request(url, { ...options, method: this.METHODS.GET }, options.timeout);
+    get: HTTPMethod = (url, options = { timeout: this.defTimeout }) => {
+        let url2: string = url;
+        const { data } = options;
+        if (data !== null) {
+            url2 += typeof data === 'string' ? data : this.p_queryStringify(data);
+        }
+        return this.p_request(url2, { ...options, method: this.METHODS.GET }, options.timeout);
+    }
 
     post: HTTPMethod = (url, options = { timeout: this.defTimeout }) =>
         this.p_request(url, { ...options, method: this.METHODS.POST }, options.timeout);
@@ -47,10 +53,7 @@ export default class HTTP {
     p_request(purl: string, options: TRequest = {}, timeout = 5000): Promise<XMLHttpRequest> {
         const { method = '', data, headers } = options;
 
-        let url = this.baseUrl + purl;
-        if (method === this.METHODS.GET && !!data) {
-            url += typeof data === 'string' ? data : this.p_queryStringify(data);
-        }
+        const url = this.baseUrl + purl;
 
         return new Promise((resolve, reject) => {
             // eslint-disable-next-line no-undef

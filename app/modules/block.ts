@@ -1,7 +1,6 @@
 import { v4 as makeUUID } from 'uuid';
 import Handlebars from 'handlebars';
 import EventBus from './event-bus.ts';
-import Helpers from '../utils/helpers.ts';
 
 // Нельзя создавать экземпляр данного класса
 class Block<TProps extends Record<string, any> = any> {
@@ -15,7 +14,8 @@ class Block<TProps extends Record<string, any> = any> {
     eventBus: any;
 
     // временная инициализация
-    private p_element: any = Helpers.GetDocument().createElement('template');
+    // eslint-disable-next-line no-undef
+    private p_element: any = document.createElement('template');
 
     private p_tagName: string = '';
 
@@ -268,7 +268,8 @@ class Block<TProps extends Record<string, any> = any> {
 
     private p_createDocumentElement(tagName: string): any {
         // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-        const element: any = Helpers.GetDocument().createElement(tagName);
+        // eslint-disable-next-line no-undef
+        const element: any = document.createElement(tagName);
         if (this.p_settings?.withInternalID) {
             element.setAttribute('data-id', this.Id);
         }
@@ -312,7 +313,8 @@ class Block<TProps extends Record<string, any> = any> {
     }
 
     render(): any {
-        return Helpers.GetDocument().createElement('template');
+        // eslint-disable-next-line no-undef
+        return document.createElement('template');
     } // Необходимо вернуть разметку
 
     beforeInit(): void {}

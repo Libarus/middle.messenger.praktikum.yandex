@@ -3,3 +3,8 @@ node_modules
 .github
 .vscode
 vite.config.ts
+mochaSetup.js
+block.spec.ts
+http.spec.ts
+router.spec.ts
+components.spec.ts

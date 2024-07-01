@@ -25,16 +25,6 @@ export default class Helpers {
         }
     }
 
-    public static GetDocument(): any {
-        // eslint-disable-next-line no-undef
-        return document;
-    }
-
-    public static GetWindow(): any {
-        // eslint-disable-next-line no-undef
-        return window;
-    }
-
     public static Alert(message: string): void {
         // eslint-disable-next-line no-alert
         alert(message);
