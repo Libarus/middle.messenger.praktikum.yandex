@@ -53,11 +53,5 @@
     "stylelint": {
         "extends": "stylelint-config-standard",
         "rules": {}
-    },
-    "husky": {
-        "hooks": {
-          "pre-commit": "npm-run-all test lint:all",
-          "pre-push": "npm run other command"
-        }
-      }
+    }
 }
