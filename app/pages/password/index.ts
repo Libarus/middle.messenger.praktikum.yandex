@@ -95,7 +95,7 @@ export default class PasswordPage extends Block {
             }),
         ],
         formElements: [this.inputOldPassword, this.inputNewPassword, this.inputNewPasswordAgain],
-        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: Event, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
             Helpers.Log('INFO', 'Сохранение в разработке');
             ev.preventDefault();

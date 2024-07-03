@@ -206,7 +206,7 @@ export default class RegPage extends Block {
                     this.inputPassword,
                     this.inputPasswordAgain,
                 ],
-                afterSubmit: (ev: any, valid: boolean, data: TSignUpRequest) => {
+                afterSubmit: (ev: Event, valid: boolean, data: TSignUpRequest) => {
                     Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
                     if (valid) {
                         try {

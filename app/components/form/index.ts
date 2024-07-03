@@ -2,7 +2,7 @@ import Validator from '../../modules/validator.ts';
 import Universal from '../universal/index.ts';
 
 export default class Form extends Universal {
-    private formElements: any[] = [];
+    private formElements: Universal[] = [];
 
     private isValidate: boolean = false;
 
@@ -42,7 +42,7 @@ export default class Form extends Universal {
         });
 
         const submitEvent = {
-            submit: (ev: any) => {
+            submit: (ev: Event) => {
                 ev.preventDefault();
                 const data: any = {};
 
@@ -63,7 +63,7 @@ export default class Form extends Universal {
         this.setProps({ events: elementEvents });
     }
 
-    private validateOne(formEl: any): boolean {
+    private validateOne(formEl: Universal): boolean {
         let result = true;
         if (formEl.Props.validate) {
             const em = formEl.element.parentElement.querySelector('.form-input-error');
