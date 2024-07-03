@@ -1,12 +1,12 @@
 type TOptions = {
-    data?: any;
+    data?: unknown;
     headers?: Record<string, number>;
     timeout?: number;
 };
 
 type TRequest = {
     method?: string;
-    data?: any;
+    data?: unknown;
     headers?: Record<string, number>;
 };
 

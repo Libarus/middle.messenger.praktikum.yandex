@@ -56,7 +56,7 @@ export default class MessengerPage extends Block {
     modalAddChat = new Form({
         children: [this.сhatName, this.chanNameButton],
         formElements: [this.inputChatName],
-        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: Event, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT '}valid. Form data:`, data);
             if (valid) {
                 try {
@@ -272,7 +272,7 @@ export default class MessengerPage extends Block {
             attrib: { class: 'content-chat-action' },
         }),
         formElements: [this.message, this.typemessage],
-        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: Event, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is${valid ? '' : ' NOT'} valid. Form data:`, data);
             this.ws?.send(JSON.stringify(data));
             this.sendMessageForm.reset();

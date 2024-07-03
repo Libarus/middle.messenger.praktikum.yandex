@@ -48,7 +48,7 @@ export default class Chat extends Block {
             data[dt].forEach((message: TChatMessage) => {
                 const time: Date = new Date(message.time);
 
-                let msg: any = {};
+                let msg: unknown = {};
                 const type = message.user_id === userId ? 'question' : 'answer';
                 const statusImage = '/images/galki.svg';
                 const statusAlt = 'Сообщение доставлено и прочитано';

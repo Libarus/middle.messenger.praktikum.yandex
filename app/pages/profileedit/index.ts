@@ -199,7 +199,7 @@ export default class ProfileEditPage extends Block {
             this.inputDisplayName,
             this.inputPhone,
         ],
-        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: Event, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT'} valid. Form data:`, data);
             if (valid) {
                 try {

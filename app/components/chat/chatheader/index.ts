@@ -38,7 +38,7 @@ export default class ChatHeader extends Block {
     modalAddUser = new Form({
         children: [this.сhatName, this.chanNameButton],
         formElements: [this.inputChatName],
-        afterSubmit: (ev: any, valid: boolean, data: any = {}) => {
+        afterSubmit: (ev: Event, valid: boolean, data: any = {}) => {
             Helpers.Log('INFO', `Form is ${valid ? '' : 'NOT '}valid. Form data:`, data);
             if (valid) {
                 const chatId = +this.Props.chatId;

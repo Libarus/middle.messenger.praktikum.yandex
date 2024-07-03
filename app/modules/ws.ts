@@ -111,7 +111,7 @@ export default class WS {
     }
 
     private p_pingpong() {
-        const ping: any = { type: 'ping' };
+        const ping: unknown = { type: 'ping' };
         Helpers.Log('INFO', 'ping');
         if (this.p_socket && this.p_socket.readyState === 1) {
             this.p_socket.send(JSON.stringify(ping));

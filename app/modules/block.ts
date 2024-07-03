@@ -11,10 +11,9 @@ class Block<TProps extends Record<string, any> = any> {
         FLOW_RENDER: 'flow:render',
     };
 
-    eventBus: any;
+    eventBus: () => EventBus;
 
     // временная инициализация
-    // eslint-disable-next-line no-undef
     private p_element: any = document.createElement('template');
 
     private p_tagName: string = '';
